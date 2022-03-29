@@ -1,20 +1,20 @@
 pipeline {
         agent {
-            docker { image 'python:3.9' }
+            docker { image 'python:3.7' }
         }
         stages {
             stage('Build') {
                 steps {
-                        echo "build"
-                    //sh 'pip install -r requirements.txt'
+                        //sh 'python -m venv env'
+                        //sh 'source env/bin/activate'
+                        sh 'pip install -r requirements.txt'
                 }
                 
             }
 
             stage('Test') {
                 steps {
-                        echo "test"
-                    //sh 'python app/manage.py test'
+                    sh 'python SecureCity/manage.py test'
                 }
             }
         }
