@@ -6,9 +6,9 @@ pipeline {
             stage('Build') {
                 steps {
                         withEnv(["HOME=${env.WORKSPACE}"]){
-                                sh 'pwd'
+                                // path to env: /var/jenkins_home/workspace/Team_11/django_pipeline
                                 //sh 'python3 -m venv --upgrade /var/jenkins_home/workspace/Team_11/django_pipeline'
-                                //sh 'python3 -m pip install --upgrade pip setuptools wheel'
+                                sh 'python3 -m pip install --upgrade pip setuptools wheel'
                                 sh 'pip3 install -r SecureCity/requirements.txt'
                         }
                         //sh 'python -m venv env'
