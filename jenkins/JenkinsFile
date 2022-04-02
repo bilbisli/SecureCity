@@ -10,9 +10,6 @@ pipeline {
                                 // path to env: /var/jenkins_home/workspace/Team_11/django_pipeline
                                 //sh 'python3 -m venv --upgrade /var/jenkins_home/workspace/Team_11/django_pipeline'
                                 
-                                sh 'source /usr/local/bin/virtualenvwrapper.sh'
-                                sh 'workon env'
-                                
                                 sh 'python3 -m pip install --upgrade pip setuptools wheel'
                                 //sh 'which python'
                                 
@@ -38,7 +35,7 @@ pipeline {
                 steps {
                         // sh 'cd env'
                         sh 'find . -name python.*'
-                        sh 'env/bin/python SecureCity/manage.py test'
+                        sh '~/env/bin/python SecureCity/manage.py test'
                 }
             }
         }
