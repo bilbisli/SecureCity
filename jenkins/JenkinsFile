@@ -10,16 +10,18 @@ pipeline {
                                 // path to env: /var/jenkins_home/workspace/Team_11/django_pipeline
                                 //sh 'python3 -m venv --upgrade /var/jenkins_home/workspace/Team_11/django_pipeline'
                                 sh 'python3 -m pip install --upgrade pip setuptools wheel'
+                                sh 'which python'
                                 sh 'pip3 install -r SecureCity/requirements.txt'
                         }
                         */
-                    
+                        /*
                         sh 'mkdir ~/my_virtual_env'
                         sh ' python3 -m venv ~/my_virtual_env
                         sh 'source ~/my_virtual_env/bin/activate'
                         sh 'which python'
                         sh 'python3 -m pip install --upgrade pip setuptools wheel'
                         sh 'pip3 install -r SecureCity/requirements.txt'
+                        */
                         //sh 'python -m venv env'
                         //sh 'source env/bin/activate'
                         
