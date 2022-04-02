@@ -7,7 +7,7 @@ pipeline {
                 steps {
                         withEnv(["HOME=${env.WORKSPACE}"]){
                                 sh '/usr/local/bin/python -m pip install --upgrade pip'
-                                sh 'pip3 install --upgrade setuptools'
+                                sh 'sudo apt update'
                                 sh 'pip3 install -r SecureCity/requirements.txt'
                         }
                         //sh 'python -m venv env'
