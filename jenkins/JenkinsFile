@@ -36,7 +36,11 @@ pipeline {
             stage('Test') {
                 steps {
                         // sh 'find . -name python.*'
-                        sh 'env/bin/python SecureCity/manage.py test'
+                        withEnv(["HOME=${env.WORKSPACE}"]){
+                                sh 'python SecureCity/manage.py test'
+                        }
+                        //sh 'env/bin/python SecureCity/manage.py test'
+                        //sh 'python SecureCity/manage.py test'
                 }
             }
         }
