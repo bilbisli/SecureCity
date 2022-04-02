@@ -19,8 +19,8 @@ pipeline {
             }
             stage('Test') {
                 steps {
-                        sh 'cd env'
-                        sh 'ls'
+                        // sh 'cd env'
+                        sh 'find . -name thisfile.txt'
                         //sh 'env/bin/python SecureCity/manage.py test'
                 }
             }
