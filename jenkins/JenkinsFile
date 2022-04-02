@@ -6,7 +6,7 @@ pipeline {
             stage('Build') {
                 steps {
                         withEnv(["HOME=${env.WORKSPACE}"]){
-                                sh 'add2virtualenv /var/jenkins_home/workspace/Team_11/django_pipeline/.local/bin'
+                                
                                 sh 'python -m pip install --upgrade pip setuptools wheel'
                                 sh 'pip install -r SecureCity/requirements.txt'
                         }
