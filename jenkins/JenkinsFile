@@ -19,7 +19,7 @@ pipeline {
             }
             stage('Test') {
                 steps {
-                    sh '/bin/python SecureCity/manage.py test'
+                    sh './.local/lib/python3.8/site-packages/bin/python SecureCity/manage.py test'
                 }
             }
         }
