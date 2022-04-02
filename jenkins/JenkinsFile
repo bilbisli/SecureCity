@@ -19,7 +19,7 @@ pipeline {
             }
             stage('Test') {
                 steps {
-                    sh './.local/lib/python3.8/site-packages/bin/python SecureCity/manage.py test'
+                    sh './var/jenkins_home/workspace/Team_11/django_pipeline@2/.local/bin/python SecureCity/manage.py test'
                 }
             }
         }
