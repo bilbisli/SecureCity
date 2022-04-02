@@ -14,8 +14,8 @@ pipeline {
                                 //sh 'which python'
                                 
                                 sh 'pip3 install -r SecureCity/requirements.txt'
-                                sh 'pip3 install django --upgrade'
-                                sh 'pip install django --upgrade'
+                                //sh 'pip3 install django --upgrade'
+                                //sh 'pip install django --upgrade'
                         }
                         
                         /*
