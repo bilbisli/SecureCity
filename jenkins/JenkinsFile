@@ -5,12 +5,21 @@ pipeline {
          stages {
             stage('Build') {
                 steps {
+                         /*
                         withEnv(["HOME=${env.WORKSPACE}"]){
                                 // path to env: /var/jenkins_home/workspace/Team_11/django_pipeline
                                 //sh 'python3 -m venv --upgrade /var/jenkins_home/workspace/Team_11/django_pipeline'
                                 sh 'python3 -m pip install --upgrade pip setuptools wheel'
                                 sh 'pip3 install -r SecureCity/requirements.txt'
                         }
+                        */
+                    
+                        sh 'mkdir ~/my_virtual_env'
+                        sh ' python3 -m venv ~/my_virtual_env
+                        sh 'source ~/my_virtual_env/bin/activate'
+                        sh 'which python'
+                        sh 'python3 -m pip install --upgrade pip setuptools wheel'
+                        sh 'pip3 install -r SecureCity/requirements.txt'
                         //sh 'python -m venv env'
                         //sh 'source env/bin/activate'
                         
@@ -20,8 +29,8 @@ pipeline {
             stage('Test') {
                 steps {
                         // sh 'cd env'
-                        sh 'find . -name thisfile.txt'
-                        //sh 'env/bin/python SecureCity/manage.py test'
+                        sh 'find . -name python.*'
+                        sh 'env/bin/python SecureCity/manage.py test'
                 }
             }
         }
