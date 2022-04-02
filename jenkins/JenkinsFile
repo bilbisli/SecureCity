@@ -19,7 +19,9 @@ pipeline {
             }
             stage('Test') {
                 steps {
-                        sh 'env/bin/python SecureCity/manage.py test'
+                        sh 'cd env'
+                        sh 'ls'
+                        //sh 'env/bin/python SecureCity/manage.py test'
                 }
             }
         }
