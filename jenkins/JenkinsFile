@@ -19,7 +19,7 @@ pipeline {
             }
             stage('Test') {
                 steps {
-                    sh 'python SecureCity/manage.py test'
+                    sh '/bin/python SecureCity/manage.py test'
                 }
             }
         }
