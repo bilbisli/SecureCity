@@ -25,6 +25,7 @@ pipeline {
                         sh 'python3 -m pip install --upgrade pip setuptools wheel'
                         sh 'pip3 install -r SecureCity/requirements.txt'
                         */
+                        
                         //sh 'python -m venv env'
                         //sh 'source env/bin/activate'
                         
@@ -33,9 +34,8 @@ pipeline {
             }
             stage('Test') {
                 steps {
-                        // sh 'cd env'
-                        sh 'find . -name python.*'
-                        sh '~/env/bin/python SecureCity/manage.py test'
+                        // sh 'find . -name python.*'
+                        sh 'env/bin/python SecureCity/manage.py test'
                 }
             }
         }
