@@ -20,4 +20,5 @@ from HomePage import views as HomePageV
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HomePageV.home),
+    path(r'patrolManagement/', HomePageV.patrol_management_page, name='patrolManagement'),
 ]
