@@ -14,4 +14,10 @@ class AnimalTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertNotEqual(response.status_code, 404)
 
+    def test_adminPage(self):
+        request = self.factory.get('admin:index')
+        response = views.home(request)
+        self.assertEqual(response.status_code, 200)
+        self.assertNotEqual(response.status_code, 404)
+
 
