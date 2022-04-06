@@ -4,13 +4,11 @@ from django.core.validators import MinLengthValidator
 from django.core.validators import RegexValidator
 import datetime
 
-numeric = RegexValidator(r'^[0-9+]', 'Only digit characters.')
-
 class Parent(models.Model):
     user=models.OneToOneField(User, on_delete=models.CASCADE)
     type=models.CharField(max_length=50,default='Parent')
     ID_Number = models.CharField(max_length=9, validators=[MinLengthValidator(9)])
-    Phone_Number = models.CharField(max_length=10,validators=[numeric,MinLengthValidator(10)])
+    Phone_Number = models.CharField(max_length=10,validators=[MinLengthValidator(10)])
     Birthday = models.DateField(default=datetime.date.today)
     First_Name = models.CharField(validators=[MinLengthValidator(2)],max_length=50)
     Last_Name = models.CharField(validators=[MinLengthValidator(2)],max_length=50)

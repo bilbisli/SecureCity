@@ -2,6 +2,11 @@
 {% block content %}
 <title>Secure City</title>
 
+ <style>
+    .user_error input {
+        border-color: red;
+    }
+ </style>
 
 <div align="center">
 <h1>Add Parent:</h1>
@@ -9,7 +14,11 @@
 
             <form method="POST"  name="clicked" action="{% url 'AddParent' %}" >
                 {% csrf_token %}
-                <p>{{ form.username.label }}: {{ form.username }}</p>
+                <p>{{ form.username.label }}:
+                <span class="{% if form.username.errors %}user_error{% endif %}">
+                    {{ form.username }}
+                </span>
+                </p>
                 {% for error in form.username.errors %}
                     <li style="color: red">{{ error }}</li>
                 {% endfor %}
