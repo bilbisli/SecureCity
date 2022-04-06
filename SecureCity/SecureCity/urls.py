@@ -22,7 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HomePageV.home,name="homepage"),
     path('AddParent/', AuthenticationV.AddParent, name="AddParent"),
-    path('Login/', AuthenticationV.loginU, name="Login"),
-    path('logout/', AuthenticationV.logoutuser, name="logoutuser"),
 
 ]
