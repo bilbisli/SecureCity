@@ -27,7 +27,7 @@ class Parenttest(TestCase):
         self.factory = RequestFactory()
 
     def test_signup_parent(self):
-        request = self.factory.get('AddParent')
+        request =  self.factory.get('AddParent')
         request.user = AnonymousUser()
         response = AddParent(request)
         self.assertEqual(response.status_code, 200)
