@@ -16,8 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from HomePage import views as HomePageV
+from Authentication import views as AuthenticationV
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', HomePageV.home),
+    path('', HomePageV.home,name="homepage"),
+    path('AddParent/', AuthenticationV.AddParent, name="AddParent"),
+
 ]
