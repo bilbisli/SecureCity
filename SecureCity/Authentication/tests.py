@@ -22,6 +22,12 @@ class SignUptest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertNotEqual(response.status_code, 404)
 
+    def test_login(self):
+        request = self.factory.get('Login')
+        response = loginU(request)
+        self.assertEqual(response.status_code, 200)
+        self.assertNotEqual(response.status_code, 404)
+
 class Parenttest(TestCase):
     def setUp(self):
         self.factory = RequestFactory()
