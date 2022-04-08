@@ -46,4 +46,4 @@ def loginU(request):
             return render(request, 'Authentication/Login.html', {'form': AuthenticationForm(), 'error': "Wrong username or password"})
         else:
             login(request, user)
-            return render(request, 'Authentication/Login.html', {'form': AuthenticationForm(), 'error': ""})
+            return redirect('homepage')
