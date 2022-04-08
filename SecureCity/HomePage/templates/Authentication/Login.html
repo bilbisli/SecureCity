@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<!DOCTYPE html>
+    <div align="center">
+
+<br><br><br><br><br>
+<h1>Login</h1>
+<br><br>
+{% if  error != "" %}
+<h2 class="alert alert-danger">{{ error }}</h2>
+{% endif %}
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary" type="submit">Login</button><br><br>
+</form>
+
+    <h3>Don't have an account yet? <a href="{% url 'AddParent' %}"> Register</a></h3>
+    <br>
+
+
+    </div>
+{% endblock %}
