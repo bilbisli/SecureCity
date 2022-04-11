@@ -8,5 +8,3 @@ cryptography==36.0.2
 tornado~=6.0.3
 setuptools==62.1.0
 future~=0.18.2
-django-crispy-forms
-crispy_forms
