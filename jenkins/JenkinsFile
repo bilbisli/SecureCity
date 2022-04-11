@@ -10,6 +10,7 @@ pipeline {
                                 sh 'python3 -m pip install --upgrade pip setuptools wheel'
                                 sh 'pip3 install -r SecureCity/requirements.txt'
                                 sh 'pip3 install django-crispy-forms'
+                                sh 'pip3 install django-jenkins'
                                 sh 'python SecureCity/manage.py jenkins --enable-coverage'
                         } 
                 }
