@@ -9,22 +9,21 @@
     <title>Patrol Management Page</title>
 </head>
 <body>
-    {% load crispy_forms_tags %}
 {#    <link rel="stylesheet" href="/static/style_back_all.css">#}
-    <form method="POST">
-        {% csrf_token %}
-        <div class="col-md-6">
-            {{ form | crispy}}
-        </div>
-
-<!--            <label for="inputEmail4" class="form-label">certificate</label>-->
-<!--            <input type="user" class="form-control" id="{{ user }}">-->
-
-        <button type="submit" class="btn btn-dark btn-sm" name="save">Post</button>
-        <br>
-        <br>
-
-    </form>
+    <div class="patrol_list: ">
+         <ul class="list-group" style="opacity:0.85;">
+             <h3>Your Patrols</h3>
+            {% for number, patrol in patrols %}
+                {# TODO: when specific patrol page is created - change the patrol listing to include a link of it #}
+                <li class="list-group-item" style="margin-left:2em">{{ number }}.   {{patrol}}</li>
+            {% endfor %}
+        </ul>
+        <hr>
+    </div>
+    <div>
+        {# add patrol button #}
+        <a href="{% url 'CreatePatrol' %}" class="btn btn-primary" style="margin-left:2em">Add Patrol</a>
+    </div>
 </body>
 </html>
 {% endblock %}

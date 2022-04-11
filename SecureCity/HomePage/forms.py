@@ -9,7 +9,7 @@ class PatrolForm(forms.ModelForm):
             'title',
             'location',
             'priority',
-            'participants needed',
+            'participants_needed',
             'date',
             'start_time',
             'end_time',
