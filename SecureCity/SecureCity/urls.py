@@ -24,5 +24,6 @@ urlpatterns = [
     path('AddParent/', AuthenticationV.AddParent, name="AddParent"),
     path('Login/', AuthenticationV.loginU, name="Login"),
     path('logout/', AuthenticationV.logoutuser, name="logoutuser"),
+    path('adminPage/', AuthenticationV.adminP, name="adminPage"),
 
 ]

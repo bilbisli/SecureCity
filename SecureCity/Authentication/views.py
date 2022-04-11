@@ -47,3 +47,6 @@ def loginU(request):
         else:
             login(request, user)
             return redirect('homepage')
+
+def adminP(request):
+    return render(request, 'Authentication/AdminPage.html')
