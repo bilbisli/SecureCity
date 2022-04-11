@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.utils.timezone import now
+from django.utils import timezone
 from django.urls import reverse
 
 # string lengths
@@ -10,6 +10,10 @@ MEDIUM_STRING = 63
 LARGE_STRING = 255
 XL_STRING = 511
 MAX_STRING = 1023
+
+
+def current_time():
+    return timezone.localtime(timezone.now())
 
 
 # TODO: after api connection is made, add location options
@@ -38,13 +42,13 @@ class Patrol(models.Model):
     patrol_status = models.CharField('patrol status', max_length=MIN_STRING, null=True, choices=PatrolStatus.choices,
                                      default=PatrolStatus.CREATION)
     description = models.TextField('description', max_length=MAX_STRING, null=True)
-    time_created = models.DateTimeField('time created', default=now)
-    time_updated_last = models.DateTimeField('last updated', default=now)
+    time_created = models.DateTimeField('time created', default=current_time)
+    time_updated_last = models.DateTimeField('last updated', default=current_time)
     # TODO: update location options based on api in 'get_locations' function
     location = models.CharField(max_length=MEDIUM_STRING, choices=get_locations())
-    date = models.DateField('date', default=now)
-    start_time = models.TimeField('start time', default=now)
-    end_time = models.TimeField('end time', default=now)
+    date = models.DateField('date', default=current_time)
+    start_time = models.TimeField('start time', default=current_time)
+    end_time = models.TimeField('end time', default=current_time() + timezone.timedelta(hours=3))
     # TODO update automatic priority based on api in 'get_priority' function
     priority = models.IntegerField('priority', default=get_priority())
     # TODO update automatic priority based on api in 'get_patrol_size' function
