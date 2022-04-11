@@ -19,8 +19,8 @@ pipeline {
                 steps {
                         withEnv(["HOME=${env.WORKSPACE}"]){
                                 // sh 'python SecureCity/manage.py jenkins'
-                                sh 'coverage run --source='.' manage.py test HomePage'
-                                sh 'coverage run --source='.' manage.py test Authentication'
+                                sh 'coverage run --source='.' SecureCity/manage.py test HomePage'
+                                sh 'coverage run --source='.' SecureCity/manage.py test Authentication'
                         }
                 }
             }
