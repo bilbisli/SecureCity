@@ -12,7 +12,6 @@ pipeline {
                                 sh 'pip3 install django-crispy-forms'
                                 sh 'pip3 install coverage'
                                 sh 'pip3 install django-jenkins'
-                                sh 'python SecureCity/manage.py jenkins --enable-coverage'
                         } 
                 }
                 
