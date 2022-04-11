@@ -11,9 +11,6 @@ pipeline {
                                 sh 'pip3 install -r SecureCity/requirements.txt'
                                 sh 'pip3 install django-crispy-forms'
                                 sh 'pip3 install coverage'
-                                sh 'pip3 install django-jenkins'
-                                sh 'pip3 uninstall auditlog'
-                                sh 'pip3 install auditlog3'
                         } 
                 }
                 
@@ -21,7 +18,9 @@ pipeline {
             stage('Test') {
                 steps {
                         withEnv(["HOME=${env.WORKSPACE}"]){
-                                sh 'python SecureCity/manage.py jenkins'
+                                // sh 'python SecureCity/manage.py jenkins'
+                                sh 'coverage run --source='.' manage.py test HomePage'
+                                sh 'coverage run --source='.' manage.py test Authentication'
                         }
                 }
             }
