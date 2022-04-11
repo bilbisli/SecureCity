@@ -1,5 +1,4 @@
 asgiref==3.5.0
-backports.zoneinfo==0.2.1
 Django~=3.1.3
 sqlparse==0.4.2
 tzdata==2022.1
@@ -9,6 +8,4 @@ cryptography==36.0.2
 tornado~=6.0.3
 setuptools==62.1.0
 future~=0.18.2
-zlib~=1.2.11
-openssl~=1.1.1n
-pywin32~=302
+django-crispy-forms
