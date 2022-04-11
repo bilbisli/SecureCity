@@ -17,6 +17,7 @@ class Parent(models.Model):
     )
     City = models.CharField(validators=[MinLengthValidator(2)],max_length=50)
     Neighborhood = models.CharField(default='', choices=neighborhood_CHOICES,max_length=50)
+    areaAgent = models.BooleanField(default=False)
     def __str__(self):
         return self.user.username
 
