@@ -16,10 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from HomePage import views as HomePageV
+from Authentication import views as AuthenticationV
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', HomePageV.home, name='Home'),
+    path('', HomePageV.home, name="homepage"),
     path(r'PatrolManagement/', HomePageV.patrol_management, name='PatrolManagement'),
     path(r'PatrolManagement/CreatePatrol', HomePageV.create_patrol, name='CreatePatrol'),
+    path('AddParent/', AuthenticationV.AddParent, name="AddParent"),
+    path('Login/', AuthenticationV.loginU, name="Login"),
+    path('logout/', AuthenticationV.logoutuser, name="logoutuser"),
 ]

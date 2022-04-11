@@ -1,14 +1,16 @@
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
 from HomePage.forms import PatrolForm
 
 
+@login_required(login_url='/Login/')
 def home(request):
     return render(request, 'HomePage/homePage.html')
 
 
-# TODO: limit access to this page to only area managers
+@user_passes_test(lambda u: u.is_authenticated and u.profile.is_patrol_manager, login_url='/', redirect_field_name=None)
 def patrol_management(request):
     patrols = [(number + 1, patrol) for number, patrol in enumerate(request.user.patrols.all())]
     context = {
@@ -17,7 +19,7 @@ def patrol_management(request):
     return render(request, 'Patrols/PatrolManagement.html', context)
 
 
-# TODO: limit access to this page to only area managers
+@user_passes_test(lambda u: u.is_authenticated and u.profile.is_patrol_manager, login_url='/', redirect_field_name=None)
 def create_patrol(request):
     if request.method == 'POST':
         patrol_form = PatrolForm(request.POST or None)

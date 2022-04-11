@@ -12,26 +12,27 @@
 
 <body>
     <div>
-
-        {# TODO: limit the navbar to logged in users only: {% if request.user.is_authenticated %} #}
-
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-          <a class="navbar-brand" href="#">Navbar</a>
+          <a class="navbar-brand" href="{% url 'homepage' %}">Home</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
+                {% if user.is_authenticated %}
               <li class="nav-item active">
-                <a class="nav-link" href={% url 'Home' %}>Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link disabled" href="#" style="color:blue;">Hi {{ user.username }}!</a>
               </li>
-              <li class="nav-item active">
-                <a class="nav-link" href={% url 'PatrolManagement' %}>Manage Patrols <span class="sr-only">(current)</span></a>
-              </li>
+                {% endif %}
               <li class="nav-item">
                 <a class="nav-link" href="#">Link</a>
               </li>
+                {% if user.profile.is_patrol_manager %}
+              <li class="nav-item active">
+                <a class="nav-link" href={% url 'PatrolManagement' %}>Manage Patrols <span class="sr-only">(current)</span></a>
+              </li>
+                {% endif %}
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Dropdown
@@ -47,17 +48,27 @@
                 <a class="nav-link disabled" href="#">Disabled</a>
               </li>
             </ul>
+             {% if user.is_authenticated %}
+                {% if user.is_superuser %}
+                    <a class="nav-link" href="{% url 'admin:index' %}"><h8 style="color:#6c6cf8;">Admin Panel</h8> <span class="sr-only">(current)</span></a>
+                {% endif %}
+                <a class="nav-link active" href="{% url 'logoutuser' %}">LogOut</a>
+
+            {% else %}
+                <a class="nav-link active" href="{% url 'AddParent' %}">Register</a>
+                <a class="nav-link active" href="{% url 'Login' %}">Login</a>
+            {% endif %}
             <form class="form-inline my-2 my-lg-0">
               <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
               <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
           </div>
         </nav>
-        <div class="container">
-            <div id="content" name="content">
-                {% block content %}
-                {% endblock %}
-            </div>
+    </div>
+    <div class="container">
+        <div id="content" name="content">
+            {% block content %}
+            {% endblock %}
         </div>
     </div>
 </body>
