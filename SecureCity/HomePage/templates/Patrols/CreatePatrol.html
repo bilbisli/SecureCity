@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Patrol Management Page</title>
+</head>
+<body>
+    {% load crispy_forms_tags %}
+{#    <link rel="stylesheet" href="/static/style_back_all.css">#}
+    <form method="POST">
+        {% csrf_token %}
+        <div class="col-md-6">
+            {{ form | crispy}}
+        </div>
+
+<!--            <label for="inputEmail4" class="form-label">certificate</label>-->
+<!--            <input type="user" class="form-control" id="{{ user }}">-->
+
+        <button type="submit" class="btn btn-dark btn-sm" name="save">Post</button>
+        <br>
+        <br>
+
+    </form>
+</body>
+</html>
+{% endblock %}
+

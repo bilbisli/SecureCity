@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
-from .forms import ExtendedUserCreationForm,ParentProfileForm
+from .forms import ExtendedUserCreationForm, ParentProfileForm
 
 
 def AddParent(request):
