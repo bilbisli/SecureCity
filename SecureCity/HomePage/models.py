@@ -40,18 +40,18 @@ class Patrol(models.Model):
         ACTIVE = "Active"
         ARCHIVE = "Archive"
 
-    manager = models.ForeignKey(User, on_delete=models.CASCADE, related_name='patrols', null=True)
+    manager = models.ForeignKey(User, on_delete=models.CASCADE, related_name='patrols', null=False)
     title = models.CharField('title', max_length=MEDIUM_STRING)
     patrol_status = models.CharField('patrol status', max_length=MIN_STRING, null=True, choices=PatrolStatus.choices,
                                      default=PatrolStatus.CREATION)
-    description = models.TextField('description', max_length=MAX_STRING, null=True)
-    time_created = models.DateTimeField('time created', default=current_time)
-    time_updated_last = models.DateTimeField('last updated', default=current_time)
+    description = models.TextField('description', max_length=MAX_STRING, null=True, blank=True)
+    time_created = models.DateTimeField('time created', default=current_time, null=False)
+    time_updated_last = models.DateTimeField('last updated', default=current_time, null=False)
     # TODO: update location options based on api in 'get_locations' function
     location = models.CharField(max_length=MEDIUM_STRING, choices=get_locations())
-    date = models.DateField('date', default=current_time)
-    start_time = models.TimeField('start time', default=current_time)
-    end_time = models.TimeField('end time', default=current_time() + timezone.timedelta(hours=3))
+    date = models.DateField('date', default=current_time, null=False)
+    start_time = models.TimeField('start time', default=current_time, null=False)
+    end_time = models.TimeField('end time', default=current_time() + timezone.timedelta(hours=3), null=False)
     # TODO update automatic priority based on api in 'get_priority' function
     priority = models.IntegerField('priority', default=get_priority())
     # TODO update automatic priority based on api in 'get_patrol_size' function

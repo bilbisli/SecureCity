@@ -22,7 +22,7 @@ def patrol_management(request):
 @user_passes_test(lambda u: u.is_authenticated and u.profile.is_patrol_manager, login_url='/', redirect_field_name=None)
 def create_patrol(request):
     if request.method == 'POST':
-        patrol_form = PatrolForm(request.POST or None)
+        patrol_form = PatrolForm(request.POST or None, user=request.user)
         if patrol_form.is_valid():
             patrol = patrol_form.instance
             patrol.manager = request.user
