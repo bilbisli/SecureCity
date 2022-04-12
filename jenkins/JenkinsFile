@@ -12,7 +12,7 @@ pipeline {
                                 sh 'pip3 install django-crispy-forms'
                                 sh 'cd SecureCity'
                                 sh 'pwd'
-                                sw 'ls -l'
+                                sh 'ls -l'
                                 sh 'python manage.py makemigrations'
                                 sh 'python manage.py migrate'
                         } 
