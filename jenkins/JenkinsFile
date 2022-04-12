@@ -10,11 +10,8 @@ pipeline {
                                 sh 'python3 -m pip install --upgrade pip setuptools wheel'
                                 sh 'pip3 install -r SecureCity/requirements.txt'
                                 sh 'pip3 install django-crispy-forms'
-                                sh 'cd SecureCity/SecureCity'
-                                sh 'pwd'
-                                sh 'ls -l'
-                                sh 'python manage.py makemigrations'
-                                sh 'python manage.py migrate'
+                                sh 'python SecureCity/manage.py makemigrations'
+                                sh 'python SecureCity/manage.py migrate'
                         } 
                 }
                 
@@ -22,7 +19,7 @@ pipeline {
             stage('Test') {
                 steps {
                         withEnv(["HOME=${env.WORKSPACE}"]){
-                                sh 'python manage.py test --pattern="tests*.py"'
+                                sh 'python SecureCity/manage.py test --pattern="SecureCity/HomePage/tests*.py"'
                                 //sh 'python manage.py test'
                         }
                 }
