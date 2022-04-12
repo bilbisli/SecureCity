@@ -19,7 +19,8 @@ pipeline {
             stage('Test') {
                 steps {
                         withEnv(["HOME=${env.WORKSPACE}"]){
-                                sh 'python SecureCity/manage.py test --pattern="SecureCity/HomePage/tests*.py"'
+                                sh 'python manage.py test --pythonpath SecureCity/HomePage/tests.py'
+                                //sh 'python SecureCity/manage.py test --pattern="tests*.py"'
                                 //sh 'python manage.py test'
                         }
                 }
