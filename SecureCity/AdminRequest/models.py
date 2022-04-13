@@ -5,8 +5,8 @@ from django.utils import timezone
 MAX_STRING = 150
 
 class AdminRequest(models.Model):
-    userAsked = models.OneToOneField(User, on_delete=models.CASCADE, null=False)
-    date = models.DateField('date', default=timezone.localtime(timezone.now()), null=False)
+    userAsked = models.OneToOneField(User, on_delete=models.CASCADE, null=False, primary_key=True)
+    date = models.DateField('date', default=timezone.now, null=False)
     description = models.TextField('description', max_length=MAX_STRING, null=True, blank=True)
 
     @classmethod
