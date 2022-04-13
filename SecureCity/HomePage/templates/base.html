@@ -55,7 +55,7 @@
                     <a class="nav-link active" href="#"><h8 style="color:#6c6cf8;">My Page</h8> <span class="sr-only">(current)</span></a>
                 {% endif %}
                 <a class="nav-link active" href="{% url 'logoutuser' %}">LogOut</a>
-
+                <a class="nav-link active" href="{% url 'parent_patrol' %}"><h8 style="color:#6c6cf8;">Patrols</h8> <span class="sr-only">(current)</span></a>
             {% else %}
                 <a class="nav-link active" href="{% url 'AddParent' %}">Register</a>
                 <a class="nav-link active" href="{% url 'Login' %}">Login</a>

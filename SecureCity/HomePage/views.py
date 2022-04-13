@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
 from HomePage.forms import PatrolForm
+from .models import *
 
 
 @login_required(login_url='/Login/')
@@ -34,3 +35,12 @@ def create_patrol(request):
         'form': patrol_form,
     }
     return render(request, 'Patrols/CreatePatrol.html', context)
+
+@login_required(login_url='/Login/')
+def parent_patrol(request):
+    patrols = Patrol.objects.all()
+    context = {
+            'patrols': patrols
+    }
+    return render(request, 'Patrols/ParentPatrolPage.html', context)
+

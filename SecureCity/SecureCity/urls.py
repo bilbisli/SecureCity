@@ -27,5 +27,6 @@ urlpatterns = [
     path('Login/', AuthenticationV.loginU, name="Login"),
     path('logout/', AuthenticationV.logoutuser, name="logoutuser"),
     path('adminPage/', AuthenticationV.adminP, name="adminPage"),
+    path('Patrol/', HomePageV.parent_patrol, name='parent_patrol'),
 
 ]
