@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from HomePage import views as HomePageV
 from Authentication import views as AuthenticationV
+from AdminRequest import views as AdminRequestV
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,5 +30,6 @@ urlpatterns = [
     path('adminPage/', AuthenticationV.adminP, name="adminPage"),
     path('Patrol/', HomePageV.parent_patrol, name='parent_patrol'),
     path('mypage/', AuthenticationV.residentPage, name='resident_page'),
+    path('becomePatrolManager/', AdminRequestV.becomePatrolManager, name='becomePatrolManager'),
 
 ]

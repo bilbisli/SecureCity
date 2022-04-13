@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<br><br><br>
+<div class="card text-center">
+  <div class="card-header">
+    <h4> Information about patrol manager </h4>
+  </div>
+  <div class="card-body">
+
+    <p class="card-text">This is very important job and it's comes with big responsibility
+    This is very important job and it's comes with big responsibility
+    This is very important job and it's comes with big responsibility</p>
+
+      <h5 class="card-title">If you want to be a manager you can add a few words to the application:</h5>
+
+      <div class="form-horizontal">
+    <div class="form-group">
+        <div class="center">
+            <textarea class="form-control" maxlength="150" rows="3" placeholder="150 characters top" required></textarea>
+        </div>
+        </div>
+    </div>
+
+    <a href="#" class="btn btn-primary">send application</a>
+  </div>
+  <div class="card-footer text-muted">
+      <p class="text-danger">Please note you will not be able to edit the request after sending</p>
+  </div>
+</div>
+
+</body>
+</html>
+
+{% endblock %}
