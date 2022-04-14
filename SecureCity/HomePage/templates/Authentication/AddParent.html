@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-<title>Secure City</title>
 
  <style>
     .user_error input {
@@ -11,57 +10,26 @@
 <div align="center">
 <h1>Add Parent:</h1>
     <br><br>
-
             <form method="POST"  name="clicked" action="{% url 'AddParent' %}" >
                 {% csrf_token %}
-                <p>{{ form.username.label }}:
-                <span class="{% if form.username.errors %}user_error{% endif %}">
-                    {{ form.username }}
-                </span>
-                </p>
-                {% for error in form.username.errors %}
-                    <li style="color: red">{{ error }}</li>
+                {% for field in form %}
+                     <p>{{ field.label }}:
+                    <span class="{% if field.errors %}user_error{% endif %}">
+                        {{ field }}
+                    </span></p>
+                    {% for error in field.errors %}
+                        <li style="color: red">{{ error }}</li>
+                    {% endfor %}
                 {% endfor %}
-                <p>{{ form.password1.label }}: {{ form.password1 }}</p>
-                {% for error in form.password1.errors %}
-                    <li style="color: red">{{ error }}</li>
+                {% for field in profile_form %}
+                     <p>{{ field.label }}:
+                    <span class="{% if field.errors %}user_error{% endif %}">
+                        {{ field }}
+                    </span></p>
+                    {% for error in field.errors %}
+                        <li style="color: red">{{ error }}</li>
+                    {% endfor %}
                 {% endfor %}
-                <p>{{ form.password2.label }}: {{ form.password2 }}</p>
-                {% for error in form.password2.errors %}
-                    <li style="color: red">{{ error }}</li>
-                {% endfor %}
-
-                <p>{{ profile_form.First_Name.label }}: {{ profile_form.First_Name }}</p>
-                {% for error in profile_form.First_Name.errors %}
-                    <li style="color: red">{{ error }}</li>
-                {% endfor %}
-                <p>{{ profile_form.Last_Name.label }}: {{ profile_form.Last_Name }}</p>
-                {% for error in profile_form.Last_Name.errors %}
-                    <li style="color: red">{{ error }}</li>
-                {% endfor %}
-                 <p>{{ profile_form.Birthday.label }}: {{ profile_form.Birthday }}</p>
-                {% for error in profile_form.Birthday.errors %}
-                    <li style="color: red">{{ error }}</li>
-                {% endfor %}
-                 <p>{{ profile_form.ID_Number.label }}: {{ profile_form.ID_Number }}</p>
-                {% for error in profile_form.ID_Number.errors %}
-                    <li style="color: red">{{ error }}</li>
-                {% endfor %}
-                <p>{{ profile_form.Phone_Number.label }}: {{ profile_form.Phone_Number }}</p>
-                {% for error in profile_form.Phone_Number.errors %}
-                    <li style="color: red">{{ error }}</li>
-                {% endfor %}
-                <p>{{ profile_form.City.label }}: {{ profile_form.City }}</p>
-                {% for error in profile_form.City.errors %}
-                    <li style="color: red">{{ error }}</li>
-                {% endfor %}
-                <p>{{ profile_form.Neighborhood.label }}: {{ profile_form.Neighborhood }}</p>
-                {% for error in profile_form.Neighborhood.errors %}
-                    <li style="color: red">{{ error }}</li>
-                {% endfor %}
-
-
-
                 <input type="submit" style="color: white; background-color: blue" name="clicked" value ="Create">
             </form>
 </div>
