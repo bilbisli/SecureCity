@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.dateparse import parse_date, parse_time
 
-from .models import Patrol, User, current_time,Contact
+from .models import Patrol, User, current_time
 
 
 class PatrolForm(forms.ModelForm):
@@ -53,15 +53,3 @@ class PatrolForm(forms.ModelForm):
                         or start_time <= patrol.start_time <= end_time:
                     raise forms.ValidationError(
                         "You already have a patrol on this date at this time")
-
-class ContactForm(forms.ModelForm):
-    class Meta:
-        model = Contact
-        fields = [
-            'name',
-            'telephone',
-        ]
-
-    def __init__(self, *args, **kwargs):
-        self.user = kwargs.pop('user', None)  #TODO: do i need it ???
-        super(ContactForm, self).__init__(*args, **kwargs)
