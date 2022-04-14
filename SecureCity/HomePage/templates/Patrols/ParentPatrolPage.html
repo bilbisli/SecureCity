@@ -27,19 +27,18 @@
 							<th>End Time</th>
 							<th>Priority</th>
 							<th>Participants Needed</th>
-
 						</tr>
                         {% for patrol in patrols %}
-						<tr>
-							<td>{{patrol.title}}</td>
-							<td>{{patrol.manager}}</td>
-							<td>{{patrol.status}}</td>
-							<td>{{patrol.location}}</td>
-							<td>{{patrol.start_time}}</td>
-							<td>{{patrol.end_time}}</td>
-							<td>{{patrol.priority}}</td>
-							<td>{{patrol.participants_needed}}</td>
-						</tr>
+							<tr>
+								<td>{{patrol.title}}</td>
+								<td>{{patrol.manager}}</td>
+								<td>{{patrol.status}}</td>
+								<td>{{patrol.location}}</td>
+								<td>{{patrol.start_time}}</td>
+								<td>{{patrol.end_time}}</td>
+								<td>{{patrol.priority}}</td>
+								<td>{{patrol.participants_needed}}</td>
+							</tr>
 						{% endfor %}
 
 					</table>

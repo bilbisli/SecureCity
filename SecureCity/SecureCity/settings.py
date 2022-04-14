@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'HomePage',
     'Authentication',
     'AdminRequest',
+    'Contact',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Management Page</title>
+</head>
+<body>
+{#    <link rel="stylesheet" href="/static/style_back_all.css">#}
+<br>
+		<div class="row">
+			<div class="col-md">
+                    {% if user.is_superuser %}
+						<a class="btn btn-primary" href="http://127.0.0.1:8000/admin/Contact/contact/" role="button">Manage Contact</a>
+                    {% endif %}
+				<div class="card card-body" id="general">
+					<h5>List of contacts:</h5>
+				</div>
+				<div class="card card-body" id="general">
+					<table class="table">
+						<tr>
+							<th>Name</th>
+							<th>Telephone</th>
+						</tr>
+                        {% for c in contacts %}
+							<tr>
+								<td>{{c.name}}</td>
+								<td>{{c.telephone}}</td>
+							</tr>
+						{% endfor %}
+
+					</table>
+				</div>
+			</div>
+
+		</div>
+
+	<style>
+	        #logo{
+		}
+		#general{
+		background-color: #D3D3D3;
+		}
+		body{
+			background-color: #7CD1E0;
+		}
+	</style>
+</body>
+</html>
+{% endblock %}

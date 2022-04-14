@@ -1,7 +1,6 @@
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-
 from HomePage.forms import PatrolForm
 from .models import *
 
@@ -43,4 +42,6 @@ def parent_patrol(request):
             'patrols': patrols
     }
     return render(request, 'Patrols/ParentPatrolPage.html', context)
+
+
 

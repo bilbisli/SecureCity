@@ -18,6 +18,7 @@ from django.urls import path
 from HomePage import views as HomePageV
 from Authentication import views as AuthenticationV
 from AdminRequest import views as AdminRequestV
+from Contact import views as ContactV
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,6 +30,7 @@ urlpatterns = [
     path('logout/', AuthenticationV.logoutuser, name="logoutuser"),
     path('adminPage/', AuthenticationV.adminP, name="adminPage"),
     path('Patrol/', HomePageV.parent_patrol, name='parent_patrol'),
+    path(r'ContactManagement/', ContactV.contact_management, name='ContactManagement'),
     path('mypage/', AuthenticationV.residentPage, name='resident_page'),
     path('becomePatrolManager/', AdminRequestV.becomePatrolManager, name='becomePatrolManager'),
 
