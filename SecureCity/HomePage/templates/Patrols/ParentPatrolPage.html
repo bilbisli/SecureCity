@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Parent Patrol Page</title>
+</head>
+<body>
+{#    <link rel="stylesheet" href="/static/style_back_all.css">#}
+<br>
+		<div class="row">
+			<div class="col-md">
+				<div class="card card-body" id="general">
+					<h5>List of patrols:</h5>
+				</div>
+				<div class="card card-body" id="general">
+					<table class="table">
+						<tr>
+							<th>Title</th>
+							<th>Manager</th>
+							<th>Status</th>
+							<th>Location</th>
+                            <th>Start Time</th>
+							<th>End Time</th>
+							<th>Priority</th>
+							<th>Participants Needed</th>
+
+						</tr>
+                        {% for patrol in patrols %}
+						<tr>
+							<td>{{patrol.title}}</td>
+							<td>{{patrol.manager}}</td>
+							<td>{{patrol.status}}</td>
+							<td>{{patrol.location}}</td>
+							<td>{{patrol.start_time}}</td>
+							<td>{{patrol.end_time}}</td>
+							<td>{{patrol.priority}}</td>
+							<td>{{patrol.participants_needed}}</td>
+						</tr>
+						{% endfor %}
+
+					</table>
+				</div>
+			</div>
+
+		</div>
+
+	<style>
+	        #logo{
+		}
+		#general{
+		background-color: #D3D3D3;
+		}
+		body{
+			background-color: #7CD1E0;
+		}
+	</style>
+</body>
+</html>
+{% endblock %}

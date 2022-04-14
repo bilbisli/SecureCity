@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<br><br><br>
+<div class="card text-center">
+  <div class="card-header">
+    <h4> Information about patrol manager </h4>
+  </div>
+  <div class="card-body">
+
+    <p class="card-text">This is very important job and it's comes with big responsibility.
+    This is very important job and it's comes with big responsibility.
+    This is very important job and it's comes with big responsibility</p>
+
+      <h5 class="card-title">If you want to be a manager you can add a few words to the application:</h5>
+      <form method="POST">
+      <div class="form-horizontal">
+    <div class="form-group">
+        <div class="center">
+            <textarea class="form-control" name="text" maxlength="150" rows="3" placeholder="150 characters top" required></textarea>
+        </div>
+        </div>
+    </div>
+
+
+        {% csrf_token %}
+        <button class="btn btn-primary" name="posses" onclick="myFunction()" type="submit">send application</button>
+      </form>
+      <script>
+    function myFunction() {
+//         if (confirm('Are you sure you want to donate to Andrew Hyder?')) {
+//   // true (paypal.me/andrewdhyder)
+// } else {
+//   // false
+// }
+      alert("The request has been sent");
+    }
+    </script>
+
+  </div>
+  <div class="card-footer text-muted">
+      <p class="text-danger">Please note you will not be able to edit the request after sending</p>
+  </div>
+</div>
+
+</body>
+</html>
+
+{% endblock %}
