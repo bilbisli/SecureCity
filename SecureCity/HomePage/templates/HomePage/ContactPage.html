@@ -13,6 +13,9 @@
 <br>
 		<div class="row">
 			<div class="col-md">
+                    {% if user.is_superuser %}
+						<a class="btn btn-primary" href="http://127.0.0.1:8000/admin/Contact/contact/" role="button">Manage Contact</a>
+                    {% endif %}
 				<div class="card card-body" id="general">
 					<h5>List of contacts:</h5>
 				</div>
