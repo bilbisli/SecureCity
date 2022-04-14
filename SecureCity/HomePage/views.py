@@ -2,8 +2,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
-from HomePage.forms import ContactForm
-from HomePage.forms import PatrolForm
+from HomePage.forms import PatrolForm ,ContactForm
 from .models import *
 
 
@@ -52,3 +51,4 @@ def contact_management(request):
             'contacts': contacts
     }
     return render(request, 'HomePage/ContactPage.html', context)
+
