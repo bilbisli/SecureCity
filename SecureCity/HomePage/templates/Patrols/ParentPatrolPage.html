@@ -16,14 +16,6 @@
 				<div class="card card-body" id="general">
 					<h5>List of patrols:</h5>
 				</div>
-				<script>
-
-				var today = new Date();
-				var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-				var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-				var dateTime = date+' '+time;
-
-				</script>
 				<div class="card card-body" id="general">
 					<table class="table">
 						<tr>
@@ -35,7 +27,6 @@
 							<th>End Time</th>
 							<th>Priority</th>
 							<th>Participants Needed</th>
-
 						</tr>
                         {% for patrol in patrols %}
 							<tr>

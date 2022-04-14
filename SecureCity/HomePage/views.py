@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
+from HomePage.forms import ContactForm
 from HomePage.forms import PatrolForm
 from .models import *
 
@@ -44,3 +45,10 @@ def parent_patrol(request):
     }
     return render(request, 'Patrols/ParentPatrolPage.html', context)
 
+@user_passes_test(lambda u: u.is_authenticated and u.profile.is_patrol_manager, login_url='/', redirect_field_name=None)
+def contact_management(request):
+    contacts = Contact.objects.all()
+    context = {
+            'contacts': contacts
+    }
+    return render(request, 'HomePage/ContactPage.html', context)
