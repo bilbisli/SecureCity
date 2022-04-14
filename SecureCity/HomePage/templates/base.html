@@ -46,9 +46,7 @@
                     {% if user.profile.is_patrol_manager %}
                   <a class="dropdown-item" href="{% url 'PatrolManagement' %}">Manage Patrol</a>
                     {% endif %}
-                    {% if user.is_superuser %}
-                  <a class="dropdown-item" href="{% url 'ContactManagement' %}">Manage Contact</a>
-                    {% endif %}
+                  <a class="dropdown-item" href="{% url 'ContactManagement' %}">Contacts</a>
                     {% if not user.profile.is_patrol_manager %}
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="{% url 'becomePatrolManager' %}">Ask to be patrol manager</a>
