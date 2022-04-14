@@ -30,7 +30,7 @@ urlpatterns = [
     path('logout/', AuthenticationV.logoutuser, name="logoutuser"),
     path('adminPage/', AuthenticationV.adminP, name="adminPage"),
     path('Patrol/', HomePageV.parent_patrol, name='parent_patrol'),
-    # path(r'ContactManagement/', ContactV.contact_management, name='ContactManagement'),
+    path(r'ContactManagement/', ContactV.contact_management, name='ContactManagement'),
     path('mypage/', AuthenticationV.residentPage, name='resident_page'),
     path('becomePatrolManager/', AdminRequestV.becomePatrolManager, name='becomePatrolManager'),
 

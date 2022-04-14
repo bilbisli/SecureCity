@@ -21,17 +21,11 @@
 						<tr>
 							<th>Name</th>
 							<th>Telephone</th>
-							<th>Update</th>
-							<th>Delete</th>
 						</tr>
                         {% for c in contacts %}
 							<tr>
 								<td>{{c.name}}</td>
 								<td>{{c.telephone}}</td>
-<!--							<td><a class="btn btn-sm btn-info" href="{%url 'update_contact' c.name%}">Update</a></td>-->
-<!--							<td><a class="btn btn-sm btn-danger" href="{%url 'delete_contact' c.name%}">Delete</a></td>-->
-							<td><a class="btn btn-sm btn-info" href="#">Update</a></td>
-							<td><a class="btn btn-sm btn-danger" href="#">Delete</a></td>
 							</tr>
 						{% endfor %}
 
