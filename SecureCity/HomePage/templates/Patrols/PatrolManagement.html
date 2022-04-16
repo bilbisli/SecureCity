@@ -17,6 +17,7 @@
         <a href="{% url 'CreatePatrol' %}" class="btn btn-primary" style="margin-left:2em">Add Patrol</a>
                 <br>        <br>
     </div>
+<form method="POST">
     <div class="patrol_list: ">
          <ul class="list-group" style="opacity:0.85;">
              <h3>My Patrols</h3><br>
@@ -29,7 +30,8 @@
         </ul>
         <hr>
     </div>
-
+<button type="submit" class="btn btn-primary">Download CSV File</button>
+</form>
 </body>
 </html>
 {% endblock %}
