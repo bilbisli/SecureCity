@@ -39,7 +39,6 @@ def create_patrol(request):
 def parent_patrol(request):
     activePatrols = Patrol.objects.filter(patrol_status__in=["Creation","Active"])
     donePatrols = Patrol.objects.filter(patrol_status="Archive")
-    print(activePatrols)
     context = {
             'activePatrols': activePatrols,
             'donePatrols': donePatrols

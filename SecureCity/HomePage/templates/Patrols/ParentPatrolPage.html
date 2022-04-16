@@ -7,6 +7,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Parent Patrol Page</title>
+    <script>
+function myFunction(id) {
+
+    if (document.getElementById("b_"+id).textContent == "Close"){
+        document.getElementById("b_"+id).textContent = "Show Summary";
+        document.getElementById(id).style.display = "none";
+    }
+    else{
+       document.getElementById("b_"+id).textContent = "Close";
+       document.getElementById(id).style.display = "";
+    }
+
+   }
+
+    </script>
 </head>
 <body>
 {#   <link rel="stylesheet" href="/static/style_back_all.css">#}
@@ -17,6 +32,8 @@
 					<h5>List of patrols:</h5>
 				</div>
 				<div class="card card-body" id="general">
+
+
 					<table class="table">
 						<tr>
 							<th>Title</th>
@@ -27,8 +44,7 @@
 							<th>End Time</th>
 							<th>Priority</th>
 							<th>Participants Needed</th>
-                            {% if user.issuperuser %}
-                            {% endif %}
+
 						</tr>
                         <tr>
 							<th>Active Patrols</th>
@@ -58,6 +74,15 @@
 								<td>{{patrol.end_time}}</td>
 								<td>{{patrol.priority}}</td>
 								<td>{{patrol.participants_needed}}</td>
+                                {% if user.is_superuser %}
+                                    <td><button id="b_{{ patrol.id }}" onclick="myFunction({{ patrol.id }})">Show Summary</button></td>
+                                    <tr id="{{ patrol.id }}" style="display: none">
+                                        <td>
+                                            <h5>Summary:</h5>
+                                            {{ patrol.description }}
+                                        </td>
+                                    </tr>
+                                {% endif %}
 							</tr>
 						{% endfor %}
 
