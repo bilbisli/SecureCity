@@ -10,20 +10,26 @@
 </head>
 <body>
 {#    <link rel="stylesheet" href="/static/style_back_all.css">#}
+    <div>
+        {# add patrol button #}
+        <br>
+        <br>
+        <a href="{% url 'CreatePatrol' %}" class="btn btn-primary" style="margin-left:2em">Add Patrol</a>
+                <br>        <br>
+    </div>
     <div class="patrol_list: ">
          <ul class="list-group" style="opacity:0.85;">
-             <h3>Your Patrols</h3>
+             <h3>My Patrols</h3><br>
             {% for number, patrol in patrols %}
                 {# TODO: when specific patrol page is created - change the patrol listing to include a link of it #}
-                <li class="list-group-item" style="margin-left:2em">{{ number }}.   {{patrol}}</li>
+                <li class="list-group-item" style="margin-left:2em">{{ number }}.&nbsp;&nbsp;&nbsp;{{patrol}}
+                    &nbsp;&nbsp;&nbsp; <b>To CSV?</b>&nbsp;&nbsp;<input type="checkbox" name="ToCSV">
+                </li>
             {% endfor %}
         </ul>
         <hr>
     </div>
-    <div>
-        {# add patrol button #}
-        <a href="{% url 'CreatePatrol' %}" class="btn btn-primary" style="margin-left:2em">Add Patrol</a>
-    </div>
+
 </body>
 </html>
 {% endblock %}
