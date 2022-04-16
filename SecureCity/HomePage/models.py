@@ -59,6 +59,7 @@ class Patrol(models.Model):
     reactions = models.ManyToManyField(User, related_name='reactions', blank=True)
     approved_reactions = models.ManyToManyField(User, related_name='approved_reactions', blank=True)
     users_participated = models.ManyToManyField(User, related_name='participants', blank=True)
+    done = models.BooleanField(default=False)
 
     def __str__(self):
         return f'title: {self.title} | location: {self.location} | priority: {self.priority} | ' \

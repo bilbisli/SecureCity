@@ -27,8 +27,28 @@
 							<th>End Time</th>
 							<th>Priority</th>
 							<th>Participants Needed</th>
+                            {% if user.issuperuser %}
+                            {% endif %}
 						</tr>
-                        {% for patrol in patrols %}
+                        <tr>
+							<th>Active Patrols</th>
+						</tr>
+                        {% for patrol in activePatrols %}
+							<tr>
+								<td>{{patrol.title}}</td>
+								<td>{{patrol.manager}}</td>
+								<td>{{patrol.status}}</td>
+								<td>{{patrol.location}}</td>
+								<td>{{patrol.start_time}}</td>
+								<td>{{patrol.end_time}}</td>
+								<td>{{patrol.priority}}</td>
+								<td>{{patrol.participants_needed}}</td>
+							</tr>
+						{% endfor %}
+                        <tr>
+							<th>Archive Patrols</th>
+						</tr>
+                        {% for patrol in donePatrols %}
 							<tr>
 								<td>{{patrol.title}}</td>
 								<td>{{patrol.manager}}</td>
