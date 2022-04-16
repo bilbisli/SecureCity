@@ -17,9 +17,10 @@
 						<a class="btn btn-primary" href="http://127.0.0.1:8000/admin/Contact/contact/" role="button">Manage Contact</a>
                     {% endif %}
 				<div class="card card-body" id="general">
-					<h5>List of contacts:</h5>
+					<h5>Contacts List:</h5>
 				</div>
 				<div class="card card-body" id="general">
+                    <h3 style="color: red">Emergency Numbers</h3>
 					<table class="table">
 						<tr>
 							<th>Name</th>
@@ -31,7 +32,19 @@
 								<td>{{c.telephone}}</td>
 							</tr>
 						{% endfor %}
-
+					</table>
+                <h3 style="color: red">Patrol Managers Numbers:</h3>
+                	<table class="table">
+						<tr>
+							<th>Name</th>
+							<th>Telephone</th>
+						</tr>
+                        {% for p in patrols %}
+							<tr>
+								<td>{{p.First_Name}} {{p.Last_Name}}</td>
+								<td>{{p.Phone_Number}}</td>
+							</tr>
+						{% endfor %}
 					</table>
 				</div>
 			</div>
