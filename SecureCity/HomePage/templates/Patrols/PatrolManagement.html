@@ -18,19 +18,22 @@
                 <br>        <br>
     </div>
 <form method="POST">
+{% csrf_token %}
     <div class="patrol_list: ">
          <ul class="list-group" style="opacity:0.85;">
              <h3>My Patrols</h3><br>
             {% for number, patrol in patrols %}
                 {# TODO: when specific patrol page is created - change the patrol listing to include a link of it #}
                 <li class="list-group-item" style="margin-left:2em">{{ number }}.&nbsp;&nbsp;&nbsp;{{patrol}}
-                    &nbsp;&nbsp;&nbsp; <b>To CSV?</b>&nbsp;&nbsp;<input type="checkbox" name="ToCSV">
+                    &nbsp;&nbsp;&nbsp; <b>To CSV?</b>&nbsp;&nbsp;<input type="checkbox" name="ToCSV" value="{{ patrol.id }}">
                 </li>
             {% endfor %}
         </ul>
         <hr>
     </div>
+<h6 style="color: red">{{ error }}</h6>
 <button type="submit" class="btn btn-primary">Download CSV File</button>
+
 </form>
 </body>
 </html>
