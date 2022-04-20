@@ -31,7 +31,7 @@ def patrol_management(request):
                 priorities.append(p.priority)
                 managers.append(str(p.manager))
                 dates.append(str(p.date))
-                between.append(str(p.start_time)+'-'+str(p.end_time))
+                between.append(str(p.start_time) + '-' + str(p.end_time))
             csvFile = pd.DataFrame()
             csvFile['Title'] = titles
             csvFile['Location'] = locations
@@ -46,8 +46,8 @@ def patrol_management(request):
 
     patrols = [(number + 1, patrol) for number, patrol in enumerate(request.user.patrols.all())]
     context = {
-            'patrols': patrols,
-            'error': error
+        'patrols': patrols,
+        'error': error
     }
     return render(request, 'Patrols/PatrolManagement.html', context)
 
@@ -68,15 +68,17 @@ def create_patrol(request):
     }
     return render(request, 'Patrols/CreatePatrol.html', context)
 
+
 @login_required(login_url='/Login/')
 def parent_patrol(request):
-    activePatrols = Patrol.objects.filter(patrol_status__in=["Creation","Active"])
-    donePatrols = Patrol.objects.filter(patrol_status="Archive")
+    if request.GET.get('sort') == 'Priority':
+        activePatrols = Patrol.objects.filter(patrol_status__in=["Creation", "Active"]).order_by('-priority')
+        donePatrols = Patrol.objects.filter(patrol_status="Archive").order_by('-priority')
+    else:
+        activePatrols = Patrol.objects.filter(patrol_status__in=["Creation", "Active"])
+        donePatrols = Patrol.objects.filter(patrol_status="Archive")
     context = {
-            'activePatrols': activePatrols,
-            'donePatrols': donePatrols
+        'activePatrols': activePatrols,
+        'donePatrols': donePatrols
     }
     return render(request, 'Patrols/ParentPatrolPage.html', context)
-
-
-
