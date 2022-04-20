@@ -75,8 +75,8 @@ def parent_patrol(request):
         activePatrols = Patrol.objects.filter(patrol_status__in=["Creation", "Active"]).order_by('-priority')
         donePatrols = Patrol.objects.filter(patrol_status="Archive").order_by('-priority')
     else:
-        activePatrols = Patrol.objects.filter(patrol_status__in=["Creation", "Active"])
-        donePatrols = Patrol.objects.filter(patrol_status="Archive")
+        activePatrols = Patrol.objects.filter(patrol_status__in=["Creation", "Active"]).order_by('-title')
+        donePatrols = Patrol.objects.filter(patrol_status="Archive").order_by('-title')
     context = {
         'activePatrols': activePatrols,
         'donePatrols': donePatrols
