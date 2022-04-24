@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from HomePage.forms import PatrolForm
 from .models import *
+import pandas as pd
 
 
 @login_required(login_url='/Login/')
@@ -12,9 +13,41 @@ def home(request):
 
 @user_passes_test(lambda u: u.is_authenticated and u.profile.is_patrol_manager, login_url='/', redirect_field_name=None)
 def patrol_management(request):
+    error = ''
+    if request.POST:
+        patrols = Patrol.objects.filter(id__in=request.POST.getlist("ToCSV"))
+        if not len(patrols):
+            error = 'Please choose at least one Patrol!'
+        else:
+            titles = []
+            locations = []
+            priorities = []
+            managers = []
+            dates = []
+            between = []
+            for p in patrols:
+                titles.append(p.title)
+                locations.append(p.location)
+                priorities.append(p.priority)
+                managers.append(str(p.manager))
+                dates.append(str(p.date))
+                between.append(str(p.start_time)+'-'+str(p.end_time))
+            csvFile = pd.DataFrame()
+            csvFile['Title'] = titles
+            csvFile['Location'] = locations
+            csvFile['Priority'] = priorities
+            csvFile['Manager'] = managers
+            csvFile['Date'] = dates
+            csvFile['Time'] = between
+            response = HttpResponse(content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename=Patrols_Summary.csv'
+            csvFile.to_csv(path_or_buf=response)
+            return response
+
     patrols = [(number + 1, patrol) for number, patrol in enumerate(request.user.patrols.all())]
     context = {
-            'patrols': patrols
+            'patrols': patrols,
+            'error': error
     }
     return render(request, 'Patrols/PatrolManagement.html', context)
 
@@ -37,9 +70,11 @@ def create_patrol(request):
 
 @login_required(login_url='/Login/')
 def parent_patrol(request):
-    patrols = Patrol.objects.all()
+    activePatrols = Patrol.objects.filter(patrol_status__in=["Creation","Active"])
+    donePatrols = Patrol.objects.filter(patrol_status="Archive")
     context = {
-            'patrols': patrols
+            'activePatrols': activePatrols,
+            'donePatrols': donePatrols
     }
     return render(request, 'Patrols/ParentPatrolPage.html', context)
 

@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Parent
-from django.forms.widgets import SelectDateWidget
+from django.forms.widgets import SelectDateWidget, DateInput
 from django.contrib.admin.widgets import AdminDateWidget
 from datetime import date
 
@@ -26,7 +26,7 @@ class ParentProfileForm(forms.ModelForm):
         model = Parent
         fields = ('First_Name', 'Last_Name', 'Birthday', 'ID_Number', 'Phone_Number', 'City', 'Neighborhood')
         widgets = {
-            'birthday': SelectDateWidget(years=range(1900, date.today().year + 1)),
+            'Birthday': forms.DateInput(attrs={'type': 'date'}),
         }
 
     def clean_ID_Number(self):
