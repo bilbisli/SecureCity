@@ -13,6 +13,7 @@ def AddParent(request):
         profile_form = ParentProfileForm(request.POST)
         if form.is_valid() and profile_form.is_valid():
             user = form.save()
+            user.profile.delete()
             profile = profile_form.save(commit=False)
             profile.user = user
             profile.save()
@@ -30,11 +31,9 @@ def AddParent(request):
     context= {'form': form, 'profile_form':profile_form,'error': ""}
     return render(request, 'Authentication/AddParent.html', context)
 
-
 def logoutuser(request):
     logout(request)
     return redirect('homepage')
-
 
 
 def loginU(request):
