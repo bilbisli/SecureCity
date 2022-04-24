@@ -20,10 +20,12 @@ class PatrolForm(forms.ModelForm):
         ]
         widgets = {
             'date': forms.DateInput(attrs={'type': 'date'}),
+            'start_time': forms.TimeInput(attrs={'type': 'time'}),
+            'end_time': forms.TimeInput(attrs={'type': 'time'}),
         }
-        date = forms.DateField(widget=forms.SelectDateWidget(
-
-        ), )
+        # date = forms.DateField(widget=forms.SelectDateWidget(
+        #
+        # ), )
         exclude = ['time_created', 'time_updated_last', ]
 
     def __init__(self, *args, **kwargs):
