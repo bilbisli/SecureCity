@@ -10,8 +10,8 @@ pipeline {
                                 sh 'python3 -m pip install --upgrade pip setuptools wheel'
                                 sh 'pip3 install -r SecureCity/requirements.txt'
                                 sh 'pip3 install django-crispy-forms'
-                                sh 'python SecureCity/manage.py flush --no-input'
-                                sh 'rm -r SecureCity/migrations/0*'
+                                sh 'python SecureCity/*/manage.py flush --no-input'
+                                sh 'rm -r SecureCity/*/migrations/0*'
                                 sh 'python SecureCity/manage.py makemigrations'
                                 sh 'python SecureCity/manage.py migrate'
                         } 
