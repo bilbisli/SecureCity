@@ -18,12 +18,19 @@ class PatrolForm(forms.ModelForm):
             'description',
             'patrol_status',
         ]
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date'}),
+            'start_time': forms.TimeInput(attrs={'type': 'time'}),
+            'end_time': forms.TimeInput(attrs={'type': 'time'}),
+        }
+        # date = forms.DateField(widget=forms.SelectDateWidget(
+        #
+        # ), )
         exclude = ['time_created', 'time_updated_last', ]
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
         super(PatrolForm, self).__init__(*args, **kwargs)
-
 
     def clean_date(self):
         # Check if the date is in the past
