@@ -24,7 +24,10 @@
              <h3>My Patrols</h3><br>
             {% for number, patrol in patrols %}
                 {# TODO: when specific patrol page is created - change the patrol listing to include a link of it #}
-                <li class="list-group-item" style="margin-left:2em">{{ number }}.&nbsp;&nbsp;&nbsp;{{patrol}}
+                <li class="list-group-item" style="margin-left:2em">{{ number }}.&nbsp;&nbsp;&nbsp;
+                    <a href="{% url 'patrol_detail' patrol.pk %}" style="color:#0A0000">
+                        {{ patrol }}
+                    </a>
                     &nbsp;&nbsp;&nbsp; <b>To CSV?</b>&nbsp;&nbsp;<input type="checkbox" name="ToCSV" value="{{ patrol.id }}" checked>
                 </li>
             {% endfor %}

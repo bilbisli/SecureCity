@@ -15,23 +15,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import url, include
 from HomePage import views as HomePageV
 from Authentication import views as AuthenticationV
 from AdminRequest import views as AdminRequestV
 from Contact import views as ContactV
+from Patrols import views as PatrolsV
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HomePageV.home, name="homepage"),
-    path(r'PatrolManagement/', HomePageV.patrol_management, name='PatrolManagement'),
-    path(r'PatrolManagement/CreatePatrol', HomePageV.create_patrol, name='CreatePatrol'),
     path('AddParent/', AuthenticationV.AddParent, name="AddParent"),
     path('Login/', AuthenticationV.loginU, name="Login"),
     path('logout/', AuthenticationV.logoutuser, name="logoutuser"),
     path('adminPage/', AuthenticationV.adminP, name="adminPage"),
-    path('Patrol/', HomePageV.parent_patrol, name='parent_patrol'),
     path(r'ContactManagement/', ContactV.contact_management, name='ContactManagement'),
     path('mypage/', AuthenticationV.residentPage, name='resident_page'),
     path('becomePatrolManager/', AdminRequestV.becomePatrolManager, name='becomePatrolManager'),
+    url('patrols/', include('Patrols.urls'), name='patrols'),
 
 ]

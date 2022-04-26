@@ -51,14 +51,18 @@ function myFunction(id) {
 						</tr>
                         {% for patrol in activePatrols %}
 							<tr>
-								<td>{{patrol.title}}</td>
-								<td>{{patrol.manager}}</td>
-								<td>{{patrol.status}}</td>
-								<td>{{patrol.location}}</td>
-								<td>{{patrol.start_time}}</td>
-								<td>{{patrol.end_time}}</td>
-								<td>{{patrol.priority}}</td>
-								<td>{{patrol.participants_needed}}</td>
+                                <td>
+                                <a href="{% url 'patrol_detail' patrol.pk %}" style="color:#0A0000; font-weight:500">
+                                {{ patrol.title }}
+                                </a>
+                                </td>
+                                <td>{{patrol.manager}}</td>
+                                <td>{{patrol.status}}</td>
+                                <td>{{patrol.location}}</td>
+                                <td>{{patrol.start_time}}</td>
+                                <td>{{patrol.end_time}}</td>
+                                <td>{{patrol.priority}}</td>
+                                <td>{{patrol.participants_needed}}</td>
 							</tr>
 						{% endfor %}
                         <tr>
