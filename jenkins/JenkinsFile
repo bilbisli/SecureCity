@@ -11,7 +11,7 @@ pipeline {
                                 sh 'pip3 install -r SecureCity/requirements.txt'
                                 sh 'pip3 install django-crispy-forms'
                                 sh 'python SecureCity/manage.py flush --no-input'
-                                sh 'find . -path "*/migrations/*.pyc"  -delete'
+                                sh 'rm */migrations/0*.py'
                                 sh 'python SecureCity/manage.py makemigrations'
                                 sh 'python SecureCity/manage.py migrate'
                         } 
