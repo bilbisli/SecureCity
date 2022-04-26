@@ -19,6 +19,7 @@ from HomePage import views as HomePageV
 from Authentication import views as AuthenticationV
 from AdminRequest import views as AdminRequestV
 from Contact import views as ContactV
+from adminPage import views as AdminV
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,7 +29,7 @@ urlpatterns = [
     path('AddParent/', AuthenticationV.AddParent, name="AddParent"),
     path('Login/', AuthenticationV.loginU, name="Login"),
     path('logout/', AuthenticationV.logoutuser, name="logoutuser"),
-    path('adminPage/', AuthenticationV.adminP, name="adminPage"),
+    path('adminPage/', AdminV.adminP, name="adminPage"),
     path('Patrol/', HomePageV.parent_patrol, name='parent_patrol'),
     path(r'ContactManagement/', ContactV.contact_management, name='ContactManagement'),
     path('mypage/', AuthenticationV.residentPage, name='resident_page'),
