@@ -52,7 +52,7 @@ function myFunction(id) {
                         {% for patrol in activePatrols %}
 							<tr>
                                 <td>
-                                <a href="{% url 'patrol_detail' patrol.pk %}" style="color:#0A0000; font-weight:500">
+                                <a href="{% url 'patrol_page' patrol.pk %}" style="color:#0A0000; font-weight:500">
                                 {{ patrol.title }}
                                 </a>
                                 </td>

@@ -7,7 +7,7 @@ from .forms import PatrolForm
 from .models import Patrol
 
 
-def patrol_detail(request, patrol_id):
+def patrol_page(request, patrol_id):
     try:
         patrol = Patrol.objects.get(id=patrol_id)
     except Patrol.DoesNotExist:
