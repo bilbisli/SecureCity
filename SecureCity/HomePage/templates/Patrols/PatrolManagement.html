@@ -21,19 +21,26 @@
 {% csrf_token %}
     <div class="patrol_list: ">
          <ul class="list-group" style="opacity:0.85;">
+         {% if user.is_superuser %}
+             <h3>All Patrols</h3><br>
+        {% else %}
              <h3>My Patrols</h3><br>
+         {% endif %}
             {% for number, patrol in patrols %}
                 {# TODO: when specific patrol page is created - change the patrol listing to include a link of it #}
                 <li class="list-group-item" style="margin-left:2em">{{ number }}.&nbsp;&nbsp;&nbsp;{{patrol}}
+                    {% if user.is_superuser %}
                     &nbsp;&nbsp;&nbsp; <b>To CSV?</b>&nbsp;&nbsp;<input type="checkbox" name="ToCSV" value="{{ patrol.id }}" checked>
+                    {% endif %}
                 </li>
             {% endfor %}
         </ul>
         <hr>
     </div>
 <h6 style="color: red">{{ error }}</h6>
-<button type="submit" class="btn btn-primary">Download CSV File</button>
-
+    {% if user.is_superuser %}
+        <button type="submit" class="btn btn-primary">Download CSV File</button>
+    {% endif %}
 </form>
 </body>
 </html>

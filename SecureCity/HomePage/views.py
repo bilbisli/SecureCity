@@ -43,8 +43,10 @@ def patrol_management(request):
             response['Content-Disposition'] = 'attachment; filename=Patrols_Summary.csv'
             csvFile.to_csv(path_or_buf=response)
             return response
-
-    patrols = [(number + 1, patrol) for number, patrol in enumerate(request.user.patrols.all())]
+    if request.user.is_superuser:
+        patrols = [(number + 1, patrol) for number, patrol in enumerate(Patrol.objects.all())]
+    else:
+        patrols = [(number + 1, patrol) for number, patrol in enumerate(request.user.patrols.all())]
     context = {
         'patrols': patrols,
         'error': error
