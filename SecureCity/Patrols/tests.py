@@ -99,7 +99,6 @@ class PatrolPageTest(TestCase):
         # check that the path to patrol management uses the correct view
         self.assertEqual(resolver.view_name, 'patrol_page')
         self.assertEqual(resolver.func, patrol_page)
-
         # test patrol page with wrong id
         non_existant_patrol_id = 999
         url = reverse('patrol_page', args=(non_existant_patrol_id,))
