@@ -60,6 +60,9 @@ class Patrol(models.Model):
     approved_reactions = models.ManyToManyField(User, related_name='approved_reactions', blank=True)
     users_participated = models.ManyToManyField(User, related_name='participants', blank=True)
 
+    def get_fields_values(self):
+        return [(field.name, field.value_to_string(self)) for field in Patrol._meta.fields]
+
     def __str__(self):
         return f'title: {self.title} | location: {self.location} | priority: {self.priority} | ' \
                f'manager: {self.manager} | date: {self.date} | between: {self.start_time}-{self.end_time}'

@@ -8,6 +8,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
+
 class Parent(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     type = models.CharField(max_length=50, default='Parent')
@@ -24,15 +25,8 @@ class Parent(models.Model):
     Neighborhood = models.CharField(default='', choices=neighborhood_CHOICES, max_length=50)
     is_patrol_manager = models.BooleanField(default=False)
 
-    def __str__(self):
-        return self.user.username
-
-
-# class UserProfile(models.Model):
-#     # required by the auth model
-#     user = models.OneToOneField(User, unique=True, on_delete=models.CASCADE, related_name='profile', blank=True,
-#                                 null=True)
-#     is_patrol_manager = models.BooleanField(default=False)
+    def get_fields_values(self):
+        return [(field.name, field.value_to_string(self)) for field in Parent._meta.fields]
 
     def __str__(self):
         return f"{self.user.username}'s profile"

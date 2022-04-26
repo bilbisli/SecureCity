@@ -13,3 +13,6 @@ class AdminRequest(models.Model):
     def create(cls, currentUser, description):
         UserReuest = cls(userAsked=currentUser, description=description)
         return UserReuest
+
+    def get_fields_values(self):
+        return [(field.name, field.value_to_string(self)) for field in AdminRequest._meta.fields]
