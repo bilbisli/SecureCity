@@ -9,6 +9,3 @@ import pandas as pd
 def home(request):
     return render(request, 'HomePage/homePage.html')
 
-
-
-

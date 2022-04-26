@@ -21,6 +21,7 @@ from Authentication import views as AuthenticationV
 from AdminRequest import views as AdminRequestV
 from Contact import views as ContactV
 from Patrols import views as PatrolsV
+from adminPage import views as AdminV
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,5 +34,4 @@ urlpatterns = [
     path('mypage/', AuthenticationV.residentPage, name='resident_page'),
     path('becomePatrolManager/', AdminRequestV.becomePatrolManager, name='becomePatrolManager'),
     url('patrols/', include('Patrols.urls'), name='patrols'),
-
 ]

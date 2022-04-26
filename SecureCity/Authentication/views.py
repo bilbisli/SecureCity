@@ -47,8 +47,5 @@ def loginU(request):
             login(request, user)
             return redirect('homepage')
 
-def adminP(request):
-    return render(request, 'Authentication/AdminPage.html')
-
 def residentPage(request):
     return render(request, 'Authentication/residentPage.html')

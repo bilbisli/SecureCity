@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'AdminRequest',
     'Contact',
     'Patrols',
+    'adminPage',
 ]
 
 MIDDLEWARE = [
