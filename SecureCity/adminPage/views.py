@@ -42,11 +42,11 @@ def adminP(request):
     }
     return render(request, 'AdminPage/AdminPage.html',context)
 
+
 def adminEdit(request):
     form =''
-    if "Object" in request.GET:
-        obj = request.GET.get('Object')
-        print(obj)
+    if "EditObject" in request.GET:
+        obj = request.GET.get('EditObject')
         if "user" in obj:
             obj = obj.replace("user",'')
             obj = get_object_or_404(AuthModels.Parent, id=obj)
@@ -71,3 +71,26 @@ def adminEdit(request):
         "form":form
     }
     return render(request, 'AdminPage/AdminEdit.html', context)
+
+def adminDelete(request):
+    form =''
+    if "DeleteObject" in request.GET:
+        obj = request.GET.get('DeleteObject')
+        if "user" in obj:
+            obj = obj.replace("user",'')
+            obj = get_object_or_404(AuthModels.Parent, id=obj)
+            obj = obj.user
+            if obj == request.user:
+                return redirect('adminPage')
+        elif "request" in obj:
+            obj = obj.replace("request", '')
+            obj = get_object_or_404(AdminModels.AdminRequest, userAsked__id = obj)
+        elif "contact" in obj:
+            obj = obj.replace("contact", '')
+            obj = get_object_or_404(ContactModels.Contact, id=obj)
+        elif "patrol" in obj:
+            obj = obj.replace("patrol", '')
+            obj = get_object_or_404(PatrolModels.Patrol, id=obj)
+        obj.delete()
+    return redirect('adminPage')
+

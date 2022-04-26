@@ -6,15 +6,19 @@
 <style>
 table {
   font-family: arial, sans-serif;
-  width: 100%;
+  width: 85%;
+    text-align: center;
+    text-transform: capitalize;
+    line-height: 40px;
+
+}
+th{
+  border: 1px solid #dddddd;
+}
+td{
+  border: 1px solid #dddddd;
 }
 
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-  text-align: center;
-}
 
 tr:nth-child(even) {
   background-color: #35b0ff;
@@ -22,16 +26,18 @@ tr:nth-child(even) {
 </style>
 </head>
 <body>
+<div align="center">
 <br>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
 <br>
     <form method="POST">
         {% csrf_token %}
-        <button type="submit" class="btn btn-primary" name="users">Users</button>
-        <button type="submit" class="btn btn-primary" name="patrols">Patrols</button>
-        <button type="submit" class="btn btn-primary" name="contacts">Contacts</button>
-        <button type="submit" class="btn btn-primary" name="requests">Parents Requests</button>
+
+   <button type="submit" class="btn btn-primary" name="users">Users</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   <button type="submit" class="btn btn-success" name="patrols">Patrols</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   <button type="submit" class="btn btn-warning" name="contacts">Contacts</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   <button type="submit" class="btn btn-info" name="requests">Parents Requests</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
     </form>
     {% if objects %}
@@ -42,13 +48,14 @@ tr:nth-child(even) {
       {% for x in fields %}
         <th>{{ x.name }}</th>
       {% endfor %}
+        <th>Delete</th>
   </tr>
     {% for obj in objects %}
         <tr>
         {% if type == "request" %}
-                    <td><a href="{% url 'adminEdit' %}?Object={{ type }}{{ obj.userAsked.id }}"><button>✏️</button></a></td>
+                    <td><a href="{% url 'adminEdit' %}?EditObject={{ type }}{{ obj.userAsked.id }}"><button>✏️</button></a></td>
         {% else %}
-                    <td><a href="{% url 'adminEdit' %}?Object={{ type }}{{ obj.id }}"><button>✏️</button></a></td>
+                    <td><a href="{% url 'adminEdit' %}?EditObject={{ type }}{{ obj.id }}"><button>✏️</button></a></td>
         {% endif %}
 
         {% for name, value in obj.get_fields_values%}
@@ -56,12 +63,31 @@ tr:nth-child(even) {
                 <td>{{ value }}</td>
             {% endif %}
         {% endfor %}
+        {% if type == "request" %}
+                    <td><a href="{% url 'adminDelete' %}?DeleteObject={{ type }}{{ obj.userAsked.id }}"><button>❌️</button></a></td>
+        {% else %}
+                    <td><a href="{% url 'adminDelete' %}?DeleteObject={{ type }}{{ obj.id }}"><button>❌️</button></a></td>
+        {% endif %}
+
+
         </tr>
     {% endfor %}
 
 </table>
-        {% endif %}
 
+    {% endif %}
+<br><br>
+        {% if type == "user" %}
+            <a href="{% url 'AddParent' %}"><button class="btn btn-success">Create Parent User</button></a>
+        {% elif type == "patrol" %}
+            <a href="{% url 'CreatePatrol' %}"><button class="btn btn-success">Create Patrol</button></a>
+        {% elif type == "contact" %}
+            <a href="{% url 'CreateContact' %}"><button class="btn btn-success">Create Contact</button></a>
+        {% elif type == "request" %}
+
+            <a href="{% url 'CreateRequest' %}"><button class="btn btn-success">Create Request</button></a>
+        {% endif %}
+</div>
 </body>
 
 
