@@ -8,7 +8,9 @@ from Contact import forms as ContactForms
 from HomePage import forms as PartolForms
 from AdminRequest import forms as AdminRequestForms
 from django.shortcuts import get_object_or_404,redirect
+from django.contrib.auth.decorators import login_required, user_passes_test
 
+@user_passes_test(lambda u:u.is_superuser, login_url='/', redirect_field_name=None)
 def adminP(request,msg=''):
     objects = ''
     fields = ''
@@ -43,7 +45,7 @@ def adminP(request,msg=''):
     }
     return render(request, 'AdminPage/AdminPage.html',context)
 
-
+@user_passes_test(lambda u:u.is_superuser, login_url='/', redirect_field_name=None)
 def adminEdit(request):
     form =''
     if "EditObject" in request.GET:

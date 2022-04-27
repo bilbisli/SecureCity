@@ -78,7 +78,7 @@ tr:nth-child(even) {
     {% endif %}
 <br><br>
         {% if type == "user" %}
-            <a href="{% url 'AddParent' %}"><button class="btn btn-success">Create Parent User</button></a>
+            <a href="{% url 'AddParent' %}?admin=1"><button class="btn btn-success">Create Parent User</button></a>
         {% elif type == "patrol" %}
             <a href="{% url 'CreatePatrol' %}"><button class="btn btn-success">Create Patrol</button></a>
         {% elif type == "contact" %}

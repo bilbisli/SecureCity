@@ -5,7 +5,11 @@ from .forms import AdminRequstForm
 
 def becomePatrolManager(request):
     if request.method == "GET":
-        return render(request, 'AdminRequest/becomePatrolManager.html')
+        req = AdminRequest.objects.filter(userAsked__id=request.user.id)
+        msg = ''
+        if len(req) != 0:
+            msg = "You've already posted an application, It's under consideration!"
+        return render(request, 'AdminRequest/becomePatrolManager.html',{'msg':msg})
     else:
         newRequest = AdminRequest.create(request.user, request.POST['text'])
         newRequest.save()

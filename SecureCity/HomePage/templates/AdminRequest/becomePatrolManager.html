@@ -9,6 +9,7 @@
 <body>
 <br><br><br>
 <div class="card text-center">
+    {% if msg == '' %}
   <div class="card-header">
     <h4> Information about patrol manager </h4>
   </div>
@@ -34,11 +35,6 @@
       </form>
       <script>
     function myFunction() {
-//         if (confirm('Are you sure you want to donate to Andrew Hyder?')) {
-//   // true (paypal.me/andrewdhyder)
-// } else {
-//   // false
-// }
       alert("The request has been sent");
     }
     </script>
@@ -47,6 +43,9 @@
   <div class="card-footer text-muted">
       <p class="text-danger">Please note you will not be able to edit the request after sending</p>
   </div>
+    {% else %}
+        <h1>{{ msg }}</h1>
+    {% endif %}
 </div>
 
 </body>
