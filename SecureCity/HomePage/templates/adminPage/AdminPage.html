@@ -64,9 +64,9 @@ tr:nth-child(even) {
             {% endif %}
         {% endfor %}
         {% if type == "request" %}
-                    <td><a href="{% url 'adminDelete' %}?DeleteObject={{ type }}{{ obj.userAsked.id }}"><button>❌️</button></a></td>
+                    <td><a href="{% url 'adminDelete' %}?DeleteObject={{ type }}{{ obj.userAsked.id }}"><button type="submit" onclick="return confirm('Are you sure?')">❌️</button></a></td>
         {% else %}
-                    <td><a href="{% url 'adminDelete' %}?DeleteObject={{ type }}{{ obj.id }}"><button>❌️</button></a></td>
+                    <td><a href="{% url 'adminDelete' %}?DeleteObject={{ type }}{{ obj.id }}"><button type="submit" onclick="return confirm('Are you sure?')">❌️</button></a></td>
         {% endif %}
 
 

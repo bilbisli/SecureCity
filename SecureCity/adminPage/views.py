@@ -9,7 +9,7 @@ from HomePage import forms as PartolForms
 from AdminRequest import forms as AdminRequestForms
 from django.shortcuts import get_object_or_404,redirect
 
-def adminP(request):
+def adminP(request,msg=''):
     objects = ''
     fields = ''
     type =''
@@ -38,7 +38,8 @@ def adminP(request):
     context = {
         'objects':objects,
         'fields':fields,
-        'type':type
+        'type':type,
+        'msg':msg
     }
     return render(request, 'AdminPage/AdminPage.html',context)
 

@@ -36,9 +36,11 @@ class PatrolForm(forms.ModelForm):
     def clean_date(self):
         # Check if the date is in the past
         date = self.cleaned_data.get('date')
-        if date < current_time().date():
-            raise forms.ValidationError("Date cannot be in the past")
+        if self.stat != 'edit':
+            if date < current_time().date():
+                raise forms.ValidationError("Date cannot be in the past")
         return date
+
 
     def clean(self):
         if self.stat != 'edit':
