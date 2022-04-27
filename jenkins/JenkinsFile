@@ -23,7 +23,9 @@ pipeline {
                         withEnv(["HOME=${env.WORKSPACE}"]){
                                 //sh 'python SecureCity/manage.py test --pythonpath SecureCity/HomePage/tests.py'
                                 //sh 'python SecureCity/manage.py test --pattern="tests*.py"'
-                                sh 'python SecureCity/manage.py test ./SecureCity'
+                                sh 'coverage run --source='.' manage.py test ./SecureCity'
+                                sh 'coverage report'
+//                                 sh 'python SecureCity/manage.py test ./SecureCity'
                         }
                 }
             }
