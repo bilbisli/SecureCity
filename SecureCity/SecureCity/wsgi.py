@@ -13,4 +13,7 @@ from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'SecureCity.settings')
 
+# set environment variable to tell django where your settings.py is
+os.environ['DJANGO_SETTINGS_MODULE'] = 'SecureCity.settings'
+
 application = get_wsgi_application()
