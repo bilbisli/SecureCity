@@ -23,8 +23,9 @@ pipeline {
                         withEnv(["HOME=${env.WORKSPACE}"]){
                                 //sh 'python SecureCity/manage.py test --pythonpath SecureCity/HomePage/tests.py'
                                 //coverage django test command
+                                sh 'python3 -m pip uninstall coverage'
                                 sh 'python3 -m pip install coverage'
-                                sh 'coverage run --source=SecureCity/manage.py SecureCity/manage.py test'
+                                sh 'python -m coverage run --source=SecureCity/manage.py SecureCity/manage.py test'
 
 //                                 sh 'python -m coverage run SecureCity/manage.py test ./SecureCity --pattern="SecureCity/*tests*.py"'
 //                                 sh 'coverage run SecureCity/manage.py test ./SecureCity'
