@@ -1,9 +1,6 @@
 pipeline {
         agent {
-            docker {
-                image 'python:3.8'
-                args 'env DJANGO_SETTINGS_MODULE=SecureCity.settings'
-            }
+            docker { image 'python:3.8' }
         }
          stages {
             stage('Build') {
@@ -26,15 +23,17 @@ pipeline {
                         withEnv(["HOME=${env.WORKSPACE}"]){
                                 //sh 'python SecureCity/manage.py test --pythonpath SecureCity/HomePage/tests.py'
                                 //coverage django test command
-                                sh 'python3 -m pip uninstall coverage --yes'
-                                sh 'python3 -m pip install coverage'
-                                sh 'python -m coverage run --source=SecureCity/manage.py SecureCity/manage.py test'
+//                                 sh 'python3 -m pip uninstall coverage --yes'
+//                                 sh 'python3 -m pip install coverage'
+
 
 //                                 sh 'python -m coverage run SecureCity/manage.py test ./SecureCity --pattern="SecureCity/*tests*.py"'
 //                                 sh 'coverage run SecureCity/manage.py test ./SecureCity'
 //
-//                                 sh 'python SecureCity/manage.py test ./SecureCity'
-                                sh 'coverage report'
+
+//                                 sh 'python -m coverage run --source=SecureCity/manage.py SecureCity/manage.py test'
+                                sh 'python SecureCity/manage.py test ./SecureCity'
+//                                 sh 'coverage report'
                         }
                 }
             }
