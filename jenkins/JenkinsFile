@@ -22,11 +22,13 @@ pipeline {
                 steps {
                         withEnv(["HOME=${env.WORKSPACE}"]){
                                 //sh 'python SecureCity/manage.py test --pythonpath SecureCity/HomePage/tests.py'
-                                //sh 'python SecureCity/manage.py test --pattern="tests*.py"'
+                                //coverage django test command
+                                sh 'coverage run --source=SecureCity/manage.py SecureCity/manage.py test'
+
 //                                 sh 'python -m coverage run SecureCity/manage.py test ./SecureCity --pattern="SecureCity/*tests*.py"'
 //                                 sh 'coverage run SecureCity/manage.py test ./SecureCity'
 //
-                                sh 'python SecureCity/manage.py test ./SecureCity --with-coverage'
+//                                 sh 'python SecureCity/manage.py test ./SecureCity'
                                 sh 'coverage report'
                         }
                 }
