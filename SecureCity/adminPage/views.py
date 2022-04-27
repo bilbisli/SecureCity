@@ -2,10 +2,10 @@ from django.shortcuts import render
 from Authentication import models as AuthModels
 from AdminRequest import models as AdminModels
 from Contact import models as ContactModels
-from HomePage import models as PatrolModels
+from Patrols import models as PatrolModels
 from Authentication import forms as Authforms
 from Contact import forms as ContactForms
-from HomePage import forms as PartolForms
+from Patrols import forms as PartolForms
 from AdminRequest import forms as AdminRequestForms
 from django.shortcuts import get_object_or_404,redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -56,8 +56,14 @@ def adminEdit(request):
             form = Authforms.ParentProfileForm(request.POST or None,instance= obj)
         elif "request" in obj:
             obj = obj.replace("request", '')
+            originalUserID = obj
             obj = get_object_or_404(AdminModels.AdminRequest, userAsked__id = obj)
             form = AdminRequestForms.AdminRequstForm(request.POST or None, instance=obj)
+            if form.is_valid() and originalUserID != form.cleaned_data['userAsked']:
+                form.save()
+                delObj = get_object_or_404(AdminModels.AdminRequest, userAsked__id=originalUserID)
+                delObj.delete()
+                return redirect('adminPage')
         elif "contact" in obj:
             obj = obj.replace("contact", '')
             obj = get_object_or_404(ContactModels.Contact, id=obj)
@@ -69,7 +75,6 @@ def adminEdit(request):
         if form.is_valid():
             form.save()
             return redirect('adminPage')
-        print(obj)
     context = {
         "form":form
     }

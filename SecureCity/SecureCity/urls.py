@@ -14,18 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path, include
 from HomePage import views as HomePageV
 from Authentication import views as AuthenticationV
 from AdminRequest import views as AdminRequestV
 from Contact import views as ContactV
+from Patrols import views as PatrolsV
 from adminPage import views as AdminV
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HomePageV.home, name="homepage"),
-    path(r'PatrolManagement/', HomePageV.patrol_management, name='PatrolManagement'),
-    path(r'PatrolManagement/CreatePatrol', HomePageV.create_patrol, name='CreatePatrol'),
     path('CreateContact/', ContactV.createContact, name='CreateContact'),
     path('AddParent/', AuthenticationV.AddParent, name="AddParent"),
     path('Login/', AuthenticationV.loginU, name="Login"),
@@ -33,9 +32,9 @@ urlpatterns = [
     path('adminPage/', AdminV.adminP, name="adminPage"),
     path('adminEdit/', AdminV.adminEdit, name="adminEdit"),
     path('adminDelete/', AdminV.adminDelete, name="adminDelete"),
-    path('Patrol/', HomePageV.parent_patrol, name='parent_patrol'),
     path(r'ContactManagement/', ContactV.contact_management, name='ContactManagement'),
     path('mypage/', AuthenticationV.residentPage, name='resident_page'),
     path('becomePatrolManager/', AdminRequestV.becomePatrolManager, name='becomePatrolManager'),
     path('CreateRequest/', AdminRequestV.CreateRequest, name='CreateRequest'),
+    re_path('patrols/', include('Patrols.urls'), name='patrols'),
 ]
