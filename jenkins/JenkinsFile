@@ -1,6 +1,7 @@
 pipeline {
         agent {
             docker { image 'python:3.8' }
+            ENV DJANGO_SETTINGS_MODULE=SecureCity.settings
         }
          stages {
             stage('Build') {
