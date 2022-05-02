@@ -36,7 +36,7 @@ pipeline {
 //                                 sh 'python -m coverage run --source=SecureCity/manage.py SecureCity/manage.py test'
                                 //sh 'python SecureCity/manage.py test ./SecureCity'
                                 dir("SecureCity"){
-                                        sh 'coverage run --source='.' manage.py test'
+                                        sh 'coverage run --source="." manage.py test'
                                         sh 'coverage report'
                                         //sh 'python -m coverage run manage.py test'
                                         //sh 'python -m coverage report'
