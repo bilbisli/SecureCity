@@ -28,8 +28,9 @@ class DataFile(models.Model):
 
 
 def update_data(api_endpoint='https://data.gov.il/api/3',
-                            data='crime',
-                            limit=10 ** 9):
+                api_url='action/datastore_search?resource_id=5fc13c50-b6f3-4712-b831-a75e0f91a17e',
+                data='crime',
+                limit=10 ** 9):
     # handle past data
     current_data = DataFile.objects.filter(file_name=data)
     print('here')
@@ -44,8 +45,7 @@ def update_data(api_endpoint='https://data.gov.il/api/3',
             data_file.delete()
 
     # get the data from the api
-    url = f'https://data.gov.il/api/3/action/datastore_search?resource_id=5fc13c50-b6f3-4712-b831-a75e0f91a17e' \
-          f'&limit={limit} '
+    url = f'{api_endpoint}/{api_url}&limit={limit}'
     response = requests.get(url)
     crime_rates_db = response.json()['result']['records']
     crime_rates_df = pd.DataFrame(crime_rates_db)
@@ -62,4 +62,3 @@ def update_data(api_endpoint='https://data.gov.il/api/3',
 def get_data(data='crime'):
     current_data = DataFile.objects.filter(file_name=data, is_primary=True)
     return current_data.first().load_frame()
-

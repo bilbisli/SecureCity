@@ -9,7 +9,6 @@ class AdminRequestTestCase(TestCase):
         self.factory = RequestFactory()
         self.user = User.objects.create_user('testerFinal2', 'tester@testing.com', 'testpassword')
 
-
     def test_becomePatrolManager(self):
         request = self.factory.get('')
         request.user = self.user

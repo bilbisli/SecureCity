@@ -12,20 +12,20 @@
         <span class="glyphicon glyphicon-time"></span>
         manager: {{ patrol.manager }} | created: {{ patrol.time_created }}
     </p>
-    <h5 style="margin:0;padding:0;">location:</h5> {{ patrol.location }}
+    <h5 style="margin:0;padding:0;">Location:</h5> {{ patrol.location }}
     <br>
-    <h5 style="margin:0;padding:0;">date:</h5> {{ patrol.date }}
+    <h5 style="margin:0;padding:0;">Date:</h5> {{ patrol.date }}
     <br>
-    <h5 style="margin:0;padding:0;">start_time:</h5> {{ patrol.start_time }}
+    <h5 style="margin:0;padding:0;">Start Time:</h5> {{ patrol.start_time }}
     <br>
-    <h5 style="margin:0;padding:0;">end_time:</h5> {{ patrol.end_time }}
+    <h5 style="margin:0;padding:0;">End Time:</h5> {{ patrol.end_time }}
     <br>
     {% if patrol.description %}
-        <h5 style="margin:0;padding:0;">description:</h5> {{ patrol.description }}
+        <h5 style="margin:0;padding:0;">Description:</h5> {{ patrol.description }}
         <br>
     {% endif %}
 
-    <h5 style="margin:0;padding:0;">number of participants:</h5> {{ patrol.approved_reactions.count }}/{{ patrol.participants_needed }}
+    <h5 style="margin:0;padding:0;">Number of Participants:</h5> {{ patrol.approved_reactions.count }}/{{ patrol.participants_needed }}
 
 
 

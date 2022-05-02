@@ -9,9 +9,6 @@ class HomepageTestCase(TestCase):
         self.factory = RequestFactory()
         self.user = User.objects.create_user('testerFinal2', 'tester@testing.com', 'testpassword')
 
-    def test_animals_can_speak(self):
-        self.assertEqual('hello', 'hello')
-
     def test_homePage(self):
         request = self.factory.get('')
         request.user = self.user
