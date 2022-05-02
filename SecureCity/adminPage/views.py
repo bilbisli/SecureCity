@@ -20,6 +20,8 @@ def adminP(request, msg=''):
 
     req_msg = request.session.get('msg')
     msg = req_msg if msg == '' and req_msg else msg
+    if req_msg:
+        del request.session['msg']
 
     if request.POST:
         if "users" in request.POST:
