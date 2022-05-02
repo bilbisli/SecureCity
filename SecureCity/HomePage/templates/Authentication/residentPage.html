@@ -4,11 +4,53 @@
 
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>My Page</title>
+    <style>
+    table {
+      font-family: arial, sans-serif;
+      width: 85%;
+        text-align: center;
+        text-transform: capitalize;
+        line-height: 40px;
+
+    }
+    th{
+      border: 1px solid #dddddd;
+    }
+    td{
+      border: 1px solid #dddddd;
+    }
+
+
+    tr:nth-child(even) {
+      background-color: #35b0ff;
+    }
+    </style>
 </head>
 <body>
 
+
+    <br><br>
+    <table>
+      <tr>
+            <th>Edit</th>
+          {% for x in fields %}
+            <th>{{ x.name }}</th>
+          {% endfor %}
+      </tr>
+        {% for obj in objects %}
+            <tr>
+                <td><a href="{% url 'adminEdit' %}?EditObject={{ type }}{{ obj.id }}"><button>✏️</button></a></td>
+
+            {% for name, value in obj.get_fields_values %}
+                {% if value %}
+                    <td>{{ value }}</td>
+                {% else %}
+                    <td>-</td>
+                {% endif %}
+            {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
 
 </body>
 </html>
