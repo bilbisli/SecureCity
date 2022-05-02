@@ -42,7 +42,6 @@ class PatrolForm(forms.ModelForm):
                 raise forms.ValidationError("Date cannot be in the past")
         return date
 
-
     def clean(self):
         if self.stat != 'edit':
             cleaned_data = super().clean()  # Call the parent clean method

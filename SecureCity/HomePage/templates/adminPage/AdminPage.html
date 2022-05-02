@@ -68,9 +68,11 @@
                                 <td><a href="{% url 'adminEdit' %}?EditObject={{ type }}{{ obj.id }}"><button>✏️</button></a></td>
                     {% endif %}
 
-                    {% for name, value in obj.get_fields_values%}
+                    {% for name, value in obj.get_fields_values %}
                         {% if value %}
                             <td>{{ value }}</td>
+                        {% else %}
+                            <td>-</td>
                         {% endif %}
                     {% endfor %}
                     {% if type == "request" %}

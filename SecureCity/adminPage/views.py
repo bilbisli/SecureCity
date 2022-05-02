@@ -19,7 +19,6 @@ def adminP(request, msg=''):
     type = ''
 
     req_msg = request.session.get('msg')
-    print(req_msg)
     msg = req_msg if msg == '' and req_msg else msg
 
     if request.POST:
