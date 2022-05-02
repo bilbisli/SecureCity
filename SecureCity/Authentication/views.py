@@ -61,7 +61,7 @@ def loginU(request):
 
 
 def residentPage(request):
-    objects = PatrolModels.Patrol.objects.all()
+    objects = PatrolModels.Patrol.objects.filter(manager=request.user)
     fields = PatrolModels.Patrol._meta.get_fields()[:-3]
     context = {
         'objects': objects,
