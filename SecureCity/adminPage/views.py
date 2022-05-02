@@ -53,7 +53,7 @@ def adminP(request, msg=''):
     return render(request, 'AdminPage/AdminPage.html', context)
 
 
-@user_passes_test(lambda u: u.is_superuser, login_url='/', redirect_field_name=None)
+@user_passes_test(lambda u: u.is_superuser or u.profile.is_patrol_manager, login_url='/', redirect_field_name=None)
 def adminEdit(request):
     form = ''
     if "EditObject" in request.GET:

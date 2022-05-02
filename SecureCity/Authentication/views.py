@@ -8,7 +8,6 @@ from .forms import ExtendedUserCreationForm, ParentProfileForm
 from Patrols import models as PatrolModels
 
 
-
 def AddParent(request):
     admin = False
     if "admin" in request.GET:
@@ -63,8 +62,10 @@ def loginU(request):
 def residentPage(request):
     objects = PatrolModels.Patrol.objects.filter(manager=request.user)
     fields = PatrolModels.Patrol._meta.get_fields()[:-3]
+    type = "patrol"
     context = {
         'objects': objects,
-        'fields': fields
+        'fields': fields,
+        'type': type
     }
     return render(request, 'Authentication/residentPage.html', context)
