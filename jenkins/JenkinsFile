@@ -12,7 +12,7 @@ pipeline {
                                         sh 'pip3 install -r requirements.txt'
                                         sh 'pip3 install django-crispy-forms'
                                         sh 'python manage.py flush --no-input'
-                                        sh 'rm -r */migrations/0*'
+                                        sh 'rm -f -r */migrations/0*'
                                         sh 'python manage.py makemigrations'
                                         sh 'python manage.py migrate'
                                 }
