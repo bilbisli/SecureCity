@@ -27,6 +27,7 @@ pipeline {
                                         sh 'python -m coverage run --source="." manage.py test'
                                         sh 'python -m coverage report'
                                         sh 'python manage.py runserver'
+                                        sh 'pkill -f runserver'
                                 }
                         }
                 }
