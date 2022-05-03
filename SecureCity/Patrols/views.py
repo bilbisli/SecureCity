@@ -3,6 +3,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.http import HttpResponse, Http404
 from django.shortcuts import render
+from datetime import datetime
 from .forms import PatrolForm
 from .models import Patrol
 
@@ -84,6 +85,12 @@ def parent_patrol(request):
     else:
         activePatrols = Patrol.objects.filter(patrol_status__in=["Creation", "Active"])
         donePatrols = Patrol.objects.filter(patrol_status="Archive")
+
+    sTime = datetime.strptime(request.GET['STime'], '%H:%M').time()
+    eTime = datetime.strptime(request.GET['ETime'], '%H:%M').time()
+    if sTime != '0':
+        activePatrols.objects.extra(where=[f"start_time between {sTime} and {eTime}"])
+
     context = {
         'activePatrols': activePatrols,
         'donePatrols': donePatrols
