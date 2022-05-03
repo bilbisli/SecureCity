@@ -11,6 +11,10 @@ import datetime
 from Authentication.views import *
 from Authentication.models import *
 from Authentication.forms import *
+from Patrols import models as PatrolModels
+
+from Authentication.views import residentPage, AddParent, loginU
+
 
 class SignUptest(TestCase):
     def setUp(self):
@@ -28,8 +32,11 @@ class SignUptest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertNotEqual(response.status_code, 404)
 
+
 class Parenttest(TestCase):
     def setUp(self):
+        self.user = User.objects.create_user('testerFinal', 'tester@testing.com', 'testpassword')
+        self.user.save()
         self.factory = RequestFactory()
 
     def test_signup_parent(self):
@@ -37,4 +44,15 @@ class Parenttest(TestCase):
         request.user = AnonymousUser()
         response = AddParent(request)
         self.assertEqual(response.status_code, 200)
+
+    def test_residentPage(self):
+        logged_in = self.client.login(username='testerFinal', password='testpassword')
+        self.assertTrue(logged_in)
+        request = self.factory.get('resident_page')
+        request.user = self.user
+        response = residentPage(request)
+        self.assertEqual(response.status_code, 200)
+
+    def tearDown(self):
+        self.user.delete()
 
