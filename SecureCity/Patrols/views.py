@@ -86,10 +86,12 @@ def parent_patrol(request):
         activePatrols = Patrol.objects.filter(patrol_status__in=["Creation", "Active"])
         donePatrols = Patrol.objects.filter(patrol_status="Archive")
 
-    sTime = datetime.strptime(request.GET['STime'], '%H:%M').time()
-    eTime = datetime.strptime(request.GET['ETime'], '%H:%M').time()
-    if sTime != '0':
-        activePatrols.objects.extra(where=[f"start_time between {sTime} and {eTime}"])
+    sTime = datetime.strptime(request.POST.get('STime'), '%H:%M').time()
+    eTime = datetime.strptime(request.POST.get('ETime'), '%H:%M').time()
+    if request.method == 'POST':
+        print(sTime, eTime)
+    # if sTime != '0':
+    #     activePatrols.objects.extra(where=[f"start_time between {sTime} and {eTime}"])
 
     context = {
         'activePatrols': activePatrols,
