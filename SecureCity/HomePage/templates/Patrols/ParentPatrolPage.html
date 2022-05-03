@@ -40,23 +40,25 @@ function myFunction(id) {
         <div class="demo-section k-header" style="width: 600px;">
     <form method="POST">
     {% csrf_token %}
-            <label for="start">Start time:</label>
+            <label for="start">Patrols who starting Between </label>
             <select name="STime">
                 <option value="0">All</option>
+                <option value="15:00">15:00</option>
               <option value="16:00">16:00</option>
                 <option value="17:00">17:00</option>
               <option value="18:00">18:00</option>
               <option value="19:00">19:00</option>
-              <option value="20:00">20:00</option>
+
             </select>
 
-            <label for="end" style="margin-left:3em">End time:</label>
+            <label for="end" style="margin-left:3em">and</label>
             <select name="ETime">
                 <option value="0">All</option>
+                <option value="20:00">20:00</option>
               <option value="21:00">21:00</option>
               <option value="22:00">22:00</option>
               <option value="23:00">23:00</option>
-              <option value="00:00">00:00</option>
+
             </select>
                     <label for="end" style="margin-left:3em"> </label>
              <button type="submit" class="btn btn-primary">Submit</button>

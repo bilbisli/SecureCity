@@ -6,6 +6,7 @@ from django.shortcuts import render
 from datetime import datetime
 from .forms import PatrolForm
 from .models import Patrol
+from django.db.models import Q
 
 
 def patrol_page(request, patrol_id):
@@ -80,18 +81,23 @@ def create_patrol(request):
 @login_required(login_url='/Login/')
 def parent_patrol(request):
     if request.GET.get('sort') == 'Priority':
+        print("heklo")
         activePatrols = Patrol.objects.filter(patrol_status__in=["Creation", "Active"]).order_by('-priority')
         donePatrols = Patrol.objects.filter(patrol_status="Archive").order_by('-priority')
     else:
         activePatrols = Patrol.objects.filter(patrol_status__in=["Creation", "Active"])
         donePatrols = Patrol.objects.filter(patrol_status="Archive")
 
-    sTime = datetime.strptime(request.POST.get('STime'), '%H:%M').time()
-    eTime = datetime.strptime(request.POST.get('ETime'), '%H:%M').time()
     if request.method == 'POST':
-        print(sTime, eTime)
-    # if sTime != '0':
-    #     activePatrols.objects.extra(where=[f"start_time between {sTime} and {eTime}"])
+        if request.POST.get('STime') != '0':
+            sTime = datetime.strptime(request.POST.get('STime'), '%H:%M').time()
+            activePatrols = list(activePatrols)
+            activePatrols = list(filter(lambda x: x.start_time >= sTime, activePatrols))
+        if request.POST.get('ETime') != '0':
+            eTime = datetime.strptime(request.POST.get('ETime'), '%H:%M').time()
+            activePatrols = list(activePatrols)
+            activePatrols = list(filter(lambda x: x.start_time <= eTime, activePatrols))
+
 
     context = {
         'activePatrols': activePatrols,
