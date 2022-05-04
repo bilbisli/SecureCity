@@ -14,6 +14,7 @@ from .models import update_data
 
 @user_passes_test(lambda u: u.is_superuser, login_url='/', redirect_field_name=None)
 def adminP(request, msg=''):
+
     objects = ''
     fields = ''
     type = ''
