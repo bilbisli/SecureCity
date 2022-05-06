@@ -1,10 +1,13 @@
 from django.test import TestCase, RequestFactory, Client
 from Contact import views
 from django.test.utils import teardown_test_environment, setup_test_environment
+from django.test import tag
 
 
 
 
+
+@tag('unitTest')
 class ContactTestCase(TestCase):
 
     def setUp(self):

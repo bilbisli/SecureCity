@@ -5,13 +5,17 @@ from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.test import TestCase, RequestFactory, Client
 from django.contrib.auth.models import User
 from django.urls import reverse, resolve
+from django.test import tag
 
 from Patrols.views import patrol_management, patrol_page
 
 from Patrols.models import Patrol
 
 
+
+@tag('integrationTest')
 class PatrolManagementTest(TestCase):
+    @tag('unitTest')
     def setUp(self):
         self.user = User.objects.create_user('testerFinal', 'tester@testing.com', 'testpassword')
         self.user.save()
@@ -25,11 +29,13 @@ class PatrolManagementTest(TestCase):
         logged_in = self.client.login(username='testerFinal', password='testpassword')
         self.assertTrue(logged_in)
 
+    @tag('unitTest')
     def tearDown(self):
         self.patrol.delete()
         self.client.logout()
         self.user.delete()
 
+    @tag('unitTest')
     def test_patrolManagement_not_manager(self):
         # test patrol management when user is not manager
         response = self.client.get(reverse('PatrolManagement'))
@@ -39,6 +45,7 @@ class PatrolManagementTest(TestCase):
         self.assertNotEqual(response.status_code, 404)
         self.assertEqual(response.status_code, 302)
 
+    @tag('unitTest')
     def test_patrolManagement_is_manager(self):
         # self.client.logout()
         self.user.profile.is_patrol_manager = True
@@ -60,6 +67,7 @@ class PatrolManagementTest(TestCase):
         self.assertEqual(resolver.view_name, 'PatrolManagement')
         self.assertEqual(resolver.func, patrol_management)
 
+    @tag('integrationTest')
     def test_patrolManagement_csv_download(self):
         self.user.profile.is_patrol_manager = True
         self.user.profile.save()
@@ -88,6 +96,7 @@ class PatrolManagementTest(TestCase):
                                    self.patrol.date,
                                    f'{self.patrol.start_time}:00-{self.patrol.end_time}:00'])
 
+    @tag('unitTest')
     def test_patrolManagement_add_patrol(self):
         # self.client.logout()
         self.user.profile.is_patrol_manager = True
@@ -100,7 +109,7 @@ class PatrolManagementTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertNotEqual(response.status_code, 404)
 
-
+@tag('unitTest')
 class PatrolPageTest(TestCase):
     def setUp(self):
         self.user = User.objects.create_user('testerFinal', 'tester@testing.com', 'testpassword')
