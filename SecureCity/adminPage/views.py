@@ -113,6 +113,12 @@ def adminDelete(request):
 
 
 @user_passes_test(lambda u: u.is_superuser, login_url='/', redirect_field_name=None)
+def adminDelete(request):
+    adminDelete(request)
+    return redirect('adminPage')
+
+
+@user_passes_test(lambda u: u.is_superuser, login_url='/', redirect_field_name=None)
 def updateDatabases(request):
     update_data(data='crime')
     request.session['msg'] = "Successfully updated databases"
