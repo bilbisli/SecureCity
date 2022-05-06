@@ -2,8 +2,13 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.test import TestCase, RequestFactory, Client
 from HomePage import views
+from django.test import tag
 
 
+
+
+
+@tag('unitTest')
 class HomepageTestCase(TestCase):
     def setUp(self):
         self.factory = RequestFactory()

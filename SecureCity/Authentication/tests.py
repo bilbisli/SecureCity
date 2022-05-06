@@ -12,10 +12,11 @@ from Authentication.views import *
 from Authentication.models import *
 from Authentication.forms import *
 from Patrols import models as PatrolModels
+from django.test import tag
 
 from Authentication.views import residentPage, AddParent, loginU
 
-
+@tag('unitTest')
 class SignUptest(TestCase):
     def setUp(self):
         self.factory = RequestFactory()
@@ -32,7 +33,7 @@ class SignUptest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertNotEqual(response.status_code, 404)
 
-
+@tag('unitTest')
 class Parenttest(TestCase):
     def setUp(self):
         self.user = User.objects.create_user('testerFinal', 'tester@testing.com', 'testpassword')
