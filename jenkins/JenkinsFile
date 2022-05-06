@@ -35,7 +35,7 @@ pipeline {
                 steps {
                         withEnv(["HOME=${env.WORKSPACE}"]){
                                 dir("SecureCity"){
-                                        sh 'python -m coverage run --source="." --tag=unitest test'
+                                        sh 'python -m --source="." test --tag=unitest'
                                 }
                         }
                 }
@@ -44,7 +44,7 @@ pipeline {
                 steps {
                         withEnv(["HOME=${env.WORKSPACE}"]){
                                 dir("SecureCity"){
-                                        sh 'python -m coverage run --source="." --tag=integrationTest'
+                                        sh 'python -m --source="." test --tag=integrationTest'
                                 }
                         }
                 }
