@@ -3,11 +3,6 @@ pipeline {
             docker { image 'python:3.8' }
         }
          stages {
-           stage ('GIT Checkout'){
-                steps {
-                        git changelog: false, poll: false, url: 'https://github.com/Project-Management-SCE/PM2022_TEAM_11.git'
-                }
-             }
             stage('Build') {
                 steps {
                          
@@ -39,8 +34,8 @@ pipeline {
             stage('UnitTest') {
                 steps {
                         withEnv(["HOME=${env.WORKSPACE}"]){
-                                        dir("SecureCity"){
-                                        sh 'python -m coverage run -a manage.py test --tag=unitTest'
+                                dir("SecureCity"){
+                                        sh 'python manage.py test --tag=integrationTest'
                                 }
                         }
                 }
@@ -48,8 +43,8 @@ pipeline {
              stage('IntegrationTest') {
                 steps {
                         withEnv(["HOME=${env.WORKSPACE}"]){
-                        dir("SecureCity"){
-                                        sh 'python -m coverage run -a manage.py test --tag=integrationTest'
+                                dir("SecureCity"){
+                                        sh 'python manage.py test --tag=unitTest'
                                 }
                         }
                 }
