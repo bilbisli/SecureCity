@@ -116,8 +116,14 @@ def adminDelete(request):
 
 @user_passes_test(lambda u: u.is_superuser, login_url='/', redirect_field_name=None)
 def adminApprove(request):
+    form = ''
     # TODO: sprint 3 task 26
-    adminDelete(request)
+    if "ApproveObject" in request.GET:
+        obj = request.GET.get('ApproveObject')
+        if "request" in obj:
+            obj = obj.replace("request", '')
+            obj = get_object_or_404(AdminModels.AdminRequest, userAsked__id=obj)
+        obj.delete()
     return redirect('adminPage')
 
 
