@@ -113,7 +113,8 @@ def adminDelete(request):
 
 
 @user_passes_test(lambda u: u.is_superuser, login_url='/', redirect_field_name=None)
-def adminDelete(request):
+def adminApprove(request):
+    # TODO: sprint 3 task 26
     adminDelete(request)
     return redirect('adminPage')
 
