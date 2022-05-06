@@ -14,11 +14,9 @@ from .models import update_data
 
 @user_passes_test(lambda u: u.is_superuser, login_url='/', redirect_field_name=None)
 def adminP(request, msg=''):
-
     objects = ''
     fields = ''
     type = ''
-
     req_msg = request.session.get('msg')
     msg = req_msg if msg == '' and req_msg else msg
     if req_msg:
@@ -119,4 +117,3 @@ def updateDatabases(request):
     update_data(data='crime')
     request.session['msg'] = "Successfully updated databases"
     return redirect('adminPage')
-
