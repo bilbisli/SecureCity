@@ -3,6 +3,11 @@ pipeline {
             docker { image 'python:3.8' }
         }
          stages {
+           stage ('GIT Checkout'){
+                steps {
+                        git changelog: false, poll: false, url: 'https://github.com/Project-Management-SCE/PM2022_TEAM_11.git'
+                }
+             }
             stage('Build') {
                 steps {
                          
