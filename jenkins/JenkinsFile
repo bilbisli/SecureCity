@@ -35,7 +35,7 @@ pipeline {
                 steps {
                         withEnv(["HOME=${env.WORKSPACE}"]){
                                 dir("SecureCity"){
-                                        sh 'python manage.py test --tag=unitest --source="."'
+                                        sh 'python manage.py test "./" --tag=unitest'
                                 }
                         }
                 }
@@ -44,7 +44,7 @@ pipeline {
                 steps {
                         withEnv(["HOME=${env.WORKSPACE}"]){
                                 dir("SecureCity"){
-                                        sh 'python manage.py test --tag=integrationTest --source="."'
+                                        sh 'python manage.py test "./" --tag=integrationTest'
                                 }
                         }
                 }
