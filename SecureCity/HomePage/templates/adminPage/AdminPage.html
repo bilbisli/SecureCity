@@ -61,7 +61,6 @@
                   {% if type == "request" %}
                     <th>Approve</th>
                   {% endif %}
-
                   <th>Delete</th>
                 </tr>
                 {% for obj in objects %}
@@ -80,9 +79,7 @@
                         {% endif %}
                     {% endfor %}
                     {% if type == "request" %}
-                                <td><a href="{% url 'adminApprove' %}?DeleteObject={{ type }}{{ obj.userAsked.id }}"><button type="submit" onclick="return confirm('Are you sure?')">V️</button></a></td>
-                    {% endif %}
-                        {% if type == "request" %}
+                                <td><a href="{% url 'adminApprove' %}?ApproveObject={{ type }}{{ obj.userAsked.id }}"><button type="submit" onclick="return confirm('Are you sure?')">✅️</button></a></td>
                                 <td><a href="{% url 'adminDelete' %}?DeleteObject={{ type }}{{ obj.userAsked.id }}"><button type="submit" onclick="return confirm('Are you sure?')">❌️</button></a></td>
                     {% else %}
                                 <td><a href="{% url 'adminDelete' %}?DeleteObject={{ type }}{{ obj.id }}"><button type="submit" onclick="return confirm('Are you sure?')">❌️</button></a></td>
