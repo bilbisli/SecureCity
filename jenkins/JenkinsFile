@@ -34,14 +34,14 @@ pipeline {
             stage('UnitTest') {
                 steps {
                         withEnv(["HOME=${env.WORKSPACE}"]){
-                                        sh 'python SecureCity/manage.py test ./SecureCity'
+                                        sh 'python SecureCity/manage.py test --tag=unitTest ./SecureCity'
                         }
                 }
             }
              stage('IntegrationTest') {
                 steps {
                         withEnv(["HOME=${env.WORKSPACE}"]){
-                                sh 'python SecureCity/manage.py test ./SecureCity'
+                                sh 'python SecureCity/manage.py test --tag=integrationTest ./SecureCity'
                         }
                 }
             }
