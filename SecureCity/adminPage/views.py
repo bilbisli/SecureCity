@@ -121,7 +121,9 @@ def adminApprove(request):
         if "request" in obj:
             obj = obj.replace("request", '')
             obj = get_object_or_404(AdminModels.AdminRequest, userAsked__id=obj)
-        obj.delete()
+            UserObj = get_object_or_404(AuthModels.Parent, user=obj.get_userAsked())
+            UserObj.setPatrolManager()
+            obj.delete()
     return redirect('adminPage')
 
 
