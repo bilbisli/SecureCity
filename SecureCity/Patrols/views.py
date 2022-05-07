@@ -40,7 +40,7 @@ def patrol_management(request):
                 priorities.append(p.priority)
                 managers.append(str(p.manager))
                 dates.append(str(p.date))
-                between.append(str(p.start_time)+'-'+str(p.end_time))
+                between.append(str(p.start_time) + '-' + str(p.end_time))
             csvFile = pd.DataFrame()
             csvFile['Title'] = titles
             csvFile['Location'] = locations
@@ -55,8 +55,8 @@ def patrol_management(request):
 
     patrols = [(number + 1, patrol) for number, patrol in enumerate(request.user.patrols.all())]
     context = {
-            'patrols': patrols,
-            'error': error
+        'patrols': patrols,
+        'error': error
     }
     return render(request, 'Patrols/PatrolManagement.html', context)
 
@@ -97,7 +97,6 @@ def parent_patrol(request):
             eTime = datetime.strptime(request.POST.get('ETime'), '%H:%M').time()
             activePatrols = list(activePatrols)
             activePatrols = list(filter(lambda x: x.start_time <= eTime, activePatrols))
-
 
     context = {
         'activePatrols': activePatrols,

@@ -1,16 +1,12 @@
 import csv
 import io
-
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.test import TestCase, RequestFactory, Client
 from django.contrib.auth.models import User
 from django.urls import reverse, resolve
 from django.test import tag
-
 from Patrols.views import patrol_management, patrol_page
-
 from Patrols.models import Patrol
-
 
 
 @tag('integrationTest')
@@ -74,7 +70,7 @@ class PatrolManagementTest(TestCase):
         self.user.save()
         self.assertTrue(self.user.profile.is_patrol_manager)
         self.assertTrue(self.user.is_authenticated)
-        lst = {"ToCSV": [self.patrol.id,]}
+        lst = {"ToCSV": [self.patrol.id, ]}
         response = self.client.post(reverse('PatrolManagement'), lst)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.__class__, HttpResponse)
@@ -108,6 +104,7 @@ class PatrolManagementTest(TestCase):
         response = self.client.post('/patrols/PatrolManagement/CreatePatrol')
         self.assertEqual(response.status_code, 200)
         self.assertNotEqual(response.status_code, 404)
+
 
 @tag('unitTest')
 class PatrolPageTest(TestCase):
