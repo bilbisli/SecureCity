@@ -17,7 +17,8 @@ class Parent(models.Model):
     First_Name = models.CharField(validators=[MinLengthValidator(2)], max_length=50)
     Last_Name = models.CharField(validators=[MinLengthValidator(2)], max_length=50)
     neighborhood_CHOICES = (
-        ('1', 'Neve Zeev'), ('2', 'Neot Lon')
+        ('1', 'Neve Zeev'), ('2', 'Neot Lon'), ('3', 'Ramot'), ('4', 'Neve Noy'),
+
     )
 
     City = models.CharField(validators=[MinLengthValidator(2)], max_length=50)
