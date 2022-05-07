@@ -26,7 +26,7 @@ function myFunction(id) {
 <body>
 {#   <link rel="stylesheet" href="/static/style_back_all.css">#}
 <br>
-		<div class="row">
+<div class="row">
 			<div class="col-md">
 				<div class="card card-body" id="general">
 					<h5>List of patrols:</h5>
@@ -123,74 +123,69 @@ function myFunction(id) {
 
         </style>
     </div>
-
-					<table class="table">
-						<tr>
-							<th>Title</th>
-							<th>Manager</th>
-							<th>Status</th>
-							<th>Location</th>
-                            <th>Start Time</th>
-							<th>End Time</th>
-							<th>Priority</th>
-							<th>Participants Needed</th>
-
-						</tr>
-                        <tr>
-							<th><b>Active Patrols</b></th>
-						</tr>
-                        {% for patrol in activePatrols %}
-							<tr>
-                                <td>
-                                <a href="{% url 'patrol_page' patrol.pk %}" style="color:#0A0000; font-weight:500">
-                                    {{ patrol.title }}
-                                </a>
-                                </td>
-                                <td>{{patrol.manager}}</td>
-                                <td>{{patrol.status}}</td>
-                                <td>{{patrol.location}}</td>
-                                <td>{{patrol.start_time}}</td>
-                                <td>{{patrol.end_time}}</td>
-                                <td>{{patrol.priority}}</td>
-                                <td>{{patrol.participants_needed}}</td>
-							</tr>
-						{% endfor %}
-                        <tr>
-							<th><b>Archive Patrols</b></th>
-						</tr>
-                        {% for patrol in donePatrols %}
-							<tr>
-								<td>{{patrol.title}}</td>
-								<td>{{patrol.manager}}</td>
-								<td>{{patrol.status}}</td>
-								<td>{{patrol.location}}</td>
-								<td>{{patrol.start_time}}</td>
-								<td>{{patrol.end_time}}</td>
-								<td>{{patrol.priority}}</td>
-								<td>{{patrol.participants_needed}}</td>
-                                {% if user.is_superuser %}
-                                    <td><button id="b_{{ patrol.id }}" onclick="myFunction({{ patrol.id }})">Show Summary</button></td>
-                                    <tr id="{{ patrol.id }}" style="display: none">
-                                        <td>
-                                            <h5>Summary:</h5>
-                                            {{ patrol.description }}
-                                        </td>
-                                    </tr>
-                                {% endif %}
-							</tr>
-						{% endfor %}
-
-					</table>
-				</div>
+                        <table class="table">
+                            <tr>
+                                <th>Title</th>
+                                <th>Manager</th>
+                                <th>Status</th>
+                                <th>Location</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                                <th>Priority</th>
+                                <th>Participants Needed</th>
+                            </tr>
+                            <tr>
+                                <th><b>Active Patrols</b></th>
+                            </tr>
+                            {% for patrol in activePatrols %}
+                                <tr>
+                                    <td>
+                                        <a href="{% url 'patrol_page' patrol.pk %}" style="color:#0A0000; font-weight:500">
+                                            {{ patrol.title }}
+                                        </a>
+                                    </td>
+                                    <td>{{patrol.manager}}</td>
+                                    <td>{{patrol.status}}</td>
+                                    <td>{{patrol.location}}</td>
+                                    <td>{{patrol.start_time}}</td>
+                                    <td>{{patrol.end_time}}</td>
+                                    <td>{{patrol.priority}}</td>
+                                    <td>{{patrol.participants_needed}}</td>
+                                </tr>
+                            {% endfor %}
+                            <tr>
+                                <th><b>Archive Patrols</b></th>
+                            </tr>
+                            {% for patrol in donePatrols %}
+                                <tr>
+                                    <td>{{patrol.title}}</td>
+                                    <td>{{patrol.manager}}</td>
+                                    <td>{{patrol.status}}</td>
+                                    <td>{{patrol.location}}</td>
+                                    <td>{{patrol.start_time}}</td>
+                                    <td>{{patrol.end_time}}</td>
+                                    <td>{{patrol.priority}}</td>
+                                    <td>{{patrol.participants_needed}}</td>
+                                    {% if user.is_superuser %}
+                                        <td><button id="b_{{ patrol.id }}" onclick="myFunction({{ patrol.id }})">Show Summary</button></td>
+                                        <tr id="{{ patrol.id }}" style="display: none">
+                                            <td>
+                                                <h5>Summary:</h5>
+                                                {{ patrol.description }}
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+					    </table>
+                </div>
 			</div>
-
 		</div>
     <div>
         {# add patrol button #}
-        <br>
-        <br>
+        <br><br>
         <a href="{% url 'CreatePatrol' %}" class="btn btn-primary" style="margin-left:2em">Add Patrol</a>
-                <br>        <br>
+        <br><br>
     </div>
 	<style>
 	        #logo{

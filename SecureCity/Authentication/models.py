@@ -18,10 +18,9 @@ class Parent(models.Model):
     Last_Name = models.CharField(validators=[MinLengthValidator(2)], max_length=50)
     neighborhood_CHOICES = (
         ('1', 'Neve Zeev'), ('2', 'Neot Lon'), ('3', 'Ramot'), ('4', 'Neve Noy'),
-
     )
 
-    City = models.CharField(validators=[MinLengthValidator(2)], max_length=50)
+    City = models.CharField(default='Beer Sheba', validators=[MinLengthValidator(2)], max_length=50)
     Neighborhood = models.CharField(default='', choices=neighborhood_CHOICES, max_length=50)
     is_patrol_manager = models.BooleanField(default=False)
 
