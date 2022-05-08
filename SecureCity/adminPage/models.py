@@ -54,26 +54,19 @@ def update_data(data_name='crime_records_data',
                 save=True,):
     # get the data from the api
     package_search_url = f'{api_endpoint}{data_packages_search_path}{data_name}'
-    print(package_search_url)
     results = requests.get(package_search_url).json()['result']['results'][0]['resources']
     db = filter(lambda r: r['format'] in ['exel', 'JSON', 'XLSX', 'CSV', 'EXCEL'], results)
 
     if to_df:
         db = next(db)
-
-        print('\n\n--1--\n\n', db, '\n\n--1--\n\n')
         try:
             db_id = db['id']
             db_url = f'{api_endpoint}{data_search_path}{db_id}&limit={limit}'
             response = requests.get(db_url)
             db = response.json()['result']['records']
-
         except KeyError:
             db = db['url']
-    # else:
-    #     db = requests.get(package_search_url).json()['result']['resources']
     df = db
-    print('\n\n--2--\n\n', 'here', '\n\n--2--\n\n')
     if to_df:
         df = pd.DataFrame.from_records(db)
 
