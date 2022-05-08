@@ -5,6 +5,7 @@ from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from .forms import ExtendedUserCreationForm, ParentProfileForm
+from Patrols import models as PatrolModels
 
 
 def AddParent(request):
@@ -59,4 +60,12 @@ def loginU(request):
 
 
 def residentPage(request):
-    return render(request, 'Authentication/residentPage.html')
+    objects = PatrolModels.Patrol.objects.filter(manager=request.user)
+    fields = PatrolModels.Patrol._meta.get_fields()[:-3]
+    type = "patrol"
+    context = {
+        'objects': objects,
+        'fields': fields,
+        'type': type
+    }
+    return render(request, 'Authentication/residentPage.html', context)

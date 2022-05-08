@@ -8,7 +8,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
-
 class Parent(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     type = models.CharField(max_length=50, default='Parent')
@@ -18,12 +17,19 @@ class Parent(models.Model):
     First_Name = models.CharField(validators=[MinLengthValidator(2)], max_length=50)
     Last_Name = models.CharField(validators=[MinLengthValidator(2)], max_length=50)
     neighborhood_CHOICES = (
-        ('1', 'Neve Zeev'), ('2', 'Neot Lon')
+        ('1', 'Neve Zeev'), ('2', 'Neot Lon'), ('3', 'Ramot'), ('4', 'Neve Noy'),
     )
 
-    City = models.CharField(validators=[MinLengthValidator(2)], max_length=50)
+    City = models.CharField(default='Beer Sheba', validators=[MinLengthValidator(2)], max_length=50)
     Neighborhood = models.CharField(default='', choices=neighborhood_CHOICES, max_length=50)
     is_patrol_manager = models.BooleanField(default=False)
+
+    def setPatrolManager(self):
+        self.is_patrol_manager = True
+        self.save()
+
+    def getPatrolManager(self):
+        return self.is_patrol_manager
 
     def get_fields_values(self):
         return [(field.name, field.value_to_string(self)) for field in Parent._meta.fields]

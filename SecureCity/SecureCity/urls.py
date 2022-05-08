@@ -32,6 +32,7 @@ urlpatterns = [
     path('adminPage/', AdminV.adminP, name="adminPage"),
     path('adminEdit/', AdminV.adminEdit, name="adminEdit"),
     path('adminDelete/', AdminV.adminDelete, name="adminDelete"),
+    path('adminApprove/', AdminV.adminApprove, name="adminApprove"),
     path(r'ContactManagement/', ContactV.contact_management, name='ContactManagement'),
     path('mypage/', AuthenticationV.residentPage, name='resident_page'),
     path('becomePatrolManager/', AdminRequestV.becomePatrolManager, name='becomePatrolManager'),

@@ -3,8 +3,10 @@ from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.http import HttpResponse, Http404
 from django.shortcuts import render
+from datetime import datetime
 from .forms import PatrolForm
 from .models import Patrol
+from django.db.models import Q
 
 
 def patrol_page(request, patrol_id):
@@ -38,7 +40,7 @@ def patrol_management(request):
                 priorities.append(p.priority)
                 managers.append(str(p.manager))
                 dates.append(str(p.date))
-                between.append(str(p.start_time)+'-'+str(p.end_time))
+                between.append(str(p.start_time) + '-' + str(p.end_time))
             csvFile = pd.DataFrame()
             csvFile['Title'] = titles
             csvFile['Location'] = locations
@@ -53,8 +55,8 @@ def patrol_management(request):
 
     patrols = [(number + 1, patrol) for number, patrol in enumerate(request.user.patrols.all())]
     context = {
-            'patrols': patrols,
-            'error': error
+        'patrols': patrols,
+        'error': error
     }
     return render(request, 'Patrols/PatrolManagement.html', context)
 
@@ -79,11 +81,23 @@ def create_patrol(request):
 @login_required(login_url='/Login/')
 def parent_patrol(request):
     if request.GET.get('sort') == 'Priority':
+        print("heklo")
         activePatrols = Patrol.objects.filter(patrol_status__in=["Creation", "Active"]).order_by('-priority')
         donePatrols = Patrol.objects.filter(patrol_status="Archive").order_by('-priority')
     else:
         activePatrols = Patrol.objects.filter(patrol_status__in=["Creation", "Active"])
         donePatrols = Patrol.objects.filter(patrol_status="Archive")
+
+    if request.method == 'POST':
+        if request.POST.get('STime') != '0':
+            sTime = datetime.strptime(request.POST.get('STime'), '%H:%M').time()
+            activePatrols = list(activePatrols)
+            activePatrols = list(filter(lambda x: x.start_time >= sTime, activePatrols))
+        if request.POST.get('ETime') != '0':
+            eTime = datetime.strptime(request.POST.get('ETime'), '%H:%M').time()
+            activePatrols = list(activePatrols)
+            activePatrols = list(filter(lambda x: x.start_time <= eTime, activePatrols))
+
     context = {
         'activePatrols': activePatrols,
         'donePatrols': donePatrols

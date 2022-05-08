@@ -3,13 +3,14 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import AdminRequest
 from .forms import AdminRequstForm
 
+
 def becomePatrolManager(request):
     if request.method == "GET":
         req = AdminRequest.objects.filter(userAsked__id=request.user.id)
         msg = ''
         if len(req) != 0:
             msg = "You've already posted an application, It's under consideration!"
-        return render(request, 'AdminRequest/becomePatrolManager.html',{'msg':msg})
+        return render(request, 'AdminRequest/becomePatrolManager.html', {'msg': msg})
     else:
         newRequest = AdminRequest.create(request.user, request.POST['text'])
         newRequest.save()

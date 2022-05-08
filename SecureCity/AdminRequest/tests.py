@@ -2,8 +2,10 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.test import TestCase, RequestFactory, Client
 from AdminRequest import views
+from django.test import tag
 
 
+@tag('unitTest')
 class AdminRequestTestCase(TestCase):
     def setUp(self):
         self.factory = RequestFactory()

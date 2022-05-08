@@ -4,6 +4,7 @@ from django.utils import timezone
 
 MAX_STRING = 150
 
+
 class AdminRequest(models.Model):
     userAsked = models.OneToOneField(User, on_delete=models.CASCADE, null=False, primary_key=True)
     date = models.DateField('date', default=timezone.now, null=False)
@@ -16,3 +17,6 @@ class AdminRequest(models.Model):
 
     def get_fields_values(self):
         return [(field.name, field.value_to_string(self)) for field in AdminRequest._meta.fields]
+
+    def get_userAsked(self):
+        return self.userAsked

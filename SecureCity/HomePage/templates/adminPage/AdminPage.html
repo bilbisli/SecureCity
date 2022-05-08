@@ -53,20 +53,23 @@
         {% if objects %}
             <br><br>
             <table>
-              <tr>
+                <tr>
                     <th>Edit</th>
                   {% for x in fields %}
                     <th>{{ x.name }}</th>
                   {% endfor %}
-                    <th>Delete</th>
-              </tr>
+                  {% if type == "request" %}
+                    <th>Approve</th>
+                  {% endif %}
+                  <th>Delete</th>
+                </tr>
                 {% for obj in objects %}
                     <tr>
-                    {% if type == "request" %}
+                        {% if type == "request" %}
                                 <td><a href="{% url 'adminEdit' %}?EditObject={{ type }}{{ obj.userAsked.id }}"><button>✏️</button></a></td>
-                    {% else %}
+                        {% else %}
                                 <td><a href="{% url 'adminEdit' %}?EditObject={{ type }}{{ obj.id }}"><button>✏️</button></a></td>
-                    {% endif %}
+                        {% endif %}
 
                     {% for name, value in obj.get_fields_values %}
                         {% if value %}
@@ -76,6 +79,7 @@
                         {% endif %}
                     {% endfor %}
                     {% if type == "request" %}
+                                <td><a href="{% url 'adminApprove' %}?ApproveObject={{ type }}{{ obj.userAsked.id }}"><button type="submit" onclick="return confirm('Are you sure?')">✅️</button></a></td>
                                 <td><a href="{% url 'adminDelete' %}?DeleteObject={{ type }}{{ obj.userAsked.id }}"><button type="submit" onclick="return confirm('Are you sure?')">❌️</button></a></td>
                     {% else %}
                                 <td><a href="{% url 'adminDelete' %}?DeleteObject={{ type }}{{ obj.id }}"><button type="submit" onclick="return confirm('Are you sure?')">❌️</button></a></td>
