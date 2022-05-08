@@ -34,12 +34,12 @@ class MeasureApiResponseTestCase(TestCase):
     """
     Test the response of the API
     """
-    def setUp(self):
-        # start timer
-        self.start_time = time.time()
+    # def setUp(self):
+    #     # start timer
+    #     self.start_time = time.clock()
 
     def test_measure_stat_area_response(self):
-        tick = time.time() - self.start_time
+        tick = time.time()
         # Update the stat-area database
         statistical_areas_df = update_data(data_name='stat_n-hoods_table',
                                            api_endpoint='https://opendataprod.br7.org.il/api/3/',
@@ -47,10 +47,10 @@ class MeasureApiResponseTestCase(TestCase):
                                            data_search_path='action/datastore_search?resource_id=',
                                            )
         toc = time.time()
-        print('statistical areas db updated in: ', tick - toc)
+        print('statistical areas db updated in: ', toc - tick)
 
     def test_measure_demographics_response(self):
-        tick = time.time() - self.start_time
+        tick = time.time()
         # Update the demographic database
         unified_demographics = update_data(data_name='demographics',
                                            api_endpoint='https://opendataprod.br7.org.il/api/3/',
@@ -61,10 +61,10 @@ class MeasureApiResponseTestCase(TestCase):
                                            save=False,
                                            )
         toc = time.time()
-        print('demographics db updated in: ', tick - toc)
+        print('demographics db updated in: ', toc - tick)
 
     def test_measure_crime_rates_response(self):
-        tick = time.time() - self.start_time
+        tick = time.time()
         # Update the crime database
         crime_rates_df = update_data(data_name='crime_records_data',
                                      api_endpoint='https://data.gov.il/api/3/',
@@ -73,4 +73,4 @@ class MeasureApiResponseTestCase(TestCase):
                                      df_preprocessing_function=crime_df_clean,
                                      )
         toc = time.time()
-        print('crime db updated in: ', tick - toc)
+        print('crime db updated in: ',  toc - tick)

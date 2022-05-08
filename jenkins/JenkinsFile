@@ -59,6 +59,15 @@ pipeline {
                         }
                 }
             }
+            stage('Measure API data extraction') {
+                steps {
+                        withEnv(["HOME=${env.WORKSPACE}"]){
+                                dir("SecureCity"){
+                                        sh 'python manage.py test --tag=measureApiResponse'
+                                }
+                        }
+                }
+            }
         }
        
     }
