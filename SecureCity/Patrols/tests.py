@@ -1,18 +1,16 @@
 import csv
 import io
-
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.test import TestCase, RequestFactory, Client
 from django.contrib.auth.models import User
 from django.urls import reverse, resolve
-
 from Patrols.views import patrol_management, patrol_page
-
 from Patrols.models import Patrol
 
 
 class PatrolManagementTest(TestCase):
     def setUp(self):
+        super().setUp()
         self.user = User.objects.create_user('testerFinal', 'tester@testing.com', 'testpassword')
         self.user.save()
         self.factory = RequestFactory()
@@ -29,6 +27,7 @@ class PatrolManagementTest(TestCase):
         self.patrol.delete()
         self.client.logout()
         self.user.delete()
+        super().tearDown()
 
     def test_patrolManagement_not_manager(self):
         # test patrol management when user is not manager
@@ -103,6 +102,7 @@ class PatrolManagementTest(TestCase):
 
 class PatrolPageTest(TestCase):
     def setUp(self):
+        super().setUp()
         self.user = User.objects.create_user('testerFinal', 'tester@testing.com', 'testpassword')
         self.user.save()
         self.factory = RequestFactory()
@@ -118,6 +118,7 @@ class PatrolPageTest(TestCase):
         self.patrol.delete()
         self.client.logout()
         self.user.delete()
+        super().tearDown()
 
     def test_patrol_page(self):
         # response = self.client.get('/patrols/PatrolManagement/PatrolPage/1')
