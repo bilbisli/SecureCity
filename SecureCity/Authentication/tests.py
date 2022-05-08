@@ -4,8 +4,6 @@ from django.test import RequestFactory, TestCase
 from django.contrib.auth.models import AnonymousUser, User
 from datetime import datetime
 
-
-
 from django.contrib.auth.models import User
 import datetime
 from Authentication.views import *
@@ -15,6 +13,7 @@ from Patrols import models as PatrolModels
 from django.test import tag
 
 from Authentication.views import residentPage, AddParent, loginU
+
 
 @tag('unitTest')
 class SignUptest(TestCase):
@@ -32,6 +31,7 @@ class SignUptest(TestCase):
         response = loginU(request)
         self.assertEqual(response.status_code, 200)
         self.assertNotEqual(response.status_code, 404)
+
 
 @tag('unitTest')
 class Parenttest(TestCase):
@@ -56,4 +56,3 @@ class Parenttest(TestCase):
 
     def tearDown(self):
         self.user.delete()
-

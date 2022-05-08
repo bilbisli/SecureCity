@@ -179,7 +179,7 @@ def crime_df_clean(df, city_query='באר שבע'):
             count_pairs = len(df[(df['StatisticCrimeGroup'] == crime_category) & (
                     df['StatArea'] == stat_area)])
             temp_d[crime_category] = count_pairs
-        crime_rates_df = crime_rates_df.append(temp_d, ignore_index=True)
+        crime_rates_df = pd.concat([crime_rates_df, pd.DataFrame.from_records([temp_d])], ignore_index=True)
 
     for crime_category in crime_rates_df:
         crime_rates_df[crime_category] = crime_rates_df[crime_category].astype(int)
