@@ -3,10 +3,11 @@ from django.contrib.auth.models import User
 from django.core.validators import MinLengthValidator
 from django.core.validators import RegexValidator
 import datetime
-
+from Patrols.models import get_locations
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+MEDIUM_STRING = 63
 
 class Parent(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
@@ -16,12 +17,9 @@ class Parent(models.Model):
     Birthday = models.DateField(default=datetime.date.today)
     First_Name = models.CharField(validators=[MinLengthValidator(2)], max_length=50)
     Last_Name = models.CharField(validators=[MinLengthValidator(2)], max_length=50)
-    neighborhood_CHOICES = (
-        ('1', 'Neve Zeev'), ('2', 'Neot Lon'), ('3', 'Ramot'), ('4', 'Neve Noy'),
-    )
-
+    models.CharField(max_length=MEDIUM_STRING, choices=get_locations())
     City = models.CharField(default='Beer Sheba', validators=[MinLengthValidator(2)], max_length=50)
-    Neighborhood = models.CharField(default='', choices=neighborhood_CHOICES, max_length=50)
+    Neighborhood = models.CharField(max_length=MEDIUM_STRING, choices=get_locations())
     is_patrol_manager = models.BooleanField(default=False)
 
     def setPatrolManager(self):

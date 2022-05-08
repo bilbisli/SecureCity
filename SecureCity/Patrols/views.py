@@ -52,8 +52,10 @@ def patrol_management(request):
             response['Content-Disposition'] = 'attachment; filename=Patrols_Summary.csv'
             csvFile.to_csv(path_or_buf=response)
             return response
-
-    patrols = [(number + 1, patrol) for number, patrol in enumerate(request.user.patrols.all())]
+    if request.user.is_superuser:
+        patrols = [(number + 1, patrol) for number, patrol in enumerate(Patrol.objects.all())]
+    else:
+        patrols = [(number + 1, patrol) for number, patrol in enumerate(request.user.patrols.all())]
     context = {
         'patrols': patrols,
         'error': error
@@ -81,9 +83,13 @@ def create_patrol(request):
 @login_required(login_url='/Login/')
 def parent_patrol(request):
     if request.GET.get('sort') == 'Priority':
-        print("heklo")
         activePatrols = Patrol.objects.filter(patrol_status__in=["Creation", "Active"]).order_by('-priority')
         donePatrols = Patrol.objects.filter(patrol_status="Archive").order_by('-priority')
+
+    elif request.GET.get('sort') == 'Location':
+        activePatrols = Patrol.objects.filter(location=request.user.profile.Neighborhood)
+        donePatrols = Patrol.objects.filter(patrol_status="Archive").filter(location=request.user.profile.Neighborhood)
+
     else:
         activePatrols = Patrol.objects.filter(patrol_status__in=["Creation", "Active"])
         donePatrols = Patrol.objects.filter(patrol_status="Archive")

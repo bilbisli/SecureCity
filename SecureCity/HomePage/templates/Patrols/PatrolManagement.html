@@ -32,17 +32,17 @@
                      <a href="{% url 'patrol_page' patrol.pk %}" style="color:#0A0000">
                                 {{ patrol }}
                      </a>
-                 {% if user.is_superuser %}
+
                             &nbsp;&nbsp;&nbsp; <b>To CSV?</b>&nbsp;&nbsp;<input type="checkbox" name="ToCSV" value="{{ patrol.id }}" checked>
-                 {% endif %}
+
              {% endfor %}
          </ul>
         <hr>
     </div>
 <h6 style="color: red">{{ error }}</h6>
-    {% if user.is_superuser %}
+
         <button type="submit" class="btn btn-primary">Download CSV File</button>
-    {% endif %}
+
 </form>
 </body>
 </html>

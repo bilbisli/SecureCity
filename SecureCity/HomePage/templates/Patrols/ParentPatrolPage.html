@@ -35,6 +35,10 @@ function myFunction(id) {
 <!--	sort is here-->
 					<tr><th><a href="{{ parent_patrol }}?sort=Priority">Sort By Priority </a></th>
                         <th>
+                {% if request.user.profile.is_patrol_manager %}
+                        <tr><th><a href="{{ parent_patrol }}?sort=Location">Show Only In My Location</a></th>
+                        <th>
+                {% endif %}
 
                 <div id="example">
         <div class="demo-section k-header" style="width: 600px;">
@@ -65,40 +69,6 @@ function myFunction(id) {
                     </form>
 
         </div>
-        <script>
-            $(document).ready(function() {
-                function startChange() {
-                    var startTime = start.value();
-
-                    if (startTime) {
-                        startTime = new Date(startTime);
-
-                        end.max(startTime);
-
-                        startTime.setMinutes(startTime.getMinutes() + this.options.interval);
-
-                        end.min(startTime);
-                        end.value(startTime);
-                    }
-                }
-
-                //init start timepicker
-                var start = $("#start").kendoTimePicker({
-                    change: startChange
-                }).data("kendoTimePicker");
-
-                //init end timepicker
-                var end = $("#end").kendoTimePicker().data("kendoTimePicker");
-
-                //define min/max range
-                start.min("8:00 AM");
-                start.max("6:00 PM");
-
-                //define min/max range
-                end.min("8:00 AM");
-                end.max("7:30 AM");
-            });
-        </script>
 
         <style scoped>
             #example .k-timepicker {
