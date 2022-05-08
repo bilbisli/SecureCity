@@ -52,15 +52,7 @@ def update_data(data_name='crime_records_data',
                 organize_func=organize_primary_and_backup_data,
                 to_df=True,
                 save=True,):
-
-
-
     # get the data from the api
-    # url = f'{api_endpoint}/{api_url}&limit={limit}'
-    # response = requests.get(url)
-    # db = response.json()['result']['records']
-    # df = pd.DataFrame(db)
-
     package_search_url = f'{api_endpoint}{data_packages_search_path}{data_name}'
     print(package_search_url)
     results = requests.get(package_search_url).json()['result']['results'][0]['resources']
