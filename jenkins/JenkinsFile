@@ -18,8 +18,6 @@ pipeline {
                     heroku container:login
                     heroku container:push web --app secure-city
                     heroku container:release web --app secure-city
-                    heroku run python SecureCity/manage.py makemigrations
-//                  heroku run python SecureCity/manage.py migrate
                 '''
 //                 sh '''
 //                             rm -f install.sh
