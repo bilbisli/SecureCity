@@ -6,17 +6,16 @@ pipeline {
         stage('Build') {
             agent {
                 docker {
-                    image 'cimg/base:stable'
+                    image 'python:3.8.2'
                     args '-u root'
                  }
             }
             steps {
                 // for first run add to sh:
                 //      heroku authorizations:create
-                //      heroku update
-                //
                 sh '''
                     curl https://cli-assets.heroku.com/install.sh | sh;
+                    heroku update
                     heroku container:login
                     heroku container:push web --app secure-city
                     heroku container:release web --app secure-city
