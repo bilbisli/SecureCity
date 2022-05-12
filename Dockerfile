@@ -53,7 +53,7 @@ RUN rm -f -r */migrations/0*
 CMD ["python", "SecureCity/manage.py","flush","--no-input"]
 CMD ["python", "SecureCity/manage.py","makemigrations"]
 CMD ["python", "SecureCity/manage.py","migrate"]
-WORKDIR /SecureCity/SecureCity
-RUN gunicorn SecureCity.wsgi
+#WORKDIR /SecureCity/SecureCity
+#RUN gunicorn SecureCity.wsgi
 
 EXPOSE 8000
