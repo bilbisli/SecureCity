@@ -56,4 +56,4 @@ RUN pip install django-crispy-forms
 #WORKDIR /SecureCity/SecureCity
 #RUN gunicorn SecureCity.wsgi
 
-EXPOSE 8000
+#EXPOSE 8000
