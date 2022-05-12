@@ -14,11 +14,8 @@ pipeline {
                 sh '''
                     curl https://cli-assets.heroku.com/install.sh | sh;
                     heroku authorizations:create
-
                     heroku update
                     docker ps
-                    heroku login
-
                     heroku container:login
                     heroku container:push web --app secure-city
                     heroku container:release web --app secure-city
