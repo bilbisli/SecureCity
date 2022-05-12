@@ -7,19 +7,26 @@ pipeline {
             agent {
                 docker {
                     image 'python:3.8'
+                    args '-u root'
                  }
             }
             steps {
                 sh '''
-                            rm -f install.sh
-                            rm -f install.sh.2
-                            wget https://cli-assets.heroku.com/install.sh --no-check-certificate;
-                            chmod +x install.sh
-                            sh install.sh
-                            heroku container:login
-                            heroku container:push web --app secure-city
-                            heroku container:release web --app secure-city
-                        '''
+                    curl https://cli-assets.heroku.com/install.sh | sh;
+                    heroku container:login
+                    heroku container:push web --app sce-flask-template
+                    heroku container:release web --app sce-flask-template
+                '''
+//                 sh '''
+//                             rm -f install.sh
+//                             rm -f install.sh.2
+//                             wget https://cli-assets.heroku.com/install.sh --no-check-certificate;
+//                             chmod +x install.sh
+//                             sh install.sh;
+//                             heroku container:login
+//                             heroku container:push web --app secure-city
+//                             heroku container:release web --app secure-city
+//                         '''
             }
         }
 
