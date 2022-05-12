@@ -11,11 +11,12 @@ pipeline {
                  }
             }
             steps {
+                // for first run add to sh:
+                //      heroku authorizations:create
+                //      heroku update
+                //
                 sh '''
                     curl https://cli-assets.heroku.com/install.sh | sh;
-                    heroku authorizations:create
-                    heroku update
-                    docker ps
                     heroku container:login
                     heroku container:push web --app secure-city
                     heroku container:release web --app secure-city
