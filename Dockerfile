@@ -3,7 +3,9 @@ WORKDIR /SecureCity
 ADD . /SecureCity
 
 RUN apk --no-cache add musl-dev linux-headers g++
+RUN apk --update --upgrade add gcc musl-dev jpeg-dev zlib-dev libffi-dev cairo-dev pango-dev gdk-pixbuf-dev
 RUN apk update && apk add gcc libc-dev make git libffi-dev openssl-dev python3-dev libxml2-dev libxslt-dev
+RUN apk add py2-numpy@community py2-scipy@community py-pandas@edge
 RUN python3 -m pip install --upgrade pip setuptools wheel
 RUN pip3 install -r requirements.txt
 RUN pip3 install django-crispy-forms
