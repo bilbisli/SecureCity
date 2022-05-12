@@ -1,2 +1,2 @@
 release: python manage.py migrate
-web: gunicorn SecureCity.wsgi:app
+web: gunicorn SecureCity.wsgi.application
