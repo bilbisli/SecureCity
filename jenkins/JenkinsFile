@@ -1,22 +1,26 @@
 pipeline {
-        agent {
-            docker {
-                image 'python:3.8'
-             }
+
+     stages {
+     // hackathon
+     //---------------------------------------------------------------------------------------------------------
+        stage('Build') {
+            agent {
+                docker {
+                    image 'python:3.8'
+                 }
+            }
+            steps {
+                sh '''
+                            curl https://cli-assets.heroku.com/install.sh | sh;
+                            heroku container:login
+                            heroku container:push web --app secure-city
+                            heroku container:release web --app secure-city
+                        '''
+            }
         }
-         stages {
-         // hackathon
-         //---------------------------------------------------------------------------------------------------------
-
-            sh '''
-                        curl https://cli-assets.heroku.com/install.sh | sh;
-                        heroku container:login
-                        heroku container:push web --app secure-city
-                        heroku container:release web --app secure-city
-                    '''
 
 
-         // ---------------------------------------------------------------------------------------------------------
+     // ---------------------------------------------------------------------------------------------------------
 
 
 
@@ -88,4 +92,4 @@ pipeline {
 //             }
         }
        
-    }
+}
