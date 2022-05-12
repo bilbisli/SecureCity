@@ -49,10 +49,10 @@ RUN pip install django-crispy-forms
 
 #RUN pip install pandas
 #RUN pip install wheel
-RUN rm -f -r */migrations/0*
-CMD ["python", "SecureCity/manage.py","flush","--no-input"]
-CMD ["python", "SecureCity/manage.py","makemigrations"]
-CMD ["python", "SecureCity/manage.py","migrate"]
+#RUN rm -f -r */migrations/0*
+#CMD ["python", "SecureCity/manage.py","flush","--no-input"]
+#CMD ["python", "SecureCity/manage.py","makemigrations"]
+#CMD ["python", "SecureCity/manage.py","migrate"]
 #WORKDIR /SecureCity/SecureCity
 #RUN gunicorn SecureCity.wsgi
 
