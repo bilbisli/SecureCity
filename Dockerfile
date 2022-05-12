@@ -2,7 +2,7 @@ FROM python:3.8-alpine
 WORKDIR /SecureCity
 ADD . /SecureCity
 
-
+RUN apk --no-cache add musl-dev linux-headers g++
 RUN python3 -m pip install --upgrade pip setuptools wheel
 RUN pip3 install -r requirements.txt
 RUN pip3 install django-crispy-forms
