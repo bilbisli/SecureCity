@@ -14,9 +14,11 @@ pipeline {
                 sh '''
                     curl https://cli-assets.heroku.com/install.sh | sh;
                     heroku update
+                    heroku login
+                    docker ps
                     heroku container:login
-                    heroku container:push web --app sce-flask-template
-                    heroku container:release web --app sce-flask-template
+                    heroku container:push web --app secure-city
+                    heroku container:release web --app secure-city
                 '''
 //                 sh '''
 //                             rm -f install.sh
