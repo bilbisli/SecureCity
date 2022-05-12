@@ -8,10 +8,10 @@ pipeline {
                 docker {
                     image 'cimg/base:stable'
                     args '-u root'
-                    docker system prune -f
                  }
             }
             steps {
+                sh 'docker system prune -f'
                 // for first run add to sh:
                 //      heroku authorizations:create
                 sh '''
