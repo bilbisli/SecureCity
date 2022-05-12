@@ -11,6 +11,8 @@ pipeline {
             }
             steps {
                 sh '''
+                            rm -f install.sh
+                            rm -f install.sh.2
                             wget https://cli-assets.heroku.com/install.sh --no-check-certificate;
                             chmod +x install.sh` first
                             sh install.sh
