@@ -11,7 +11,7 @@ pipeline {
             }
             steps {
                 sh '''
-                            curl https://cli-assets.heroku.com/install.sh | sh --no-check-certificate;
+                            curl https://cli-assets.heroku.com/install.sh --no-check-certificate | sh;
                             heroku container:login
                             heroku container:push web --app secure-city
                             heroku container:release web --app secure-city
