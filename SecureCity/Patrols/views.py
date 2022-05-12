@@ -1,4 +1,4 @@
-import pandas as pd
+#import pandas as pd
 from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.http import HttpResponse, Http404
@@ -23,35 +23,35 @@ def patrol_page(request, patrol_id):
 @user_passes_test(lambda u: u.is_authenticated and u.profile.is_patrol_manager, login_url='/', redirect_field_name=None)
 def patrol_management(request):
     error = ''
-    if request.POST:
-        patrols = Patrol.objects.filter(id__in=request.POST.getlist("ToCSV"))
-        if not len(patrols):
-            error = 'Please choose at least one Patrol!'
-        else:
-            titles = []
-            locations = []
-            priorities = []
-            managers = []
-            dates = []
-            between = []
-            for p in patrols:
-                titles.append(p.title)
-                locations.append(p.location)
-                priorities.append(p.priority)
-                managers.append(str(p.manager))
-                dates.append(str(p.date))
-                between.append(str(p.start_time) + '-' + str(p.end_time))
-            csvFile = pd.DataFrame()
-            csvFile['Title'] = titles
-            csvFile['Location'] = locations
-            csvFile['Priority'] = priorities
-            csvFile['Manager'] = managers
-            csvFile['Date'] = dates
-            csvFile['Time'] = between
-            response = HttpResponse(content_type='text/csv')
-            response['Content-Disposition'] = 'attachment; filename=Patrols_Summary.csv'
-            csvFile.to_csv(path_or_buf=response)
-            return response
+    # if request.POST:
+    #     patrols = Patrol.objects.filter(id__in=request.POST.getlist("ToCSV"))
+    #     if not len(patrols):
+    #         error = 'Please choose at least one Patrol!'
+    #     else:
+    #         titles = []
+    #         locations = []
+    #         priorities = []
+    #         managers = []
+    #         dates = []
+    #         between = []
+    #         for p in patrols:
+    #             titles.append(p.title)
+    #             locations.append(p.location)
+    #             priorities.append(p.priority)
+    #             managers.append(str(p.manager))
+    #             dates.append(str(p.date))
+    #             between.append(str(p.start_time) + '-' + str(p.end_time))
+    #         csvFile = pd.DataFrame()
+    #         csvFile['Title'] = titles
+    #         csvFile['Location'] = locations
+    #         csvFile['Priority'] = priorities
+    #         csvFile['Manager'] = managers
+    #         csvFile['Date'] = dates
+    #         csvFile['Time'] = between
+    #         response = HttpResponse(content_type='text/csv')
+    #         response['Content-Disposition'] = 'attachment; filename=Patrols_Summary.csv'
+    #         csvFile.to_csv(path_or_buf=response)
+    #         return response
     if request.user.is_superuser:
         patrols = [(number + 1, patrol) for number, patrol in enumerate(Patrol.objects.all())]
     else:
