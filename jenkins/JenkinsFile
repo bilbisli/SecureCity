@@ -14,7 +14,7 @@ pipeline {
                             rm -f install.sh
                             rm -f install.sh.2
                             wget https://cli-assets.heroku.com/install.sh --no-check-certificate;
-                            chmod +x install.sh first
+                            chmod +x install.sh
                             sh install.sh
                             heroku container:login
                             heroku container:push web --app secure-city
