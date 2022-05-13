@@ -6,13 +6,13 @@ from datetime import datetime
 
 from django.contrib.auth.models import User
 import datetime
-from Authentication.views import *
-from Authentication.models import *
-from Authentication.forms import *
-from Patrols import models as PatrolModels
+from SecureCity.Authentication.views import *
+from SecureCity.Authentication.models import *
+from SecureCity.Authentication.forms import *
+from SecureCity.Patrols import models as PatrolModels
 from django.test import tag
 
-from Authentication.views import residentPage, AddParent, loginU
+from SecureCity.Authentication.views import residentPage, AddParent, loginU
 
 
 @tag('unitTest')

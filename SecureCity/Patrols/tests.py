@@ -5,8 +5,8 @@ from django.test import TestCase, RequestFactory, Client
 from django.contrib.auth.models import User
 from django.urls import reverse, resolve
 from django.test import tag
-from Patrols.views import patrol_management, patrol_page
-from Patrols.models import Patrol
+from .views import patrol_management, patrol_page
+from .models import Patrol
 
 
 @tag('integrationTest')
