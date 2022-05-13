@@ -53,7 +53,7 @@ RUN pip install django-crispy-forms
 #############################################################################
 RUN python manage.py makemigrations
 RUN python manage.py migrate
-RUN python manage.py createsuperuser --username admin --email noemail@example.com --noinput
+#RUN python manage.py createsuperuser --username admin --email noemail@example.com --noinput
 #############################################################################
 
 CMD gunicorn --bind 0.0.0.0:$PORT SecureCity.wsgi
