@@ -1,111 +1,93 @@
 pipeline {
     agent none
      stages {
-     // hackathon
-     //---------------------------------------------------------------------------------------------------------
-        stage('Build') {
-            agent {
-                docker {
-                    image 'cimg/base:stable'
-                    args '-u root'
-                 }
+            stage('Build') {
+                steps {
+
+                        withEnv(["HOME=${env.WORKSPACE}"]){
+                                dir("SecureCity"){
+                                        sh 'python3 -m pip install --upgrade pip setuptools wheel'
+                                        sh 'pip3 install -r requirements.txt'
+                                        sh 'pip3 install django-crispy-forms'
+                                        sh 'python manage.py flush --no-input'
+                                }
+                        }
+                }
+
             }
-            steps {
+            stage('Compile') {
+                steps {
+
+                        withEnv(["HOME=${env.WORKSPACE}"]){
+                                dir("SecureCity"){
+                                        sh 'rm -f -r */migrations/0*'
+                                        sh 'python manage.py makemigrations'
+                                        sh 'python manage.py migrate'
+                                        sh 'python manage.py check'     // compilation testing
+                                }
+                        }
+                }
+
+            }
+            stage('UnitTest') {
+                steps {
+                        withEnv(["HOME=${env.WORKSPACE}"]){
+                                dir("SecureCity"){
+                                        sh 'python manage.py test --tag=unitTest'
+                                }
+                        }
+                }
+            }
+             stage('IntegrationTest') {
+                steps {
+                        withEnv(["HOME=${env.WORKSPACE}"]){
+                                dir("SecureCity"){
+                                        sh 'python manage.py test --tag=integrationTest'
+                                }
+                        }
+                }
+            }
+            stage('Coverage') {
+                steps {
+                        withEnv(["HOME=${env.WORKSPACE}"]){
+                                dir("SecureCity"){
+                                        sh 'python -m coverage run --source="." manage.py test'
+                                        sh 'python -m coverage report'
+                                }
+                        }
+                }
+            }
+            stage('Measure API data extraction') {
+                steps {
+                        withEnv(["HOME=${env.WORKSPACE}"]){
+                                dir("SecureCity"){
+                                        sh 'python manage.py test --tag=measureApiResponse'
+                                }
+                        }
+                }
+            }
+            stage('Deploy') {
+                agent {
+                    docker {
+                        image 'cimg/base:stable'
+                        args '-u root'
+                    }
+                }
+                steps {
 //                 sh 'docker system prune -f' // if memory runs out
                 // for first run add to sh:
                 //      heroku authorizations:create
-                dir("SecureCity"){
-                    sh '''
-                        curl https://cli-assets.heroku.com/install.sh | sh;
-                        heroku container:login
-                        heroku container:push web --app secure-city
-                        heroku container:release web --app secure-city
-                    '''
+                    dir("SecureCity"){
+                        sh '''
+                            curl https://cli-assets.heroku.com/install.sh | sh;
+                            heroku container:login
+                            heroku container:push web --app secure-city
+                            heroku container:release web --app secure-city
+                        '''
+                    }
                 }
-//                 sh '''
-//                             rm -f install.sh
-//                             rm -f install.sh.2
-//                             wget https://cli-assets.heroku.com/install.sh --no-check-certificate;
-//                             chmod +x install.sh
-//                             sh install.sh;
-//                             heroku container:login
-//                             heroku container:push web --app secure-city
-//                             heroku container:release web --app secure-city
-//                         '''
-            }
+           }
         }
 
-
-     // ---------------------------------------------------------------------------------------------------------
-
-
-
-
-//             stage('Build') {
-//                 steps {
-//
-//                         withEnv(["HOME=${env.WORKSPACE}"]){
-//                                 dir("SecureCity"){
-//                                         sh 'python3 -m pip install --upgrade pip setuptools wheel'
-//                                         sh 'pip3 install -r requirements.txt'
-//                                         sh 'pip3 install django-crispy-forms'
-//                                         sh 'python manage.py flush --no-input'
-//                                 }
-//                         }
-//                 }
-//
-//             }
-//             stage('Compile') {
-//                 steps {
-//
-//                         withEnv(["HOME=${env.WORKSPACE}"]){
-//                                 dir("SecureCity"){
-//                                         sh 'rm -f -r */migrations/0*'
-//                                         sh 'python manage.py makemigrations'
-//                                         sh 'python manage.py migrate'
-//                                         sh 'python manage.py check'     // compilation testing
-//                                 }
-//                         }
-//                 }
-//
-//             }
-//             stage('UnitTest') {
-//                 steps {
-//                         withEnv(["HOME=${env.WORKSPACE}"]){
-//                                 dir("SecureCity"){
-//                                         sh 'python manage.py test --tag=unitTest'
-//                                 }
-//                         }
-//                 }
-//             }
-//              stage('IntegrationTest') {
-//                 steps {
-//                         withEnv(["HOME=${env.WORKSPACE}"]){
-//                                 dir("SecureCity"){
-//                                         sh 'python manage.py test --tag=integrationTest'
-//                                 }
-//                         }
-//                 }
-//             }
-//             stage('Coverage') {
-//                 steps {
-//                         withEnv(["HOME=${env.WORKSPACE}"]){
-//                                 dir("SecureCity"){
-//                                         sh 'python -m coverage run --source="." manage.py test'
-//                                         sh 'python -m coverage report'
-//                                 }
-//                         }
-//                 }
-//             }
-//             stage('Measure API data extraction') {
-//                 steps {
-//                         withEnv(["HOME=${env.WORKSPACE}"]){
-//                                 dir("SecureCity"){
-//                                         sh 'python manage.py test --tag=measureApiResponse'
-//                                 }
-//                         }
-//                 }
-//             }
-        }
        
 }
