@@ -27,6 +27,9 @@ DEBUG = True
 DEBUG_PROPAGATE_EXCEPTIONS = True
 ALLOWED_HOSTS = ['secure-city.herokuapp.com', '127.0.0.1', '*']
 
+# added when deployed to heroku
+CSRF_TRUSTED_ORIGINS = ["https://secure-city.herokuapp.com"]
+
 
 # Application definition
 

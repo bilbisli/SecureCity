@@ -28,8 +28,10 @@
 
 ######
 FROM python:3.9.7-alpine
+
 WORKDIR /SecureCity
-ADD . /SecureCity
+COPY . .
+#ADD . /SecureCity/
 
 RUN apk add --no-cache --update \
     python3 python3-dev gcc \
@@ -42,9 +44,17 @@ RUN pip install --upgrade cython
 RUN pip install --upgrade pip
 
 
-ADD requirements.txt .
+#ADD requirements.txt .
+COPY requirements.txt requirements.txt
+
 RUN pip install -r requirements.txt
 RUN pip install django-crispy-forms
+
+#############################################################################
+RUN python manage.py makemigrations
+RUN python manage.py migrate
+#############################################################################
+
 CMD gunicorn --bind 0.0.0.0:$PORT SecureCity.SecureCity.wsgi
 
 
