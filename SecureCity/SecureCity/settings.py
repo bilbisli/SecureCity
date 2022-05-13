@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-i1uls_7sz3%-w2#i5_ik6#lh@v$r8i3r_dw$3h^9o9oqe0b!27'
 DJANGO_SUPERUSER_USERNAME = 'admin'
 DJANGO_SUPERUSER_PASSWORD = 'Secure123456'
-DJANGO_SUPERUSER_EMAIL = '--noinput'
+DJANGO_SUPERUSER_EMAIL = 'noemail@example.com'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
