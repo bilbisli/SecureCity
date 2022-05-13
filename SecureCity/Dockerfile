@@ -55,7 +55,7 @@ RUN python manage.py makemigrations
 RUN python manage.py migrate
 #############################################################################
 
-CMD gunicorn --bind 0.0.0.0:$PORT SecureCity.SecureCity.wsgi
+CMD gunicorn --bind 0.0.0.0:$PORT SecureCity.wsgi
 
 
 #RUN pip install pandas
