@@ -38,13 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
-    'SecureCity.apps.HomePage',
-    'SecureCity.apps.HomePage',
-    'SecureCity.apps.Authentication',
-    'SecureCity.apps.AdminRequest',
-    'SecureCity.apps.Contact',
-    'SecureCity.apps.Patrols',
-    'SecureCity.apps.adminPage',
+    'HomePage.apps.HomePageConfig',
+    'Authentication.apps.AuthenticationConfig',
+    'AdminRequest.apps.AdminRequestConfig',
+    'Contact.apps.ContactConfig',
+    'Patrols.apps.PatrolsConfig',
+    'adminPage.apps.adminPageConfig',
 ]
 
 MIDDLEWARE = [
