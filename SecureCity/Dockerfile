@@ -30,7 +30,7 @@
 FROM python:3.9.7-alpine
 
 WORKDIR /SecureCity
-COPY . .
+COPY .. .
 #ADD . /SecureCity/
 
 RUN apk add --no-cache --update \
