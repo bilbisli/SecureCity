@@ -15,12 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path, include
-from HomePage import views as HomePageV
-from Authentication import views as AuthenticationV
-from AdminRequest import views as AdminRequestV
-from Contact import views as ContactV
-from Patrols import views as PatrolsV
-from adminPage import views as AdminV
+from SecureCity.HomePage import views as HomePageV
+from SecureCity.Authentication import views as AuthenticationV
+from SecureCity.AdminRequest import views as AdminRequestV
+from SecureCity.Contact import views as ContactV
+from SecureCity.Patrols import views as PatrolsV
+from SecureCity.adminPage import views as AdminV
 
 urlpatterns = [
     path('admin/', admin.site.urls),
