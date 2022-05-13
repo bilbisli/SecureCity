@@ -1,2 +1,2 @@
 release: python manage.py migrate
-web: gunicorn SecureCity.SecureCity.wsgi --log-file -
+web: gunicorn --bind 0.0.0.0:$PORT SecureCity.SecureCity.wsgi
