@@ -175,9 +175,9 @@ GitHub.sublime-settings
 
 # databases #
 .DS_Store
-db.sqlite3
-db.sqlite3-journal
-*.sqlite3
+#db.sqlite3
+#db.sqlite3-journal
+#*.sqlite3
 media/
 *.pyc
 *.db
