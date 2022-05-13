@@ -1,5 +1,10 @@
 pipeline {
-    agent none
+          agent {
+                    docker {
+                        image 'cimg/base:stable'
+                        args '-u root'
+                    }
+                }
      stages {
             stage('Build') {
                 steps {
@@ -67,12 +72,6 @@ pipeline {
                 }
             }
             stage('Deploy') {
-                agent {
-                    docker {
-                        image 'cimg/base:stable'
-                        args '-u root'
-                    }
-                }
                 steps {
 //                 sh 'docker system prune -f' // if memory runs out
                 // for first run add to sh:
