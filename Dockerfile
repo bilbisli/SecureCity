@@ -45,6 +45,7 @@ RUN pip install --upgrade pip
 ADD requirements.txt .
 RUN pip install -r requirements.txt
 RUN pip install django-crispy-forms
+CMD gunicorn --bind 0.0.0.0:$PORT SecureCity:app
 
 
 #RUN pip install pandas
@@ -56,4 +57,4 @@ RUN pip install django-crispy-forms
 #WORKDIR /SecureCity/SecureCity
 #RUN gunicorn SecureCity.wsgi
 
-EXPOSE 5000
+#EXPOSE 5000

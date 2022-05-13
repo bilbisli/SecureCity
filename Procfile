@@ -1,2 +1,2 @@
 release: python manage.py migrate
-web: sdfsfsddf
+web: gunicorn SecureCity.wsgi
