@@ -101,14 +101,12 @@
 }
 #########################################################################"""
 pipeline {
-         agent {
-                docker {
-                    image 'cimg/base:stable'
-                    args '-u root'
-                 }
-            }
+        agent none
          stages {
             stage('Build') {
+                agent {
+                    docker { image 'python:3.8' }
+                }
                 steps {
 
                         withEnv(["HOME=${env.WORKSPACE}"]){
@@ -123,6 +121,9 @@ pipeline {
 
             }
             stage('Compile') {
+                agent {
+                        docker { image 'python:3.8' }
+                }
                 steps {
 
                         withEnv(["HOME=${env.WORKSPACE}"]){
@@ -137,6 +138,9 @@ pipeline {
 
             }
             stage('UnitTest') {
+                agent {
+                            docker { image 'python:3.8' }
+                }
                 steps {
                         withEnv(["HOME=${env.WORKSPACE}"]){
                                 dir("SecureCity"){
@@ -146,6 +150,9 @@ pipeline {
                 }
             }
              stage('IntegrationTest') {
+                 agent {
+                            docker { image 'python:3.8' }
+                 }
                 steps {
                         withEnv(["HOME=${env.WORKSPACE}"]){
                                 dir("SecureCity"){
@@ -155,6 +162,9 @@ pipeline {
                 }
             }
             stage('Coverage') {
+                agent {
+                            docker { image 'python:3.8' }
+                }
                 steps {
                         withEnv(["HOME=${env.WORKSPACE}"]){
                                 dir("SecureCity"){
@@ -165,7 +175,12 @@ pipeline {
                 }
             }
             stage('Deploy') {
-           
+            agent {
+                docker {
+                    image 'cimg/base:stable'
+                    args '-u root'
+                 }
+            }
             steps {
 //                 sh 'docker system prune -f' // if memory runs out
                 // for first run add to sh:
@@ -183,3 +198,84 @@ pipeline {
         }
 
     }
+    """
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+pipeline {
+    agent none
+    stages{
+        stage('Install requirements'){
+            agent{
+                docker{
+                    image 'python:3.7'
+                }
+            }
+            steps{
+                withEnv(["HOME=${env.WORKSPACE}"]){
+                    sh 'python -m pip install django'
+                    sh 'python -m pip install -r requirements.txt'
+		    sh 'python -m pip install django-allauth'
+
+                }
+            }
+        }
+        stage('Compile'){
+            agent{
+                docker{
+                    image 'python:3.7'
+                }
+            }
+            steps{
+                withEnv(["HOME=${env.WORKSPACE}"]){
+					sh 'python -m compileall WebIStudy//'//manage.py'
+                    sh 'pip install django_jenkins'
+		    sh 'pip install Selenium'
+		    sh 'pip install chromedriver-py'
+		    sh 'pip install chromedriver-binary'
+		    sh 'pip install chromedriver-binary-auto'
+		    sh 'pip install Pillow'
+		    sh 'pip install gunicorn'
+		    sh 'pip install whitenoise'
+
+		    sh '''
+                      export PATH=$PATH:`chromedriver-path`
+                    '''
+
+                }
+            }
+        }
+        stage('Tests'){
+            agent{
+                docker{
+                    image 'python:3.7'
+                }
+            }
+            steps{
+                withEnv(["HOME=${env.WORKSPACE}"]){
+		    sh 'rm -f -r /migrations/0'
+		    sh 'python manage.py makemigrations'
+		    sh 'python manage.py migrate'
+		    sh 'BUILD_ID=dontKillMe nohup python manage.py runserver host_server &'
+                    sh 'python manage.py test ./WebIStudy'
+                }
+            }
+         }
+
+	 stage('Deploy to Heroku') {
+            agent {
+                docker {
+                    image 'cimg/base:stable'
+                    args '-u root'
+                }
+            }
+            steps {
+                sh '''
+
+			curl https://cli-assets.heroku.com/install.sh | sh;
+			heroku container:login
+			heroku container:push web --app webistudy
+                    	heroku container:release web --app webistudy
+                '''
+            }
+        }
+    }
+}"""
