@@ -45,7 +45,7 @@ RUN pip install --upgrade pip
 
 
 #ADD requirements.txt .
-COPY requirements.txt requirements.txt
+COPY SecureCity/requirements.txt requirements.txt
 
 RUN pip install -r requirements.txt
 RUN pip install django-crispy-forms
