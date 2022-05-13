@@ -9,7 +9,7 @@ import datetime
 from .views import *
 from .models import *
 from .forms import *
-from SecureCity.Patrols import models as PatrolModels
+
 from django.test import tag
 
 
