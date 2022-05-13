@@ -14,12 +14,14 @@ pipeline {
 //                 sh 'docker system prune -f' // if memory runs out
                 // for first run add to sh:
                 //      heroku authorizations:create
-                sh '''
-                    curl https://cli-assets.heroku.com/install.sh | sh;
-                    heroku container:login
-                    heroku container:push web --app secure-city
-                    heroku container:release web --app secure-city
-                '''
+                dir("SecureCity"){
+                    sh '''
+                        curl https://cli-assets.heroku.com/install.sh | sh;
+                        heroku container:login
+                        heroku container:push web --app secure-city
+                        heroku container:release web --app secure-city
+                    '''
+                }
 //                 sh '''
 //                             rm -f install.sh
 //                             rm -f install.sh.2
