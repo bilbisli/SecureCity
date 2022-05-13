@@ -1,14 +1,14 @@
 #import pandas as pd
 import requests
 from django.shortcuts import render
-from SecureCity.Authentication import models as AuthModels
-from SecureCity.AdminRequest import models as AdminModels
-from SecureCity.Contact import models as ContactModels
-from SecureCity.Patrols import models as PatrolModels
-from SecureCity.Authentication import forms as Authforms
-from SecureCity.Contact import forms as ContactForms
-from SecureCity.Patrols import forms as PartolForms
-from SecureCity.AdminRequest import forms as AdminRequestForms
+from Authentication import models as AuthModels
+from AdminRequest import models as AdminModels
+from Contact import models as ContactModels
+from Patrols import models as PatrolModels
+from Authentication import forms as Authforms
+from Contact import forms as ContactForms
+from Patrols import forms as PartolForms
+from AdminRequest import forms as AdminRequestForms
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 # from .models import update_data, DataFile, organize_primary_and_backup_data

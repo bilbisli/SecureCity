@@ -1,13 +1,15 @@
 from django import forms
 from .models import Contact
 
+
 class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
         fields = [
-                'name',
-                'telephone'
+            'name',
+            'telephone'
         ]
+
     def clean_name(self):
         Name = self.cleaned_data['name']
         if not Name.isalpha():

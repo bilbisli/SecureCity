@@ -1,10 +1,7 @@
 from django.test import TestCase, RequestFactory, Client
-from SecureCity.Contact import views
+from .views import *
 from django.test.utils import teardown_test_environment, setup_test_environment
 from django.test import tag
-
-
-
 
 
 @tag('unitTest')
@@ -15,7 +12,7 @@ class ContactTestCase(TestCase):
 
     def test_ContactPage(self):
         request = self.factory.get('')
-        response = views.contact_management(request)
+        response = contact_management(request)
         self.assertEqual(response.status_code, 200)
         self.assertNotEqual(response.status_code, 404)
 

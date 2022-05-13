@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render
 from .models import Contact
-from SecureCity.Authentication.models import Parent
+from Authentication.models import Parent
 from .forms import ContactForm
 from django.shortcuts import redirect
 

@@ -1,2 +1,2 @@
 release: python manage.py migrate
-web: gunicorn SecureCity.wsgi --log-file -
+web: ./web_tasks.sh

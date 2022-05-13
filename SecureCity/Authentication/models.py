@@ -3,11 +3,12 @@ from django.contrib.auth.models import User
 from django.core.validators import MinLengthValidator
 from django.core.validators import RegexValidator
 import datetime
-from SecureCity.Patrols.models import get_locations
+from Patrols.models import get_locations
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 MEDIUM_STRING = 63
+
 
 class Parent(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
