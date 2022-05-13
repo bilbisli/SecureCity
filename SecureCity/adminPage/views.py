@@ -51,7 +51,7 @@ def adminP(request, msg=''):
         'type': type,
         'msg': msg
     }
-    return render(request, 'AdminPage/AdminPage.html', context)
+    return render(request, 'adminPage/AdminPage.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser or u.profile.is_patrol_manager, login_url='/', redirect_field_name=None)
@@ -87,7 +87,7 @@ def adminEdit(request):
     context = {
         "form": form
     }
-    return render(request, 'AdminPage/AdminEdit.html', context)
+    return render(request, 'adminPage/AdminEdit.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser, login_url='/', redirect_field_name=None)
