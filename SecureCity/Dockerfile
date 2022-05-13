@@ -30,7 +30,7 @@
 FROM python:3.9.7-alpine
 
 WORKDIR /SecureCity
-COPY .. .
+COPY ../.. .
 #ADD . /SecureCity/
 
 RUN apk add --no-cache --update \
@@ -45,7 +45,7 @@ RUN pip install --upgrade pip
 
 
 #ADD requirements.txt .
-COPY SecureCity/requirements.txt requirements.txt
+COPY requirements.txt requirements.txt
 
 RUN pip install -r requirements.txt
 RUN pip install django-crispy-forms
