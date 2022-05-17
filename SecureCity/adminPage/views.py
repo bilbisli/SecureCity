@@ -128,6 +128,15 @@ def adminApprove(request):
             obj.delete()
     return redirect('adminPage')
 
+def parentsRequests(request):
+    requests = AdminModels.AdminRequest.objects.all()
+    fields = AdminModels.AdminRequest._meta.get_fields()
+    context = {
+        'requests':requests,
+        'fields':fields
+    }
+    return render(request, 'adminPage/ParentsRequests.html',context)
+
 
 @user_passes_test(lambda u: u.is_superuser, login_url='/', redirect_field_name=None)
 def updateDatabases(request):

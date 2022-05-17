@@ -36,6 +36,7 @@ urlpatterns = [
     path('mypage/', AuthenticationV.residentPage, name='resident_page'),
     path('becomePatrolManager/', AdminRequestV.becomePatrolManager, name='becomePatrolManager'),
     path('CreateRequest/', AdminRequestV.CreateRequest, name='CreateRequest'),
+    path('ParentsRequests/', AdminV.parentsRequests, name='parentsRequests'),
     path('updateDatabases/', AdminV.updateDatabases, name='updateDatabases'),
     re_path('patrols/', include('Patrols.urls'), name='patrols'),
 ]
