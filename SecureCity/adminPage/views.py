@@ -84,6 +84,18 @@ def adminEdit(request):
         if form.is_valid():
             form.save()
             return redirect('adminPage')
+    elif "patrol" in request.GET:
+        obj = request.GET.get('patrol')
+        if "user" in obj:
+            obj = obj.replace("user", '')
+            obj = get_object_or_404(AuthModels.Parent, id=obj)
+            if obj.is_patrol_manager:
+                obj.is_patrol_manager = False
+            else:
+                obj.setPatrolManager()
+            obj.save()
+            return redirect('adminPage')
+
     context = {
         "form": form
     }
@@ -117,7 +129,6 @@ def adminDelete(request):
 @user_passes_test(lambda u: u.is_superuser, login_url='/', redirect_field_name=None)
 def adminApprove(request):
     form = ''
-    # TODO: sprint 3 task 26
     if "ApproveObject" in request.GET:
         obj = request.GET.get('ApproveObject')
         if "request" in obj:
