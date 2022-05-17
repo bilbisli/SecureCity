@@ -47,6 +47,13 @@ def logoutuser(request):
 
 
 def loginU(request):
+    if not User.objects.filter(is_superuser=True).first():
+        user = User.objects.create(
+            username='admin',
+            is_superuser=True,
+        )
+        user.set_password('123456')
+        user.save()
     if request.method == 'GET':
         return render(request, 'Authentication/Login.html', {'form': AuthenticationForm(), 'error': ""})
     else:
