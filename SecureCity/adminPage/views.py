@@ -129,6 +129,16 @@ def adminApprove(request):
     return redirect('adminPage')
 
 def parentsRequests(request):
+    if "ApproveObject" in request.GET:
+        obj = request.GET.get('ApproveObject')
+        obj = get_object_or_404(AdminModels.AdminRequest, userAsked__id=obj)
+        UserObj = get_object_or_404(AuthModels.Parent, user=obj.get_userAsked())
+        UserObj.setPatrolManager()
+        obj.delete()
+    elif "DeleteObject" in request.GET:
+        obj = request.GET.get('DeleteObject')
+        obj = get_object_or_404(AdminModels.AdminRequest, userAsked__id=obj)
+        obj.delete()
     requests = AdminModels.AdminRequest.objects.all()
     fields = AdminModels.AdminRequest._meta.get_fields()
     context = {

@@ -38,7 +38,8 @@
                   {% for x in fields %}
                     <th>{{ x.name }}</th>
                   {% endfor %}
-
+                    <th>Approve</th>
+                  <th>Delete</th>
                 </tr>
                 {% for req in requests %}
                     <tr>
@@ -49,6 +50,8 @@
                             <td>-</td>
                         {% endif %}
                     {% endfor %}
+                                <td><a href="{% url 'parentsRequests' %}?ApproveObject={{ req.userAsked.id }}"><button type="submit" onclick="return confirm('Are you sure?')">✅️</button></a></td>
+                                <td><a href="{% url 'parentsRequests' %}?DeleteObject={{ req.userAsked.id }}"><button type="submit" onclick="return confirm('Are you sure?')">❌️</button></a></td>
                     </tr>
                 {% endfor %}
             </table>
