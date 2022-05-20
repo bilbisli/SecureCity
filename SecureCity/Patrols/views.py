@@ -2,7 +2,7 @@ import pandas as pd
 from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.http import HttpResponse, Http404
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 from datetime import datetime
 from .forms import PatrolForm
 from .models import Patrol
