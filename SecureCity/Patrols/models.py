@@ -21,8 +21,13 @@ def current_time():
 
 
 # TODO: after api connection is made, add location options
-def get_locations():
-    return [('A', 'שכונה א'), ('B', 'שכונה ב'), ('C', 'שכונה ג'), ('D', 'שכונה ד')]
+def get_locations(neighborhood_table='stat_n-hoods_table', neighborhood_column='neighborhood_1'):
+    try:
+        neighbourhoods = get_data(neighborhood_table)[neighborhood_column].unique()
+    except (ValueError, KeyError, TypeError, AttributeError):
+        neighbourhoods = ['שכונה א', 'שכונה ב', 'שכונה ג', 'שכונה ד']
+
+    return [(neighborhood, neighborhood) for neighborhood in neighbourhoods]
 
 
 # TODO: after api connection is made, add automatic priority calculation

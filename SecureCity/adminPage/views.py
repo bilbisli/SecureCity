@@ -169,8 +169,6 @@ def updateDatabases(request):
                                        data_packages_search_path='action/package_search?q=',
                                        data_search_path='action/datastore_search?resource_id=',
                                        )
-    print(statistical_areas_df)
-
     # Update the demographic database
     unified_demographics = update_data(data_name='demographics',
                                        api_endpoint='https://opendataprod.br7.org.il/api/3/',
