@@ -55,7 +55,7 @@ def update_data(data_name='crime_records_data',
                 organize_func=organize_primary_and_backup_data,
                 to_df=True,
                 save=True,):
-    # get the data from the api
+    # get the data from the API
     package_search_url = f'{api_endpoint}{data_packages_search_path}{data_name}'
     results = requests.get(package_search_url).json()['result']['results'][0]['resources']
     db = filter(lambda r: r['format'] in ['exel', 'JSON', 'XLSX', 'CSV', 'EXCEL'], results)
@@ -73,11 +73,8 @@ def update_data(data_name='crime_records_data',
             db = pd.read_excel(db_url)
 
     df = db
-
     if df_preprocessing_function:
         df = df_preprocessing_function(df)
-
-    print(f'{data_name}\ncolumn list: {df}')
 
     if not save:
         return df
@@ -94,6 +91,9 @@ def get_data(data='unified_data'):
     current_data = DataFile.objects.filter(file_name=data, is_primary=True)
     if current_data.count() == 0:
         current_data = DataFile.objects.filter(file_name=data)
-    return current_data.first().load_frame()
+    try:
+        return current_data.first().load_frame()
+    except AttributeError:
+        return None
 
 
