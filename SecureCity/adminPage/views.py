@@ -139,6 +139,7 @@ def adminApprove(request):
             obj.delete()
     return redirect('adminPage')
 
+
 def parentsRequests(request):
     if "ApproveObject" in request.GET:
         obj = request.GET.get('ApproveObject')
@@ -153,10 +154,10 @@ def parentsRequests(request):
     requests = AdminModels.AdminRequest.objects.all()
     fields = AdminModels.AdminRequest._meta.get_fields()
     context = {
-        'requests':requests,
-        'fields':fields
+        'requests': requests,
+        'fields': fields
     }
-    return render(request, 'adminPage/ParentsRequests.html',context)
+    return render(request, 'adminPage/ParentsRequests.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser, login_url='/', redirect_field_name=None)
@@ -168,6 +169,8 @@ def updateDatabases(request):
                                        data_packages_search_path='action/package_search?q=',
                                        data_search_path='action/datastore_search?resource_id=',
                                        )
+    print(statistical_areas_df)
+
     # Update the demographic database
     unified_demographics = update_data(data_name='demographics',
                                        api_endpoint='https://opendataprod.br7.org.il/api/3/',
@@ -192,6 +195,7 @@ def updateDatabases(request):
     lamas_demographics = lamas_demographics.iloc[2:, :-1]
     lamas_demographics["אג''ס"] = lamas_demographics["אג''ס"].astype(int)
     unified_data = unify_data(lamas_demographics, unified_demographics, crime_rates_df.load_frame(), on_column="אג''ס")
+    organize_primary_and_backup_data('unified_data')
     DataFile.put_frame(data_frame=unified_data, file_name='unified_data', is_primary=True)
 
     request.session['msg'] = "Successfully updated databases"
@@ -224,7 +228,7 @@ def demographic_tables_build(df):
         columns=unified_demographics.columns[0])
 
     for table in filter(lambda r: r['format'] == 'JSON', df):
-        #table_name = 'דמוגרפיה-' + table['name'].replace(' - JSON', "")
+        # table_name = 'דמוגרפיה-' + table['name'].replace(' - JSON', "")
         temp_table = pd.DataFrame.from_records(requests.get(table['url']).json())
         unified_demographics = unify_data(unified_demographics, temp_table, on_column="אג''ס")
 
@@ -243,4 +247,3 @@ def unify_data(*data_frames, on_column):
         unified_data = pd.merge(unified_data, df, on=on_column, suffixes=('', '_y'))
         unified_data.drop(unified_data.filter(regex='_y$').columns.tolist(), axis=1, inplace=True)
     return unified_data
-

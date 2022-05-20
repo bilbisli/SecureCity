@@ -2,8 +2,11 @@ from django.db import models
 import pandas as pd
 import requests
 from django.db.models import JSONField
+from django.utils import timezone
 
-from Patrols.models import current_time
+
+def current_time():
+    return timezone.localtime(timezone.now())
 
 
 class DataFile(models.Model):
@@ -64,14 +67,17 @@ def update_data(data_name='crime_records_data',
             db_url = f'{api_endpoint}{data_search_path}{db_id}&limit={limit}'
             response = requests.get(db_url)
             db = response.json()['result']['records']
+            db = pd.DataFrame.from_records(db)
         except KeyError:
-            db = db['url']
+            db_url = db['url']
+            db = pd.read_excel(db_url)
+
     df = db
-    if to_df:
-        df = pd.DataFrame.from_records(db)
 
     if df_preprocessing_function:
         df = df_preprocessing_function(df)
+
+    print(f'{data_name}\ncolumn list: {df}')
 
     if not save:
         return df
@@ -89,3 +95,5 @@ def get_data(data='unified_data'):
     if current_data.count() == 0:
         current_data = DataFile.objects.filter(file_name=data)
     return current_data.first().load_frame()
+
+

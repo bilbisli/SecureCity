@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.urls import reverse
 from django.db.models import signals
 from django.dispatch import dispatcher, receiver
+from adminPage.models import get_data
 
 # string lengths
 MIN_STRING = 15
