@@ -53,6 +53,7 @@ RUN pip install django-crispy-forms
 #############################################################################
 RUN python manage.py makemigrations
 RUN python manage.py migrate
+<<<<<<< Updated upstream
 #RUN python manage.py createsuperuser --username admin --email noemail@example.com --noinput
 #############################################################################
 
