@@ -112,6 +112,7 @@ def parent_patrol(request):
                 activePatrols = list(filter(lambda x: x.location == request.POST.get("locationSelect"), activePatrols))
                 donePatrols = list(donePatrols)
                 donePatrols = list(filter(lambda x: x.location == request.POST.get("locationSelect"), donePatrols))
+
     locations = ("הכל",) + tuple(location[0] for location in get_locations())
     context = {
         'activePatrols': activePatrols,
