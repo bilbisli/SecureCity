@@ -50,7 +50,7 @@ class Patrol(models.Model):
     title = models.CharField('title', max_length=MEDIUM_STRING)
     patrol_status = models.CharField('patrol status', max_length=MIN_STRING, null=True, choices=PatrolStatus.choices,
                                      default=PatrolStatus.CREATION)
-    description = models.TextField('description', max_length=MAX_STRING, null=True, blank=True)
+    description = models.TextField('summary', max_length=MAX_STRING, null=True, blank=True)
     time_created = models.DateTimeField('time created', default=current_time, null=False)
     time_updated_last = models.DateTimeField('last updated', default=current_time, null=False)
     # TODO: update location options based on api in 'get_locations' function
