@@ -43,7 +43,12 @@
 
             {% for name, value in obj.get_fields_values %}
                 {% if value %}
-                    <td>{{ value }}</td>
+                    <td>
+                    <a href="{% url 'patrol_page' obj.pk %}" style="color:#0A0000; font-weight:500">
+                                    {{ value }}
+                                </a>
+                        </td>
+
                 {% else %}
                     <td>-</td>
                 {% endif %}
