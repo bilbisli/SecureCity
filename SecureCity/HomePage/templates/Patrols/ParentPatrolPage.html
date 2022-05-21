@@ -24,149 +24,168 @@ function myFunction(id) {
     </script>
 </head>
 <body>
-{#   <link rel="stylesheet" href="/static/style_back_all.css">#}
-<br>
-<div class="row">
-			<div class="col-md">
-				<div class="card card-body" id="general">
-					<h5>List of patrols:</h5>
-				</div>
-				<div class="card card-body" id="general">
-<!--	sort is here-->
-					<tr><th><a href="{{ parent_patrol }}?sort=Priority">Sort By Priority </a></th>
-                        <th>
+    {#   <link rel="stylesheet" href="/static/style_back_all.css">#}
+    <br>
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body" id="general">
+                <h5>List of patrols:</h5>
+            </div>
+            <div class="card card-body" id="general">
+        <!--	sort is here-->
+                <tr><th><a href="{{ parent_patrol }}?sort=Priority">Sort By Priority </a></th>
+                    <th>
                 {% if request.user.profile.is_patrol_manager %}
                         <tr><th><a href="{{ parent_patrol }}?sort=Location">Show Only In My Location</a></th>
                         <th>
                 {% endif %}
 
                 <div id="example">
-        <div class="demo-section k-header" style="width: 600px;">
-    <form method="POST">
-    {% csrf_token %}
-            <label for="start">Patrols who starting Between </label>
-            <select name="STime">
-                <option value="0">All</option>
-                <option value="15:00">15:00</option>
-              <option value="16:00">16:00</option>
-                <option value="17:00">17:00</option>
-              <option value="18:00">18:00</option>
-              <option value="19:00">19:00</option>
+                    <div class="demo-section k-header" style="width: 600px;">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <label for="start">Patrols that start Between </label>
+                            <select name="STime">
+                                <option value="0">All</option>
+                                <option value="15:00">15:00</option>
+                                <option value="16:00">16:00</option>
+                                <option value="17:00">17:00</option>
+                                <option value="18:00">18:00</option>
+                                <option value="19:00">19:00</option>
+                            </select>
 
-            </select>
+                            <label for="end" style="margin-left:3em">and</label>
+                            <select name="ETime">
+                                <option value="0">All</option>
+                                <option value="20:00">20:00</option>
+                                <option value="21:00">21:00</option>
+                                <option value="22:00">22:00</option>
+                                <option value="23:00">23:00</option>
+                            </select>
+                            <label for="end" style="margin-left:3em"> </label>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                    <style scoped>
+                        #example .k-timepicker {
+                            vertical-align: middle;
+                        }
 
-            <label for="end" style="margin-left:3em">and</label>
-            <select name="ETime">
-                <option value="0">All</option>
-                <option value="20:00">20:00</option>
-              <option value="21:00">21:00</option>
-              <option value="22:00">22:00</option>
-              <option value="23:00">23:00</option>
+                        #example h3 {
+                            clear: both;
+                        }
 
-            </select>
-                    <label for="end" style="margin-left:3em"> </label>
-             <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
+                        #example .code-sample {
+                            width: 60%;
+                            float:left;
+                            margin-bottom: 20px;
+                        }
 
+                        #example .output {
+                            width: 24%;
+                            margin-left: 4%;
+                            float:left;
+                        }
+                    </style>
+                </div>
+                <table class="table">
+                    <tr>
+                        <th>Title</th>
+                        <th>Manager</th>
+                        <th>Status</th>
+                        <th>
+                            <div class="dropdown">
+                                <div class="dropdown-toggle" type="button" id="dropdownAreaButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Location
+                                </div>
+                                <div class="dropdown-menu" aria-labelledby="dropdownAreaButton">
+
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        {# select options #}
+                                        {% for location in locations %}
+                                            <button class="dropdown-item" name="locationSelect" value="{{ location }}" style="outline: none">&emsp;{{ location }}</button>
+                                        {% endfor %}
+                                    </form>
+                                </div>
+{#                                <select class="dropdown-menu" name="myselect" id="myselect" onchange="this.form.submit()">#}
+{#                                    <form action="myservlet.do" method="POST">#}
+{#                                        <option class="dropdown-item" value="1">One</option>#}
+{#                                        <option class="dropdown-item" value="2">Two</option>#}
+{#                                        <option class="dropdown-item" value="3">Three</option>#}
+{#                                        <option class="dropdown-item" value="4">Four</option>#}
+{#                                    </form>#}
+{#                                </select>#}
+                            </div>
+                        </th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Priority</th>
+                        <th>Participants Needed</th>
+                    </tr>
+                    <tr>
+                        <th><b>Active Patrols</b></th>
+                    </tr>
+                    {% for patrol in activePatrols %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'patrol_page' patrol.pk %}" style="color:#0A0000; font-weight:500">
+                                    {{ patrol.title }}
+                                </a>
+                            </td>
+                            <td>{{patrol.manager}}</td>
+                            <td>{{patrol.status}}</td>
+                            <td>{{patrol.location}}</td>
+                            <td>{{patrol.start_time}}</td>
+                            <td>{{patrol.end_time}}</td>
+                            <td>{{patrol.priority}}</td>
+                            <td>{{patrol.participants_needed}}</td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <th><b>Archive Patrols</b></th>
+                    </tr>
+                    {% for patrol in donePatrols %}
+                        <tr>
+                            <td>{{patrol.title}}</td>
+                            <td>{{patrol.manager}}</td>
+                            <td>{{patrol.status}}</td>
+                            <td>{{patrol.location}}</td>
+                            <td>{{patrol.start_time}}</td>
+                            <td>{{patrol.end_time}}</td>
+                            <td>{{patrol.priority}}</td>
+                            <td>{{patrol.participants_needed}}</td>
+                            {% if user.is_superuser %}
+                                <td><button id="b_{{ patrol.id }}" onclick="myFunction({{ patrol.id }})">Show Summary</button></td>
+                                <tr id="{{ patrol.id }}" style="display: none">
+                                    <td>
+                                        <h5>Summary:</h5>
+                                        {{ patrol.description }}
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
         </div>
-
-        <style scoped>
-            #example .k-timepicker {
-                vertical-align: middle;
+        <div>
+            {# add patrol button #}
+    {#        <br><br>#}
+    {#        <a href="{% url 'CreatePatrol' %}" class="btn btn-primary" style="margin-left:2em">Add Patrol</a>#}
+    {#        <br><br>#}
+        </div>
+        <style>
+                #logo{
             }
-
-            #example h3 {
-                clear: both;
+            #general{
+            background-color: #D3D3D3;
             }
-
-            #example .code-sample {
-                width: 60%;
-                float:left;
-                margin-bottom: 20px;
+            body{
+                background-color: #7CD1E0;
             }
-
-            #example .output {
-                width: 24%;
-                margin-left: 4%;
-                float:left;
-            }
-
         </style>
     </div>
-                        <table class="table">
-                            <tr>
-                                <th>Title</th>
-                                <th>Manager</th>
-                                <th>Status</th>
-                                <th>Location</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                <th>Priority</th>
-                                <th>Participants Needed</th>
-                            </tr>
-                            <tr>
-                                <th><b>Active Patrols</b></th>
-                            </tr>
-                            {% for patrol in activePatrols %}
-                                <tr>
-                                    <td>
-                                        <a href="{% url 'patrol_page' patrol.pk %}" style="color:#0A0000; font-weight:500">
-                                            {{ patrol.title }}
-                                        </a>
-                                    </td>
-                                    <td>{{patrol.manager}}</td>
-                                    <td>{{patrol.status}}</td>
-                                    <td>{{patrol.location}}</td>
-                                    <td>{{patrol.start_time}}</td>
-                                    <td>{{patrol.end_time}}</td>
-                                    <td>{{patrol.priority}}</td>
-                                    <td>{{patrol.participants_needed}}</td>
-                                </tr>
-                            {% endfor %}
-                            <tr>
-                                <th><b>Archive Patrols</b></th>
-                            </tr>
-                            {% for patrol in donePatrols %}
-                                <tr>
-                                    <td>{{patrol.title}}</td>
-                                    <td>{{patrol.manager}}</td>
-                                    <td>{{patrol.status}}</td>
-                                    <td>{{patrol.location}}</td>
-                                    <td>{{patrol.start_time}}</td>
-                                    <td>{{patrol.end_time}}</td>
-                                    <td>{{patrol.priority}}</td>
-                                    <td>{{patrol.participants_needed}}</td>
-                                    {% if user.is_superuser %}
-                                        <td><button id="b_{{ patrol.id }}" onclick="myFunction({{ patrol.id }})">Show Summary</button></td>
-                                        <tr id="{{ patrol.id }}" style="display: none">
-                                            <td>
-                                                <h5>Summary:</h5>
-                                                {{ patrol.description }}
-                                            </td>
-                                        </tr>
-                                    {% endif %}
-                                </tr>
-                            {% endfor %}
-					    </table>
-                </div>
-			</div>
-		</div>
-    <div>
-        {# add patrol button #}
-{#        <br><br>#}
-{#        <a href="{% url 'CreatePatrol' %}" class="btn btn-primary" style="margin-left:2em">Add Patrol</a>#}
-{#        <br><br>#}
-    </div>
-	<style>
-	        #logo{
-		}
-		#general{
-		background-color: #D3D3D3;
-		}
-		body{
-			background-color: #7CD1E0;
-		}
-	</style>
 </body>
 </html>
 {% endblock %}

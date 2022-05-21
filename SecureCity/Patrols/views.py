@@ -5,7 +5,7 @@ from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect
 from datetime import datetime
 from .forms import PatrolForm
-from .models import Patrol
+from .models import Patrol, get_locations
 from django.db.models import Q
 
 
@@ -95,17 +95,27 @@ def parent_patrol(request):
         donePatrols = Patrol.objects.filter(patrol_status="Archive")
 
     if request.method == 'POST':
-        if request.POST.get('STime') != '0':
+        if request.POST.get('STime') and request.POST.get('STime') != '0':
             sTime = datetime.strptime(request.POST.get('STime'), '%H:%M').time()
             activePatrols = list(activePatrols)
             activePatrols = list(filter(lambda x: x.start_time >= sTime, activePatrols))
-        if request.POST.get('ETime') != '0':
+        if request.POST.get('ETime') and request.POST.get('ETime') != '0':
             eTime = datetime.strptime(request.POST.get('ETime'), '%H:%M').time()
             activePatrols = list(activePatrols)
             activePatrols = list(filter(lambda x: x.start_time <= eTime, activePatrols))
-
+        if request.POST.get("locationSelect"):
+            if request.POST.get("locationSelect") == "הכל":
+                activePatrols = Patrol.objects.filter(patrol_status__in=["Creation", "Active"])
+                donePatrols = Patrol.objects.filter(patrol_status="Archive")
+            else:
+                activePatrols = list(activePatrols)
+                activePatrols = list(filter(lambda x: x.location == request.POST.get("locationSelect"), activePatrols))
+                donePatrols = list(donePatrols)
+                donePatrols = list(filter(lambda x: x.location == request.POST.get("locationSelect"), donePatrols))
+    locations = ("הכל",) + tuple(location[0] for location in get_locations())
     context = {
         'activePatrols': activePatrols,
-        'donePatrols': donePatrols
+        'donePatrols': donePatrols,
+        'locations': locations,
     }
     return render(request, 'Patrols/ParentPatrolPage.html', context)
