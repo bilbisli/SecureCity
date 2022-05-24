@@ -15,6 +15,10 @@
             {% if field.name == "priority" %}
                 {% if user.is_superuser %}
                     {{ field|as_crispy_field }}
+                {% else %}
+                <fieldset disabled>
+                    {{ field|as_crispy_field }}
+                </fieldset>
                 {% endif %}
             {% else %}
                 {{ field|as_crispy_field }}
