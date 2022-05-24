@@ -20,7 +20,6 @@ def current_time():
     return timezone.localtime(timezone.now())
 
 
-# TODO: after api connection is made, add location options
 def get_locations(neighborhood_table='stat_n-hoods_table', neighborhood_column='neighborhood_1'):
     try:
         neighbourhoods = get_data(neighborhood_table)[neighborhood_column].unique()

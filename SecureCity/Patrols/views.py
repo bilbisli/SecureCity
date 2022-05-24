@@ -7,6 +7,8 @@ from datetime import datetime
 from .forms import PatrolForm
 from .models import Patrol, get_locations
 from django.db.models import Q
+from adminPage.models import get_data
+from adminPage.views import unify_data
 
 
 def patrol_page(request, patrol_id):
@@ -77,6 +79,7 @@ def create_patrol(request):
     context = {
         'form': patrol_form,
     }
+    analyze_patrols_priority()
     return render(request, 'Patrols/CreatePatrol.html', context)
 
 
@@ -119,3 +122,34 @@ def parent_patrol(request):
         'locations': locations,
     }
     return render(request, 'Patrols/ParentPatrolPage.html', context)
+
+
+def analyze_patrols_priority(parameters=('עבירות כלפי המוסר', 'עבירות כלפי הרכוש', 'עבירות נגד גוף', 'עבירות סדר ציבורי', 'עבירות מין', 'עבירות נגד אדם',)):
+    data_df = get_data()
+    neighborhood_table = 'stat_n-hoods_table'
+    neighborhood_column = 'neighborhood_1'
+    stat_area_column = 'stat-area'
+    heb_stat_area_column = "אג''ס"
+    total_offenses_column = 'total_offenses'
+    heb_total_residents_column = "סה''כ"
+    total_residents_column = 'total_residents'
+    areas_df = get_data(neighborhood_table)
+    neighbourhoods = areas_df[neighborhood_column].unique()
+
+    data_df[total_offenses_column] = data_df[list(parameters)].sum(axis=1)
+    # data_df.to_excel('static/offenses.xlsx', index=False)
+    
+    # locations = [location[0] for location in get_locations()]
+    data_df[stat_area_column] = data_df[heb_stat_area_column]
+    data_df[total_residents_column] = data_df[heb_total_residents_column]
+#      סה''כ
+    unified_data = unify_data(areas_df[[neighborhood_column, stat_area_column]],
+               data_df[[stat_area_column, total_offenses_column, total_residents_column]], on_column=stat_area_column)
+
+    neighborhoods_df = unified_data.groupby(neighborhood_column).sum()
+    neighborhoods_df['residents_offense_ratio'] = neighborhoods_df[total_residents_column] / neighborhoods_df[total_offenses_column]
+    # neighborhoods_df.to_excel('static/neighb_offenses.xlsx')
+
+
+    # unified_data.to_excel('static/uni_d.xlsx', index=False)
+
