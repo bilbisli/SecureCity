@@ -193,6 +193,7 @@ def updateDatabases(request):
     lamas_demographics = lamas_demographics.iloc[2:, :-1]
     lamas_demographics["אג''ס"] = lamas_demographics["אג''ס"].astype(int)
     unified_data = unify_data(lamas_demographics, unified_demographics, crime_rates_df.load_frame(), on_column="אג''ס")
+
     organize_primary_and_backup_data('unified_data')
     DataFile.put_frame(data_frame=unified_data, file_name='unified_data', is_primary=True)
 
@@ -220,7 +221,7 @@ def crime_df_clean(df, city_query='באר שבע'):
     return crime_rates_df
 
 
-def demographic_tables_build(df):
+def demographic_tables_build(df, stat_area_column="אג''ס"):
     unified_demographics = pd.read_csv('static/lamas_simplified.csv')
     unified_demographics = unified_demographics.drop(columns=unified_demographics.columns[-1:]).drop(
         columns=unified_demographics.columns[0])
@@ -228,9 +229,10 @@ def demographic_tables_build(df):
     for table in filter(lambda r: r['format'] == 'JSON', df):
         # table_name = 'דמוגרפיה-' + table['name'].replace(' - JSON', "")
         temp_table = pd.DataFrame.from_records(requests.get(table['url']).json())
-        unified_demographics = unify_data(unified_demographics, temp_table, on_column="אג''ס")
+        unified_demographics = unify_data(unified_demographics, temp_table, on_column=stat_area_column)
 
-    unified_demographics["אג''ס"] = unified_demographics["אג''ס"].astype(int)
+    unified_demographics[stat_area_column] = unified_demographics[stat_area_column].astype(int)
+    # unified_demographics.set_index(stat_area_column, inplace=True)
 
     data_name = 'unified_demographics'
     organize_primary_and_backup_data(data_name)
