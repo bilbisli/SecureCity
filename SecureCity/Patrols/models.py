@@ -18,6 +18,7 @@ MEDIUM_STRING = 63
 LARGE_STRING = 255
 XL_STRING = 511
 MAX_STRING = 1023
+default_neighborhoods = ('שכונה א', 'שכונה ב', 'שכונה ג', 'שכונה ד', 'שכונה ה')
 
 
 def current_time():
@@ -29,8 +30,11 @@ def get_priority(area):
 
 
 def get_priorities():
-    areas_df = analyze_patrols_priority()
-    priorities_dict = pd.Series(areas_df['priority'].values, index=areas_df['stat-area']).to_dict()
+    try:
+        areas_df = analyze_patrols_priority()
+        priorities_dict = pd.Series(areas_df['priority'].values, index=areas_df['stat-area']).to_dict()
+    except (ValueError, KeyError, TypeError, AttributeError):
+        priorities_dict = {neighborhood: 2 for priority, neighborhood in enumerate(default_neighborhoods)}
     return priorities_dict
 
 
@@ -44,7 +48,7 @@ def get_amount_of_people():
         amount_of_people_dict = pd.Series(areas_df['amount_of_people'].values, index=areas_df['stat-area']).to_dict()
     except (ValueError, KeyError, TypeError, AttributeError):
         amount_of_people_dict = {neighborhood: priority + 1 for priority, neighborhood in
-                                 enumerate(['שכונה א', 'שכונה ב', 'שכונה ג', 'שכונה ד', 'שכונה ה'])}
+                                 enumerate(default_neighborhoods)}
 
     return amount_of_people_dict
 
