@@ -34,6 +34,7 @@ function myFunction(id) {
             <div class="card card-body" id="general">
         <!--	sort is here-->
                 <tr><th><a href="{{ parent_patrol }}?sort=Priority">Sort By Priority </a></th>
+                <tr><th><a href="{{ parent_patrol }}?sort=Participants Needed">Sort By Participants Needed </a></th>
                     <th>
                 {% if request.user.profile.is_patrol_manager %}
                         <tr><th><a href="{{ parent_patrol }}?sort=Location">Show Only In My Location</a></th>
