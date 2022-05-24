@@ -12,6 +12,7 @@ from AdminRequest import forms as AdminRequestForms
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import update_data, DataFile, organize_primary_and_backup_data
+from Patrols.models import unify_data
 
 
 @user_passes_test(lambda u: u.is_superuser, login_url='/', redirect_field_name=None)
@@ -239,11 +240,3 @@ def demographic_tables_build(df, stat_area_column="אג''ס"):
     DataFile.put_frame(data_frame=unified_demographics, file_name=data_name, is_primary=True)
 
     return unified_demographics
-
-
-def unify_data(*data_frames, on_column):
-    unified_data = data_frames[0]
-    for df in data_frames:
-        unified_data = pd.merge(unified_data, df, on=on_column, suffixes=('', '_y'))
-        unified_data.drop(unified_data.filter(regex='_y$').columns.tolist(), axis=1, inplace=True)
-    return unified_data

@@ -3,9 +3,10 @@ from django.contrib.auth.models import User
 from django.core.validators import MinLengthValidator
 from django.core.validators import RegexValidator
 import datetime
-from Patrols.models import get_locations
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+
+from adminPage.models import get_locations
 
 MEDIUM_STRING = 63
 

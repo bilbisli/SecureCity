@@ -9,6 +9,15 @@ def current_time():
     return timezone.localtime(timezone.now())
 
 
+def get_locations(neighborhood_table='stat_n-hoods_table', neighborhood_column='neighborhood_1'):
+    try:
+        neighbourhoods = get_data(neighborhood_table)[neighborhood_column].unique()
+    except (ValueError, KeyError, TypeError, AttributeError):
+        neighbourhoods = ['שכונה א', 'שכונה ב', 'שכונה ג', 'שכונה ד', 'שכונה ה']
+
+    return [(neighborhood, neighborhood) for neighborhood in neighbourhoods]
+
+
 class DataFile(models.Model):
     """
     Model for the api data files
@@ -54,7 +63,7 @@ def update_data(data_name='crime_records_data',
                 df_preprocessing_function=None,
                 organize_func=organize_primary_and_backup_data,
                 to_df=True,
-                save=True,):
+                save=True, ):
     # get the data from the API
     package_search_url = f'{api_endpoint}{data_packages_search_path}{data_name}'
     results = requests.get(package_search_url).json()['result']['results'][0]['resources']
@@ -95,5 +104,4 @@ def get_data(data='unified_data'):
         return current_data.first().load_frame()
     except AttributeError:
         return None
-
 
