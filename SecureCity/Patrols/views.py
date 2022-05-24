@@ -136,6 +136,11 @@ def analyze_patrols_priority(parameters=('עבירות כלפי המוסר', 'ע
     heb_total_residents_column = "סה''כ"
     total_residents_column = 'total_residents'
     areas_df = get_data(neighborhood_table)
+
+    # take care of the case where there is no data in the database
+    if not areas_df or not data_df:
+        return None
+
     neighbourhoods = areas_df[neighborhood_column].unique()
 
     data_df[total_offenses_column] = data_df[list(parameters)].sum(axis=1)
