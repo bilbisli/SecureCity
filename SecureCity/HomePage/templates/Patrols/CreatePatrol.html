@@ -11,7 +11,15 @@
     <form method="POST">
         {% csrf_token %}
         <div class="col-md-6">
-            {{ form | crispy}}
+        {% for field in form %}
+            {% if field.name == "priority" %}
+                {% if user.is_superuser %}
+                    {{ field|as_crispy_field }}
+                {% endif %}
+            {% else %}
+                {{ field|as_crispy_field }}
+            {% endif %}
+        {% endfor %}
         </div>
 {#        TODO: why the input?? - i've put it in a comment for the time being #}
 {#        <input type="user" class="form-control" id="{{ user }}">#}
