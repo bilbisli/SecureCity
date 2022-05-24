@@ -16,9 +16,9 @@
                 {% if user.is_superuser %}
                     {{ field|as_crispy_field }}
                 {% else %}
-                <fieldset disabled>
+<!--                <fieldset disabled>-->
                     {{ field|as_crispy_field }}
-                </fieldset>
+<!--                </fieldset>-->
                 {% endif %}
             {% else %}
                 {{ field|as_crispy_field }}

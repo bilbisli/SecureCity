@@ -62,16 +62,11 @@ def patrol_management(request):
     }
     return render(request, 'Patrols/PatrolManagement.html', context)
 
-# from django.db import models
+
 @user_passes_test(lambda u: u.is_authenticated and u.profile.is_patrol_manager, login_url='/', redirect_field_name=None)
 def create_patrol(request):
     if request.method == 'POST':
         patrol_form = PatrolForm(request.POST or None, user=request.user)
-        # print(patrol_form.fields['priority'].value)
-        print(patrol_form.instance.priority)
-        patrol_form.save()
-        print(patrol_form.instance.priority)
-        print(patrol_form.is_valid())
         if patrol_form.is_valid():
             patrol = patrol_form.instance
             patrol.manager = request.user
