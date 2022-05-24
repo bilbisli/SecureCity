@@ -66,7 +66,7 @@ class Patrol(models.Model):
     description = models.TextField('description', max_length=MAX_STRING, null=True, blank=True)
     time_created = models.DateTimeField('time created', default=current_time, null=False)
     time_updated_last = models.DateTimeField('last updated', default=current_time, null=False)
-    location = models.CharField(max_length=MEDIUM_STRING, choices=get_locations())
+    location = models.CharField(max_length=MEDIUM_STRING, choices=get_locations(), default=default_neighborhoods[0])
     date = models.DateField('date', default=current_time, null=False)
     start_time = models.TimeField('start time', default=current_time, null=False)
     end_time = models.TimeField('end time', default=current_time() + timezone.timedelta(hours=3), null=False)

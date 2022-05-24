@@ -117,7 +117,8 @@ class PatrolPageTest(TestCase):
         self.factory = RequestFactory()
         self.client = Client()
         # create a patrol
-        self.patrol = Patrol.objects.create(title='testPatrol', description='testDescription', manager=self.user)
+        self.patrol = Patrol.objects.create(title='testPatrol', description='testDescription', manager=self.user,
+                                            location='שכונה א',)
         self.patrol.save()
         # assure login
         logged_in = self.client.login(username='testerFinal', password='testpassword')
