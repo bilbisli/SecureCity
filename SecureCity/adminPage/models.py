@@ -5,15 +5,18 @@ from django.db.models import JSONField
 from django.utils import timezone
 
 
+default_neighborhoods = ('א', 'ב', 'ג', 'ד', 'ה')
+
+
 def current_time():
     return timezone.localtime(timezone.now())
 
 
-def get_locations(neighborhood_table='stat_n-hoods_table', neighborhood_column='neighborhood_1'):
+def get_locations(neighborhood_table='unified_data', neighborhood_column='neighborhood_1'):
     try:
         neighbourhoods = get_data(neighborhood_table)[neighborhood_column].unique()
     except (ValueError, KeyError, TypeError, AttributeError):
-        neighbourhoods = ['שכונה א', 'שכונה ב', 'שכונה ג', 'שכונה ד', 'שכונה ה']
+        neighbourhoods = default_neighborhoods
 
     return [(neighborhood, neighborhood) for neighborhood in neighbourhoods]
 
@@ -92,7 +95,11 @@ def update_data(data_name='crime_records_data',
     if organize_func is not None:
         organize_func(data_name)
 
-    return DataFile.put_frame(data_frame=df, file_name=data_name, is_primary=True)
+    if to_df:
+        ret = df
+    else:
+        ret = DataFile.put_frame(data_frame=df, file_name=data_name, is_primary=True)
+    return ret
 
 
 # get the current  data

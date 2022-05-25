@@ -12,7 +12,7 @@ from AdminRequest import forms as AdminRequestForms
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import update_data, DataFile, organize_primary_and_backup_data
-from Patrols.models import unify_data
+from Patrols.models import get_patrol_size
 
 
 @user_passes_test(lambda u: u.is_superuser, login_url='/', redirect_field_name=None)
@@ -58,6 +58,7 @@ def adminP(request, msg=''):
 @user_passes_test(lambda u: u.is_superuser or u.profile.is_patrol_manager, login_url='/', redirect_field_name=None)
 def adminEdit(request):
     form = ''
+    context = {}
     if "EditObject" in request.GET:
         obj = request.GET.get('EditObject')
         if "user" in obj:
@@ -82,6 +83,11 @@ def adminEdit(request):
             obj = obj.replace("patrol", '')
             obj = get_object_or_404(PatrolModels.Patrol, id=obj)
             form = PartolForms.PatrolForm(request.POST or None, instance=obj, stat='edit')
+            patrol = form.instance
+            patrol.update_priority = True
+            context['user_location'] = patrol.location[0] if type(patrol.location) == tuple else patrol.location
+            context['recommended_people_num'] = get_patrol_size(patrol.location)
+
         if form.is_valid():
             form.save()
             return redirect('adminPage')
@@ -97,9 +103,7 @@ def adminEdit(request):
             obj.save()
             return redirect('adminPage')
 
-    context = {
-        "form": form
-    }
+    context["form"] = form
     return render(request, 'adminPage/AdminEdit.html', context)
 
 
@@ -163,6 +167,8 @@ def parentsRequests(request):
 
 @user_passes_test(lambda u: u.is_superuser, login_url='/', redirect_field_name=None)
 def updateDatabases(request):
+    heb_stat_area_column = "אג''ס"
+    stat_area_column = 'stat-area'
     # Update the stat-area database
     statistical_areas_df = update_data(data_name='stat_n-hoods_table',
                                        api_endpoint='https://opendataprod.br7.org.il/api/3/',
@@ -192,11 +198,15 @@ def updateDatabases(request):
 
     lamas_demographics = pd.read_csv('static/lamas_simplified.csv')
     lamas_demographics = lamas_demographics.iloc[2:, :-1]
-    lamas_demographics["אג''ס"] = lamas_demographics["אג''ס"].astype(int)
-    unified_data = unify_data(lamas_demographics, unified_demographics, crime_rates_df.load_frame(), on_column="אג''ס")
-
+    lamas_demographics[heb_stat_area_column] = lamas_demographics[heb_stat_area_column].astype(int)
+    statistical_areas_df[heb_stat_area_column] = statistical_areas_df[stat_area_column].astype(int)
+    statistical_areas_df.drop(stat_area_column, axis=1, inplace=True)
+    unified_data = unify_data(lamas_demographics, unified_demographics, crime_rates_df, statistical_areas_df,
+                              on_column=heb_stat_area_column)
     organize_primary_and_backup_data('unified_data')
     DataFile.put_frame(data_frame=unified_data, file_name='unified_data', is_primary=True)
+
+    unified_data.to_excel('static/unified_data.xlsx')
 
     request.session['msg'] = "Successfully updated databases"
     return redirect('adminPage')
@@ -240,3 +250,11 @@ def demographic_tables_build(df, stat_area_column="אג''ס"):
     DataFile.put_frame(data_frame=unified_demographics, file_name=data_name, is_primary=True)
 
     return unified_demographics
+
+
+def unify_data(*data_frames, on_column):
+    unified_data = data_frames[0]
+    for df in data_frames:
+        unified_data = pd.merge(unified_data, df, on=on_column, suffixes=('', '_y'))
+        unified_data.drop(unified_data.filter(regex='_y$').columns.tolist(), axis=1, inplace=True)
+    return unified_data

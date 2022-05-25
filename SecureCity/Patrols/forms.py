@@ -27,7 +27,7 @@ class PatrolForm(forms.ModelForm):
         # date = forms.DateField(widget=forms.SelectDateWidget(
         #
         # ), )
-        exclude = ['time_created', 'time_updated_last', ]
+        exclude = ['time_created', 'time_updated_last']
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
