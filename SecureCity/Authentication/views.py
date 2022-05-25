@@ -72,7 +72,7 @@ def residentPage(request):
     df = df.iloc[:, [2] + [i for i in range(49, 66)]]
     df = df.loc[df['neighborhood_1'] == request.user.profile.Neighborhood]
     df.iloc[:, 0] = df.iloc[:, 0].apply(lambda x: int(x.replace(',', '')))
-    df.to_csv('officers1.csv', encoding="ISO-8859-8", index=False)
+    # df.to_csv('data.csv', encoding="ISO-8859-8", index=False)
     heder = []
     data = []
     for column_headers, i in zip(df.columns[:-1], range(len(df.columns[:-1]))):

@@ -11,6 +11,7 @@ from .models import *
 from .forms import *
 
 from django.test import tag
+from adminPage.models import get_data
 
 
 @tag('unitTest')
@@ -54,3 +55,11 @@ class Parenttest(TestCase):
 
     def tearDown(self):
         self.user.delete()
+
+    def checkDb(self):
+        df = get_data('unified_data')
+        df = df.iloc[:, [2] + [i for i in range(49, 66)]]
+        df = df.loc[df['neighborhood_1'] == self.user.profile.Neighborhood]
+        df.iloc[:, 0] = df.iloc[:, 0].apply(lambda x: int(x.replace(',', '')))
+        #df.to_csv('officers1.csv', encoding="ISO-8859-8", index=False)
+        self.assertTrue((df['neighborhood_1'] == self.user.profile.Neighborhood).all())
