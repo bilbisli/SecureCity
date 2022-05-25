@@ -119,7 +119,7 @@ class PatrolPageTest(TestCase):
         self.client = Client()
         # create a patrol
         self.patrol = Patrol.objects.create(title='testPatrol', description='testDescription', manager=self.user,
-                                            location='שכונה א',)
+                                            location=default_neighborhoods[-1],)
         self.patrol.save()
         # assure login
         logged_in = self.client.login(username='testerFinal', password='testpassword')
