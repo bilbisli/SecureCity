@@ -72,12 +72,12 @@ def residentPage(request):
     df = df.iloc[:, [2] + [i for i in range(49, 66)]]
     df = df.loc[df['neighborhood_1'] == request.user.profile.Neighborhood]
     df.iloc[:, 0] = df.iloc[:, 0].apply(lambda x: int(x.replace(',', '')))
-    # df.to_csv('officers1.csv', encoding="ISO-8859-8", index=False)
-    # heder = []
-    # data = []
-    # for column_headers, i in zip(df.columns[:-1], range(len(df.columns[:-1]))):
-    #     heder.append(column_headers)
-    #     data.append(df.iloc[:,i].sum())
+    df.to_csv('officers1.csv', encoding="ISO-8859-8", index=False)
+    heder = []
+    data = []
+    for column_headers, i in zip(df.columns[:-1], range(len(df.columns[:-1]))):
+        heder.append(column_headers)
+        data.append(df.iloc[:,i].sum())
 
     objects = PatrolModels.Patrol.objects.filter(manager=request.user)
     fields = PatrolModels.Patrol._meta.get_fields()[:-3]
@@ -86,7 +86,7 @@ def residentPage(request):
         'objects': objects,
         'fields': fields,
         'type': type,
-        # 'data': data,
-        # 'heder':heder
+        'data': data,
+        'heder':heder
     }
     return render(request, 'Authentication/residentPage.html', context)
