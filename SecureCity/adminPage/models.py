@@ -5,8 +5,20 @@ from django.db.models import JSONField
 from django.utils import timezone
 
 
+default_neighborhoods = ('א', 'ב', 'ג', 'ד', 'ה')
+
+
 def current_time():
     return timezone.localtime(timezone.now())
+
+
+def get_locations(neighborhood_table='unified_data', neighborhood_column='neighborhood_1'):
+    try:
+        neighbourhoods = get_data(neighborhood_table)[neighborhood_column].unique()
+    except (ValueError, KeyError, TypeError, AttributeError):
+        neighbourhoods = default_neighborhoods
+
+    return [(neighborhood, neighborhood) for neighborhood in neighbourhoods]
 
 
 class DataFile(models.Model):
@@ -54,7 +66,7 @@ def update_data(data_name='crime_records_data',
                 df_preprocessing_function=None,
                 organize_func=organize_primary_and_backup_data,
                 to_df=True,
-                save=True,):
+                save=True, ):
     # get the data from the API
     package_search_url = f'{api_endpoint}{data_packages_search_path}{data_name}'
     results = requests.get(package_search_url).json()['result']['results'][0]['resources']
@@ -83,7 +95,11 @@ def update_data(data_name='crime_records_data',
     if organize_func is not None:
         organize_func(data_name)
 
-    return DataFile.put_frame(data_frame=df, file_name=data_name, is_primary=True)
+    # save the data
+    ret = DataFile.put_frame(data_frame=df, file_name=data_name, is_primary=True)
+    if to_df:
+        ret = ret.load_frame()
+    return ret
 
 
 # get the current  data
@@ -95,5 +111,4 @@ def get_data(data='unified_data'):
         return current_data.first().load_frame()
     except AttributeError:
         return None
-
 

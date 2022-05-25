@@ -3,9 +3,10 @@ from django.contrib.auth.models import User
 from django.core.validators import MinLengthValidator
 from django.core.validators import RegexValidator
 import datetime
-from Patrols.models import get_locations
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from adminPage.models import get_locations, default_neighborhoods
+
 
 MEDIUM_STRING = 63
 
@@ -20,7 +21,7 @@ class Parent(models.Model):
     Last_Name = models.CharField(validators=[MinLengthValidator(2)], max_length=50)
     models.CharField(max_length=MEDIUM_STRING, choices=get_locations())
     City = models.CharField(default='Beer Sheba', validators=[MinLengthValidator(2)], max_length=50)
-    Neighborhood = models.CharField(max_length=MEDIUM_STRING, choices=get_locations())
+    Neighborhood = models.CharField(max_length=MEDIUM_STRING, choices=get_locations(), default=default_neighborhoods[0])
     is_patrol_manager = models.BooleanField(default=False)
 
     def setPatrolManager(self):

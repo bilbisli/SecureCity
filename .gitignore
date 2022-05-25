@@ -175,10 +175,12 @@ GitHub.sublime-settings
 
 # databases #
 .DS_Store
-#db.sqlite3
-#db.sqlite3-journal
-#*.sqlite3
-SecureCity/media/
+
+db.sqlite3
+db.sqlite3-journal
+*.sqlite3
+media/
+
 *.pyc
 *.db
 *.pid
@@ -201,6 +203,6 @@ SecureCity/media/
 # Ignore Django Migrations in Development if you are working on team
 
 # Only for Development (comment to remove in deployment)
-#**/migrations/**
-#!**/migrations
-#!**/migrations/__init__.py
+**/migrations/**
+!**/migrations
+!**/migrations/__init__.py

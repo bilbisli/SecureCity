@@ -6,7 +6,8 @@ from django.contrib.auth.models import User
 from django.urls import reverse, resolve
 from django.test import tag
 from .views import patrol_management, patrol_page
-from .models import Patrol
+from .models import Patrol, default_neighborhoods
+# from adminPage.models import
 
 
 @tag('integrationTest')
@@ -18,7 +19,7 @@ class PatrolManagementTest(TestCase):
         self.user.save()
         self.factory = RequestFactory()
         self.client = Client()
-        self.patrol_params = {'title': 'testPatrol', 'location': 'A', 'priority': '1',
+        self.patrol_params = {'title': 'testPatrol', 'location': default_neighborhoods[-1], 'priority': '1',
                               'manager': self.user, 'date': '2022-01-01', 'start_time': '12:00', 'end_time': '13:00'}
         self.patrol = Patrol.objects.create(**self.patrol_params)
         self.patrol.save()
@@ -117,7 +118,8 @@ class PatrolPageTest(TestCase):
         self.factory = RequestFactory()
         self.client = Client()
         # create a patrol
-        self.patrol = Patrol.objects.create(title='testPatrol', description='testDescription', manager=self.user)
+        self.patrol = Patrol.objects.create(title='testPatrol', description='testDescription', manager=self.user,
+                                            location=default_neighborhoods[-1],)
         self.patrol.save()
         # assure login
         logged_in = self.client.login(username='testerFinal', password='testpassword')
