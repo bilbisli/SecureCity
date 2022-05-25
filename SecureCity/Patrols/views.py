@@ -5,7 +5,7 @@ from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect
 from datetime import datetime
 from .forms import PatrolForm
-from .models import Patrol
+from .models import Patrol, get_patrol_size
 from .models import analyze_patrols_priority
 from adminPage.models import get_locations
 
@@ -71,12 +71,15 @@ def create_patrol(request):
         if patrol_form.is_valid():
             patrol = patrol_form.instance
             patrol.manager = request.user
+            patrol.update_priority = request.user.is_superuser
             form = patrol_form.save()
             return redirect('PatrolManagement')
     else:
         patrol_form = PatrolForm()
     context = {
         'form': patrol_form,
+        'user_location': request.user.profile.Neighborhood,
+        'recommended_people_num': get_patrol_size(request.user.profile.Neighborhood),
     }
     analyze_patrols_priority()
     return render(request, 'Patrols/CreatePatrol.html', context)

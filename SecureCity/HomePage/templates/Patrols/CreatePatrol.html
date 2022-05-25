@@ -15,13 +15,20 @@
             {% if field.name == "priority" %}
                 {% if user.is_superuser %}
                     {{ field|as_crispy_field }}
-                {% else %}
-<!--                <fieldset disabled>-->
-                    {{ field|as_crispy_field }}
-<!--                </fieldset>-->
+{#                {% else %}#}
+{#<!--                <fieldset disabled>-->#}
+{#                    {{ field|as_crispy_field }}#}
+{#<!--                </fieldset>-->#}
                 {% endif %}
             {% else %}
                 {{ field|as_crispy_field }}
+                {% if field.name == "participants_needed" %}
+                    <div class="col-md-6">
+                        <div class="alert alert-info" role="alert" style="width: 32rem;">
+                          Recommended participants for '{{ user_location }}' is: {{ recommended_people_num }}
+                        </div>
+                    </div>
+                {% endif %}
             {% endif %}
         {% endfor %}
         </div>
