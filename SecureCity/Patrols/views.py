@@ -85,7 +85,9 @@ def parent_patrol(request):
     if request.GET.get('sort') == 'Priority':
         activePatrols = Patrol.objects.filter(patrol_status__in=["Creation", "Active"]).order_by('-priority')
         donePatrols = Patrol.objects.filter(patrol_status="Archive").order_by('-priority')
-
+    elif request.GET.get('sort') == 'Participants_Needed':
+        activePatrols = Patrol.objects.filter(patrol_status__in=["Creation", "Active"]).order_by('-participants_needed')
+        donePatrols = Patrol.objects.filter(patrol_status="Archive").order_by('-participants_needed')
     elif request.GET.get('sort') == 'Location':
         activePatrols = Patrol.objects.filter(location=request.user.profile.Neighborhood)
         donePatrols = Patrol.objects.filter(patrol_status="Archive").filter(location=request.user.profile.Neighborhood)
