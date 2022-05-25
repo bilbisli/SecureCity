@@ -95,10 +95,10 @@ def update_data(data_name='crime_records_data',
     if organize_func is not None:
         organize_func(data_name)
 
+    # save the data
+    ret = DataFile.put_frame(data_frame=df, file_name=data_name, is_primary=True)
     if to_df:
-        ret = df
-    else:
-        ret = DataFile.put_frame(data_frame=df, file_name=data_name, is_primary=True)
+        ret = ret.load_frame()
     return ret
 
 
