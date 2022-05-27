@@ -15,6 +15,7 @@ from .models import update_data, DataFile, organize_primary_and_backup_data
 from Patrols.models import get_patrol_size
 
 
+
 @user_passes_test(lambda u: u.is_superuser, login_url='/', redirect_field_name=None)
 def adminP(request, msg=''):
     objects = ''
@@ -206,7 +207,7 @@ def updateDatabases(request):
     organize_primary_and_backup_data('unified_data')
     DataFile.put_frame(data_frame=unified_data, file_name='unified_data', is_primary=True)
 
-    unified_data.to_excel('static/unified_data.xlsx')
+    # unified_data.to_excel('static/unified_data.xlsx')
 
     request.session['msg'] = "Successfully updated databases"
     return redirect('adminPage')

@@ -1,3 +1,4 @@
+import pandas as pd
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
@@ -7,6 +8,11 @@ from django.contrib.auth.decorators import login_required
 from .forms import ExtendedUserCreationForm, ParentProfileForm
 from Patrols import models as PatrolModels
 from adminPage.models import get_data
+
+
+crime_columns = (
+        'עבירות כלפי המוסר', 'עבירות כלפי הרכוש', 'עבירות נגד גוף', 'עבירות סדר ציבורי', 'עבירות מין',
+        'עבירות נגד אדם',)
 
 
 def AddParent(request):
@@ -68,26 +74,62 @@ def loginU(request):
 
 
 def residentPage(request):
-    heder = []
+    headers = []
     data = []
+    fields = []
+    objects = []
+    df = pd.DataFrame()
+    neighborhood_column = "neighborhood_1"
+    heb_neighb_col = "שכונה"
+    total_population_col = "סה''כ"
+    columns = [heb_neighb_col, total_population_col] + list(crime_columns)
     df = get_data('unified_data')
     if df is not None:
-        df = df.iloc[:, [2] + [i for i in range(49, 66)]]
-        df = df.loc[df['neighborhood_1'] == request.user.profile.Neighborhood]
-        df.iloc[:, 0] = df.iloc[:, 0].apply(lambda x: int(x.replace(',', '')))
-        # df.to_csv('data.csv', encoding="ISO-8859-8", index=False)
-        for column_headers, i in zip(df.columns[:-1], range(len(df.columns[:-1]))):
-            heder.append(column_headers)
-            data.append(df.iloc[:,i].sum())
 
-    objects = PatrolModels.Patrol.objects.filter(manager=request.user)
-    fields = PatrolModels.Patrol._meta.get_fields()[:-3]
+        if not request.user.is_superuser:
+            df = df[df[neighborhood_column] == request.user.profile.Neighborhood]
+
+        df[heb_neighb_col] = df[neighborhood_column]
+        df = df.drop(neighborhood_column, axis=1)
+        df = df[columns]
+        df = df.groupby([heb_neighb_col]).sum()
+        # df['neighborhood_1'] = df.index
+        df.to_excel('static/data.xlsx')
+
+
+    #
+    #
+    #
+    #
+
+            # end = 0     # for admin with neighborhood
+            # headers = ['שכונה']
+    #         fields = ['שכונה']
+    #         objects = df['neighborhood_1']
+    #     else:
+    #         df = df.loc[df['neighborhood_1'] == request.user.profile.Neighborhood]
+    #         end = -1    # for area manager without neighborhood
+    #     # df.iloc[:, 0] = df.iloc[:, 0].apply(lambda x: int(x.replace(',', '')))
+    #
+    #     not_with_neghiborhoods = -1
+    #     for column_headers, i in zip(df.columns[:end], range(len(df.columns[:end]))):
+    #         headers.append(column_headers)
+    #         for row in df.iterrows():
+    #             data.append(row)
+    #         # data.append(df.iloc[:,i].sum())
+    #
+    # objects += PatrolModels.Patrol.objects.filter(manager=request.user)
+    # fields += PatrolModels.Patrol._meta.get_fields()[:-3]
+    # print(type(data))
+    # print(data)
+
     p_type = "patrol"
     context = {
         'objects': objects,
         'fields': fields,
         'type': p_type,
         'data': data,
-        'heder': heder
+        'headers': headers,
+        'df': df
     }
     return render(request, 'Authentication/residentPage.html', context)

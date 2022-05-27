@@ -183,7 +183,7 @@ pipeline {
             }
             steps {
 
-                sh 'docker system prune -f' // if memory runs out
+//                 sh 'docker system prune -f' // if memory runs out
                 // for first run add to sh:
                 //      heroku authorizations:create
                 dir("SecureCity"){

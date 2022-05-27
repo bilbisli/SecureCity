@@ -9,6 +9,7 @@ from django.urls import reverse
 from django.db.models import signals
 from django.dispatch import dispatcher, receiver
 from adminPage.models import get_data, get_locations, default_neighborhoods
+from Authentication.views import crime_columns
 
 
 # string lengths
@@ -101,9 +102,7 @@ class Patrol(models.Model):
         super(Patrol, self).save(*args, **kwargs)  # Call the "real" save() method.
 
 
-def analyze_patrols_priority(parameters=(
-        'עבירות כלפי המוסר', 'עבירות כלפי הרכוש', 'עבירות נגד גוף', 'עבירות סדר ציבורי', 'עבירות מין',
-        'עבירות נגד אדם',)):
+def analyze_patrols_priority(parameters=crime_columns):
     unified_data = get_data('unified_data')
     neighborhood_column = 'neighborhood_1'
     stat_area_column = "אג''ס"
