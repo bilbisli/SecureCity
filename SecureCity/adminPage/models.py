@@ -3,7 +3,7 @@ import pandas as pd
 import requests
 from django.db.models import JSONField
 from django.utils import timezone
-
+from pandas.errors import ParserError
 
 default_neighborhoods = ('א', 'ב', 'ג', 'ד', 'ה')
 
@@ -79,11 +79,16 @@ def update_data(data_name='crime_records_data',
             db_url = f'{api_endpoint}{data_search_path}{db_id}&limit={limit}'
             response = requests.get(db_url)
             db = response.json()['result']['records']
-            db = pd.DataFrame.from_records(db)
+            try:
+                db = pd.DataFrame.from_records(db)
+            except ValueError:
+                db = pd.read_excel(db_url)
         except KeyError:
             db_url = db['url']
-            db = pd.read_excel(db_url)
-
+            try:
+                db = pd.read_excel(db_url)
+            except ValueError:
+                db = pd.DataFrame.from_records(db)
     df = db
     if df_preprocessing_function:
         df = df_preprocessing_function(df)
@@ -122,7 +127,8 @@ def unify_data(*data_frames, on_column):
 
 
 def crime_df_clean(df, city_query='באר שבע'):
-    df = df[df['Settlement_Council'] == city_query]
+    if 'Settlement_Council' in df:
+        df = df[df['Settlement_Council'] == city_query]
     df = df[df['StatArea'].notna() & df['StatisticCrimeGroup'].notna()]
     df['StatArea'] = [int(stat_number) % 1000 for stat_number in df['StatArea']]
     crime_rates_df = pd.DataFrame()
@@ -181,7 +187,6 @@ def updateData():
                                        to_df=False,
                                        save=False,
                                        )
-
     # Update the crime database
     crime_rates_df = update_data(data_name='crime_records_data',
                                  api_endpoint='https://data.gov.il/api/3/',
@@ -190,7 +195,6 @@ def updateData():
                                  data_search_path='action/datastore_search?resource_id=',
                                  df_preprocessing_function=crime_df_clean,
                                  )
-
     lamas_demographics = pd.read_csv('static/lamas_simplified.csv')
     lamas_demographics = lamas_demographics.iloc[2:, :-1]
     lamas_demographics[heb_stat_area_column] = lamas_demographics[heb_stat_area_column].astype(int)
@@ -200,5 +204,3 @@ def updateData():
                               on_column=heb_stat_area_column)
     organize_primary_and_backup_data('unified_data')
     DataFile.put_frame(data_frame=unified_data, file_name='unified_data', is_primary=True)
-
-
