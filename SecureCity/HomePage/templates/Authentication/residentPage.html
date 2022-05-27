@@ -28,8 +28,30 @@
 </head>
 <body>
 <br><br>
-    <h3>You'r Patrols</h3>
+    <h3>Registered Patrols</h3>
     <br><br>
+    <table>
+      <tr>
+
+          {% for x in fields %}
+            <th>{{ x.name }}</th>
+          {% endfor %}
+      </tr>
+        {% for p in patrols %}
+            <tr>
+            {% for name, value in p.get_fields_values %}
+                {% if value %}
+                    <td>{{ value }}</td>
+                {% else %}
+                    <td>-</td>
+                {% endif %}
+            {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+{% if request.user.profile.is_patrol_manager  %}
+    <br><br>
+    <h3>Patrols I Created</h3>
     <table>
       <tr>
             <th>Edit</th>
@@ -77,7 +99,7 @@
     </tr>
   </tbody>
 </table>
-
+{% endif %}
 
 
 </body>

@@ -26,10 +26,10 @@ def overlapPatrols(user,patrol):
     return False
 
 def canJoin(user,patrol):
-    if patrol.approved_reactions.count() == patrol.participants_needed:
-        return (False,"This Patrol Is Full")
-    elif user in patrol.approved_reactions.all():
+    if user in patrol.approved_reactions.all():
         return (False, "You are already signed to this patrol")
+    elif patrol.approved_reactions.count() == patrol.participants_needed:
+        return (False,"This Patrol Is Full")
     elif overlapPatrols(user,patrol):
         return (False, "You are already signed to patrol in overlap hours")
     return (True, "")
@@ -41,8 +41,12 @@ def patrol_page(request, patrol_id):
     except Patrol.DoesNotExist:
         raise Http404(f"Invalid patrol id: {patrol_id}")
     if request.POST:
-        patrol.approved_reactions.add(request.user)
-        patrol.save()
+        if request.POST.get('cancel'):
+            patrol.approved_reactions.remove(request.user)
+            patrol.save()
+        if request.POST.get('join'):
+            patrol.approved_reactions.add(request.user)
+            patrol.save()
     join,msg = canJoin(request.user,patrol)
     context = {
         'patrol':patrol,
