@@ -9,14 +9,45 @@ from .models import Patrol, get_patrol_size
 from .models import analyze_patrols_priority
 from adminPage.models import get_locations
 
+def date_overlap(start1, end1, start2, end2):
+    overlaps = start1 <= end2 and end1 >= start2
+    if not overlaps:
+        return False
+    return True
+def overlapPatrols(user,patrol):
+    registered_patrols = Patrol.objects.filter(approved_reactions__profile__user__id=user.id)
+    currentPatrolTime = (patrol.start_time, patrol.end_time)
+    for pat in registered_patrols:
+        if pat.date == patrol.date:
+            my = (pat.start_time, pat.end_time)
+            hoursOverlap = date_overlap(currentPatrolTime[0], currentPatrolTime[1], my[0], my[1])
+            if hoursOverlap:
+                return True
+    return False
+
+def canJoin(user,patrol):
+    if patrol.approved_reactions.count() == patrol.participants_needed:
+        return (False,"This Patrol Is Full")
+    elif user in patrol.approved_reactions.all():
+        return (False, "You are already signed to this patrol")
+    elif overlapPatrols(user,patrol):
+        return (False, "You are already signed to patrol in overlap hours")
+    return (True, "")
+
 
 def patrol_page(request, patrol_id):
     try:
         patrol = Patrol.objects.get(id=patrol_id)
     except Patrol.DoesNotExist:
         raise Http404(f"Invalid patrol id: {patrol_id}")
+    if request.POST:
+        patrol.approved_reactions.add(request.user)
+        patrol.save()
+    join,msg = canJoin(request.user,patrol)
     context = {
-        'patrol': patrol,
+        'patrol':patrol,
+        'join': join,
+        'msg': msg
     }
     return render(request, 'Patrols/PatrolPage.html', context)
 

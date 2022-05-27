@@ -25,6 +25,14 @@
         <br>
     {% endif %}
     <h5 style="margin:0;padding:0;">Number of Participants:</h5> {{ patrol.approved_reactions.count }}/{{ patrol.participants_needed }}
-
+    <br><br>ֿ
+    {% if msg %}
+     <button type="submit" class="btn btn-danger" name="users">{{ msg }}</button>
+    {% else %}
+        <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success" name="users">Join Patrol</button>
+         </form>
+    {% endif %}
 {% endblock %}
 
