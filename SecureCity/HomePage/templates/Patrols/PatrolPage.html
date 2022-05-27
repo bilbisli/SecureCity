@@ -25,6 +25,21 @@
         <br>
     {% endif %}
     <h5 style="margin:0;padding:0;">Number of Participants:</h5> {{ patrol.approved_reactions.count }}/{{ patrol.participants_needed }}
-
+    <br><br>
+    <form method="POST">
+        {% csrf_token %}
+        {% if msg %}
+            {% if msg == "You are already signed to this patrol" %}
+                <h3 style="color: red">{{ msg }}</h3>
+                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to cancel?')" name="cancel" value="cancel">Cancel</button>
+            {% else %}
+            <button type="submit" class="btn btn-danger">{{ msg }}</button>
+            {% endif %}
+        {% else %}
+            <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to join?')" name="join" value="join">Join Patrol</button>
+        {% endif %}
+    </form>
+    <br><br>
+    <a href="{% url 'parent_patrol' %}" class="btn btn-primary" style="margin-left:2em">Back To Patrols</a>
 {% endblock %}
 

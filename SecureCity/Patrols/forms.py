@@ -61,5 +61,4 @@ class PatrolForm(forms.ModelForm):
                     if patrol.start_time <= start_time <= patrol.end_time \
                             or patrol.start_time <= end_time <= patrol.end_time\
                             or start_time <= patrol.start_time <= end_time:
-                        raise forms.ValidationError(
-                            "You already have a patrol on this date at this time")
+                        raise forms.ValidationError({"date": "You already have a patrol on this date at this time"})
