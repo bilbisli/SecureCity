@@ -4,8 +4,7 @@ from django.test import TestCase, RequestFactory
 from HomePage import views
 from django.test import tag
 from adminPage.models import update_data
-from adminPage.views import demographic_tables_build
-from adminPage.views import crime_df_clean
+from adminPage.models import demographic_tables_build, crime_df_clean
 
 
 @tag('unitTest')
