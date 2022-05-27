@@ -202,7 +202,7 @@ media/
 
 # Ignore Django Migrations in Development if you are working on team
 
-# Only for Development (comment to remove in deployment)
-**/migrations/**
-!**/migrations
-!**/migrations/__init__.py
+# # Only for Development (comment to remove in deployment)
+ **/migrations/**
+ !**/migrations
+ !**/migrations/__init__.py
