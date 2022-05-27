@@ -66,8 +66,8 @@
                 {% endif %}
                 {% if user.profile.is_patrol_manager or user.is_superuser %}
                     <a class="nav-link active" href="{% url 'resident_page' %}"><h8 style="color:#6c6cf8;">My Page</h8> <span class="sr-only">(current)</span></a>
-                {% else %}
-                    <a class="nav-link active" href="#"><h8 style="color:#6c6cf8;">My Page</h8> <span class="sr-only">(current)</span></a>
+                    {% else %}
+                    <a class="nav-link active" href="{% url 'resident_page' %}"><h8 style="color:#6c6cf8;">My Page</h8> <span class="sr-only">(current)</span></a>
                 {% endif %}
                 <a class="nav-link active" href="{% url 'logoutuser' %}">LogOut</a>
               {% else %}

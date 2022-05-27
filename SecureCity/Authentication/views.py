@@ -68,26 +68,31 @@ def loginU(request):
 
 
 def residentPage(request):
-    heder = []
-    data = []
-    df = get_data('unified_data')
-    if df is not None:
+    patrols = PatrolModels.Patrol.objects.filter(approved_reactions__profile__user__id=request.user.id)
+    fields = PatrolModels.Patrol._meta.get_fields()[:-3]
+    context = {
+        'patrols': patrols,
+        'fields': fields
+    }
+    if request.user.profile.is_patrol_manager:
+        df = get_data('unified_data')
         df = df.iloc[:, [2] + [i for i in range(49, 66)]]
         df = df.loc[df['neighborhood_1'] == request.user.profile.Neighborhood]
         df.iloc[:, 0] = df.iloc[:, 0].apply(lambda x: int(x.replace(',', '')))
         # df.to_csv('data.csv', encoding="ISO-8859-8", index=False)
+        heder = []
+        data = []
         for column_headers, i in zip(df.columns[:-1], range(len(df.columns[:-1]))):
             heder.append(column_headers)
             data.append(df.iloc[:,i].sum())
 
-    objects = PatrolModels.Patrol.objects.filter(manager=request.user)
-    fields = PatrolModels.Patrol._meta.get_fields()[:-3]
-    p_type = "patrol"
-    context = {
-        'objects': objects,
-        'fields': fields,
-        'type': p_type,
-        'data': data,
-        'heder': heder
-    }
-    return render(request, 'Authentication/residentPage.html', context)
+        objects = PatrolModels.Patrol.objects.filter(manager=request.user)
+        type = "patrol"
+        context2 = {
+            'objects': objects,
+            'type': type,
+            'data': data,
+            'heder':heder
+        }
+        context.update(context2)
+        return render(request, 'Authentication/residentPage.html', context)
