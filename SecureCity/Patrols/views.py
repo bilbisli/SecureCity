@@ -9,12 +9,15 @@ from .models import Patrol, get_patrol_size
 from .models import analyze_patrols_priority
 from adminPage.models import get_locations
 
+
 def date_overlap(start1, end1, start2, end2):
     overlaps = start1 <= end2 and end1 >= start2
     if not overlaps:
         return False
     return True
-def overlapPatrols(user,patrol):
+
+
+def overlapPatrols(user, patrol):
     registered_patrols = Patrol.objects.filter(approved_reactions__profile__user__id=user.id)
     currentPatrolTime = (patrol.start_time, patrol.end_time)
     for pat in registered_patrols:
@@ -25,12 +28,13 @@ def overlapPatrols(user,patrol):
                 return True
     return False
 
-def canJoin(user,patrol):
+
+def canJoin(user, patrol):
     if user in patrol.approved_reactions.all():
         return (False, "You are already signed to this patrol")
     elif patrol.approved_reactions.count() == patrol.participants_needed:
-        return (False,"This Patrol Is Full")
-    elif overlapPatrols(user,patrol):
+        return (False, "This Patrol Is Full")
+    elif overlapPatrols(user, patrol):
         return (False, "You are already signed to patrol in overlap hours")
     return (True, "")
 
@@ -47,9 +51,9 @@ def patrol_page(request, patrol_id):
         if request.POST.get('join'):
             patrol.approved_reactions.add(request.user)
             patrol.save()
-    join,msg = canJoin(request.user,patrol)
+    join, msg = canJoin(request.user, patrol)
     context = {
-        'patrol':patrol,
+        'patrol': patrol,
         'join': join,
         'msg': msg
     }
@@ -61,32 +65,29 @@ def patrol_management(request):
     error = ''
     if request.POST:
         patrols = Patrol.objects.filter(id__in=request.POST.getlist("ToCSV"))
-        if not len(patrols):
+        if len(patrols) < 1:
             error = 'Please choose at least one Patrol!'
         else:
-            titles = []
-            locations = []
-            priorities = []
-            managers = []
-            dates = []
-            between = []
-            for p in patrols:
-                titles.append(p.title)
-                locations.append(p.location)
-                priorities.append(p.priority)
-                managers.append(str(p.manager))
-                dates.append(str(p.date))
-                between.append(str(p.start_time) + '-' + str(p.end_time))
-            csvFile = pd.DataFrame()
-            csvFile['Title'] = titles
-            csvFile['Location'] = locations
-            csvFile['Priority'] = priorities
-            csvFile['Manager'] = managers
-            csvFile['Date'] = dates
-            csvFile['Time'] = between
+            def patrol_to_csv(lst_patrols):
+                titles, locations, priorities, managers, dates, between = [], [], [], [], [], []
+                for p in lst_patrols:
+                    titles.append(str(p.title))
+                    locations.append(str(p.location))
+                    priorities.append(str(p.priority))
+                    managers.append(str(p.manager))
+                    dates.append(str(p.date))
+                    between.append(str(p.start_time) + '-' + str(p.end_time))
+                csvFile = pd.DataFrame()
+                csvFile['Title'] = titles
+                csvFile['Location'] = locations
+                csvFile['Priority'] = priorities
+                csvFile['Manager'] = managers
+                csvFile['Date'] = dates
+                csvFile['Time'] = between
+                return csvFile
             response = HttpResponse(content_type='text/csv')
             response['Content-Disposition'] = 'attachment; filename=Patrols_Summary.csv'
-            csvFile.to_csv(path_or_buf=response)
+            patrol_to_csv(patrols).to_csv(path_or_buf=response, encoding="ISO-8859-8", index=False)
             return response
     if request.user.is_superuser:
         patrols = [(number + 1, patrol) for number, patrol in enumerate(Patrol.objects.all())]
@@ -164,5 +165,3 @@ def parent_patrol(request):
         'locations': locations,
     }
     return render(request, 'Patrols/ParentPatrolPage.html', context)
-
-

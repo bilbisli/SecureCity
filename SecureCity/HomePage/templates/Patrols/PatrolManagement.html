@@ -7,16 +7,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Patrol Management Page</title>
+
 </head>
 <body>
 {#    <link rel="stylesheet" href="/static/style_back_all.css">#}
-    <div>
-        {# add patrol button #}
-        <br>
-        <br>
-        <a href="{% url 'CreatePatrol' %}" class="btn btn-primary" style="margin-left:2em">Add Patrol</a>
-                <br>        <br>
-    </div>
 <form method="POST">
 {% csrf_token %}
     <div class="patrol_list: ">
@@ -29,18 +23,23 @@
              {% for number, patrol in patrols %}
              {# TODO: when specific patrol page is created - change the patrol listing to include a link of it #}
                  <li class="list-group-item" style="margin-left:2em">{{ number }}.&nbsp;&nbsp;&nbsp;
-                     <a href="{% url 'patrol_page' patrol.pk %}" style="color:#0A0000">
-                                {{ patrol }}
-                     </a>
+                     <a href="{% url 'patrol_page' patrol.pk %}" style="color:#0A0000">{{ patrol }}</a>
+<!--                     <input type="checkbox" name="ToCSV" value="{{ patrol.id }}" checked>-->
 
-                            &nbsp;&nbsp;&nbsp; <b>To CSV?</b>&nbsp;&nbsp;<input type="checkbox" name="ToCSV" value="{{ patrol.id }}" checked>
+                     <label class="container">
+                         &nbsp;&nbsp;&nbsp; <b>To CSV?</b>&nbsp;&nbsp;
+                         <input type="checkbox" name="ToCSV" value="{{ patrol.id }}" checked>
+                         <span class="checkmark"></span>
+                     </label>
+
+
              {% endfor %}
          </ul>
         <hr>
     </div>
 <h6 style="color: red">{{ error }}</h6>
-        <button type="submit" class="btn btn-primary">Download CSV File</button>
-
+        <a href="{% url 'CreatePatrol' %}" class="button button_blue" style="margin-left:2em">Add Patrol</a>
+        <button type="submit" class="button button_green">Download CSV File</button>
 </form>
 </body>
 </html>

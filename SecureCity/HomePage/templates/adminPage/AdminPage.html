@@ -36,20 +36,18 @@
             </div>
         {% endif %}
         <br>
-
         <form method="POST">
         {% csrf_token %}
-        <button type="submit" class="btn btn-primary" name="users">Users</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button type="submit" class="btn btn-success" name="patrols">Patrols</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button type="submit" class="btn btn-warning" name="contacts">Contacts</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button type="submit" class="btn btn-info" name="requests">Parents Requests</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        </form>
-
-        <br>
-        {# update databases button and by activate the view #}
-        <button type="submit" class="btn btn-danger" onclick="location.href='{% url 'updateDatabases' %}'" name='update_db'>Update Databases</button>
-        <br>
-
+            <br>
+            <button type="submit" class="button btn-primary" name="users">Users</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="submit" class="button btn-success" name="patrols">Patrols</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="submit" class="button btn-warning" name="contacts">Contacts</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="submit" class="button btn-info" name="requests">Parents Requests</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </form>
+            <br><br>
+            {# update databases button and by activate the view #}
+            <button type="submit" class="button btn-danger" onclick="location.href='{% url 'updateDatabases' %}'" name='update_db'>Update Databases</button>
+            <br>
         {% if objects %}
             <br><br>
             <table>
@@ -82,29 +80,27 @@
                         {% endif %}
                     {% endfor %}
                     {% if type == "request" %}
-                                <td><a href="{% url 'adminApprove' %}?ApproveObject={{ type }}{{ obj.userAsked.id }}"><button type="submit" onclick="return confirm('Are you sure?')">✅️</button></a></td>
-                                <td><a href="{% url 'adminDelete' %}?DeleteObject={{ type }}{{ obj.userAsked.id }}"><button type="submit" onclick="return confirm('Are you sure?')">❌️</button></a></td>
+                        <td><a href="{% url 'adminApprove' %}?ApproveObject={{ type }}{{ obj.userAsked.id }}"><button type="submit" onclick="return confirm('Are you sure?')">✅️</button></a></td>
+                        <td><a href="{% url 'adminDelete' %}?DeleteObject={{ type }}{{ obj.userAsked.id }}"><button type="submit" onclick="return confirm('Are you sure?')">❌️</button></a></td>
                     {% elif type == "user" %}
                         <td><a href="{% url 'adminDelete' %}?DeleteObject={{ type }}{{ obj.id }}"><button type="submit" onclick="return confirm('Are you sure?')">❌️</button></a></td>
                         <td><a href="{% url 'adminEdit' %}?patrol={{ type }}{{ obj.id }}"><button>Change️</button></a></td>
-
                     {% else %}
-                                <td><a href="{% url 'adminDelete' %}?DeleteObject={{ type }}{{ obj.id }}"><button type="submit" onclick="return confirm('Are you sure?')">❌️</button></a></td>
+                        <td><a href="{% url 'adminDelete' %}?DeleteObject={{ type }}{{ obj.id }}"><button type="submit" onclick="return confirm('Are you sure?')">❌️</button></a></td>
                     {% endif %}
                     </tr>
                 {% endfor %}
             </table>
         {% endif %}
-
         <br><br>
         {% if type == "user" %}
-            <a href="{% url 'AddParent' %}?admin=1"><button class="btn btn-success">Create Parent User</button></a>
+            <a href="{% url 'AddParent' %}?admin=1"><button class="button btn-success">Create Parent User</button></a>
         {% elif type == "patrol" %}
-            <a href="{% url 'CreatePatrol' %}"><button class="btn btn-success">Create Patrol</button></a>
+            <a href="{% url 'CreatePatrol' %}"><button class="button btn-success">Create Patrol</button></a>
         {% elif type == "contact" %}
-            <a href="{% url 'CreateContact' %}"><button class="btn btn-success">Create Contact</button></a>
+            <a href="{% url 'CreateContact' %}"><button class="button btn-success">Create Contact</button></a>
         {% elif type == "request" %}
-            <a href="{% url 'CreateRequest' %}"><button class="btn btn-success">Create Request</button></a>
+            <a href="{% url 'CreateRequest' %}"><button class="button btn-success">Create Request</button></a>
         {% endif %}
     </div>
 </body>
