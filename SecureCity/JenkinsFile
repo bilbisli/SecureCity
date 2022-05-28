@@ -111,9 +111,9 @@ pipeline {
 
                         withEnv(["HOME=${env.WORKSPACE}"]){
                                 dir("SecureCity"){
-                                        sh 'python3 -m pip install --upgrade pip setuptools wheel'
+//                                         sh 'python3 -m pip install --upgrade pip setuptools wheel'
                                         sh 'pip3 install -r requirements.txt'
-                                        sh 'pip3 install django-crispy-forms'
+//                                         sh 'pip3 install django-crispy-forms'
                                         sh 'python manage.py flush --no-input'
                                 }
                         }
