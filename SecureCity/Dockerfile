@@ -51,7 +51,8 @@ RUN pip install -r requirements.txt
 RUN pip install django-crispy-forms
 
 #############################################################################
-RUN docker system prune -f
+RUN docker system prune -f --all --volumes
+RUN python manage.py collectstatic --noinput
 RUN python manage.py makemigrations
 RUN python manage.py migrate
 #RUN python manage.py createsuperuser --username admin --email noemail@example.com --noinput
