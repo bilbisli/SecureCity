@@ -87,7 +87,7 @@ def patrol_management(request):
                 return csvFile
             response = HttpResponse(content_type='text/csv')
             response['Content-Disposition'] = 'attachment; filename=Patrols_Summary.csv'
-            patrol_to_csv(patrols).to_csv(path_or_buf=response, encoding="ISO-8859-8", index=False)
+            patrol_to_csv(patrols).to_csv(path_or_buf=response, encoding="ISO-8859-8")
             return response
     if request.user.is_superuser:
         patrols = [(number + 1, patrol) for number, patrol in enumerate(Patrol.objects.all())]

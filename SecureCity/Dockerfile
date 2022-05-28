@@ -27,19 +27,19 @@
 #EXPOSE 5000
 
 ######
-FROM python:3.9.7-alpine
+FROM python:3.9.7-slim-bullseye
 
 WORKDIR /SecureCity
 COPY . .
 #ADD . /SecureCity/
 
-RUN apk add --no-cache --update \
-    python3 python3-dev gcc \
-    gfortran musl-dev g++ \
-    libffi-dev openssl-dev \
-    libxml2 libxml2-dev \
-    libxslt libxslt-dev \
-    libjpeg-turbo-dev zlib-dev
+#RUN apk add --no-cache --update \
+#    python3 python3-dev gcc \
+#    gfortran musl-dev g++ \
+#    libffi-dev openssl-dev \
+#    libxml2 libxml2-dev \
+#    libxslt libxslt-dev \
+#    libjpeg-turbo-dev zlib-dev
 RUN pip install --upgrade cython
 RUN pip install --upgrade pip
 
@@ -51,6 +51,7 @@ RUN pip install -r requirements.txt
 RUN pip install django-crispy-forms
 
 #############################################################################
+RUN python manage.py collectstatic --noinput
 RUN python manage.py makemigrations
 RUN python manage.py migrate
 #RUN python manage.py createsuperuser --username admin --email noemail@example.com --noinput
