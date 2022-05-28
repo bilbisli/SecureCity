@@ -27,7 +27,7 @@
 #EXPOSE 5000
 
 ######
-FROM python:3.9.7-alpine
+FROM python:3.9.7-slim-bullseye
 
 WORKDIR /SecureCity
 COPY . .
