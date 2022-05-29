@@ -104,7 +104,6 @@ def patrol_management(request):
 def create_patrol(request):
     if request.method == 'POST':
         patrol_form = PatrolForm(request.POST or None, user=request.user)
-        print(patrol_form.errors)
         if patrol_form.is_valid():
             patrol = patrol_form.instance
             patrol.manager = request.user

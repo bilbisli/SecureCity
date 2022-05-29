@@ -24,6 +24,11 @@ from django.test import tag
 # from .models import Patrol, default_neighborhoods
 # from adminPage.models import
 
+from django.test import TestCase, RequestFactory, Client
+from django.contrib.auth.models import User
+from django.urls import reverse, resolve
+from django.test import tag
+
 
 @tag('unitTest')
 class SignUptest(TestCase):
@@ -78,6 +83,31 @@ class Parenttest(TestCase):
 
 @tag('integrationTest')
 class PatrolManagerTest(TestCase):
+    @tag('unitTest')
+    def setUp(self):
+        super().setUp()
+        self.user = User.objects.create_user('testerFinal', 'tester@testing.com', 'testpassword')
+        self.user.save()
+        self.factory = RequestFactory()
+        self.client = Client()
+        logged_in = self.client.login(username='testerFinal', password='testpassword')
+        self.assertTrue(logged_in)
+
+    @tag('unitTest')
+    def test_adminPage_not_admin(self):
+        # test admin page when user is not admin
+        response = self.client.get(reverse('adminPage'))
+        self.assertEqual(response.status_code, 302)
+
+    @tag('unitTest')
+    def test_resident_page(self):
+        # test resident page
+        response = self.client.get(reverse('resident_page'))
+        self.assertEqual(response.status_code, 200)
+
+
+@tag('integrationTest')
+class adminPageTest(TestCase):
     @tag('unitTest')
     def setUp(self):
         super().setUp()

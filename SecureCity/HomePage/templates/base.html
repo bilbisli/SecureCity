@@ -36,14 +36,13 @@
                 {% if user.is_authenticated %}
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Options
+                      Patrol Options
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                       <a class="dropdown-item" href="{% url 'parent_patrol' %}">Patrols</a>
                         {% if user.profile.is_patrol_manager %}
                       <a class="dropdown-item" href="{% url 'PatrolManagement' %}">Manage Patrol</a>
                         {% endif %}
-                      <a class="dropdown-item" href="{% url 'ContactManagement' %}">Contacts</a>
                         {% if not user.profile.is_patrol_manager %}
                       <div class="dropdown-divider"></div>
                       <a class="dropdown-item" href="{% url 'becomePatrolManager' %}">Ask to be patrol manager</a>
@@ -51,6 +50,7 @@
                     </div>
                   </li>
                   <li class="nav-item">
+                    <a class="nav-link" href="{% url 'ContactManagement' %}">Contacts</a>
                   </li>
                 {% endif %}
                 
