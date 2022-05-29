@@ -177,40 +177,40 @@ pipeline {
                         }
                 }
             }
-	    stage('Cyclomation Complexity') {
-	    agent{
-		docker{
-		    image 'python:3.8'
-		      }
-		 }
-	    steps{
-		    withEnv(["HOME=${env.WORKSPACE}"]){
-			dir("SecureCity"){
-				    sh 'pip install django-environ'
-				    sh 'pip install radon'
-				    sh 'python -m radon cc -s . -a'
-			}	
-		    }
-		 }
-            }
-            stage('PyLint') {
-		    agent{
-			docker{
-			    image 'python:3.8'
-			      }
-           	         }
-		    steps{
-			    withEnv(["HOME=${env.WORKSPACE}"]){
-			    	dir("SecureCity"){
-                                            sh 'pip install django-environ'
-					    sh 'pip install black'
-					    sh 'pip install pylint'
-					    sh 'python -m black adminPage AdminRequest Authentication Contact HomePage Patrols'
-					    sh 'python -m pylint --exit-zero adminPage AdminRequest Authentication Contact HomePage Patrols'
-                                }	
-			    }
-			 }
-            }
+// 	    stage('Cyclomation Complexity') {
+// 	    agent{
+// 		docker{
+// 		    image 'python:3.8'
+// 		      }
+// 		 }
+// 	    steps{
+// 		    withEnv(["HOME=${env.WORKSPACE}"]){
+// 			dir("SecureCity"){
+// 				    sh 'pip install django-environ'
+// 				    sh 'pip install radon'
+// 				    sh 'python -m radon cc -s . -a'
+// 			}
+// 		    }
+// 		 }
+//             }
+//             stage('PyLint') {
+// 		    agent{
+// 			docker{
+// 			    image 'python:3.8'
+// 			      }
+//            	         }
+// 		    steps{
+// 			    withEnv(["HOME=${env.WORKSPACE}"]){
+// 			    	dir("SecureCity"){
+//                                             sh 'pip install django-environ'
+// 					    sh 'pip install black'
+// 					    sh 'pip install pylint'
+// 					    sh 'python -m black adminPage AdminRequest Authentication Contact HomePage Patrols'
+// 					    sh 'python -m pylint --exit-zero adminPage AdminRequest Authentication Contact HomePage Patrols'
+//                                 }
+// 			    }
+// 			 }
+//             }
 
             stage('Deploy') {
             agent {
