@@ -182,13 +182,14 @@ pipeline {
            	}
 		    steps {
 			    withEnv(["HOME=${env.WORKSPACE}"]){
-				   	    sh 'pip install django-environ'
+			    dir("SecureCity"){
+                                            sh 'pip install django-environ'
 					    sh 'pip install black'
 					    sh 'pip install pylint'
 					    sh 'python -m black HomePage'
 					    sh 'python -m pylint --exit-zero HomePage --load-plugins=pylint_django'
 // 					    sh 'python -m pylint --exit-zero Estudy_Project'
-					
+                                }	
 				}
 			}
 		}
