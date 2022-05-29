@@ -20,3 +20,4 @@ numpy
 openpyxl
 whitenoise
 django-crispy-forms
+pylint
