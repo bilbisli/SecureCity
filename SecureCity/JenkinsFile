@@ -3,7 +3,7 @@
      stages {
      // hackathon
      //---------------------------------------------------------------------------------------------------------
-        stage('Build'){
+        stage('Build') {
             agent {
                 docker {
                     image 'cimg/base:stable'
@@ -167,17 +167,30 @@ pipeline {
                 }
                 steps {
                         withEnv(["HOME=${env.WORKSPACE}"]){
-				dir("SecureCity"){
-					sh 'python manage.py makemigrations'
-                                        sh 'python manage.py migrate'
+                                dir("SecureCity"){
                                         sh 'python -m coverage run --source="." manage.py test'
                                         sh 'python -m coverage report'
-				}
-                                
+                                }
                         }
                 }
             }
-            stage('Metric 1 - pylint python code convention') {
+	    stage('Cyclomation Complexity') {
+	    agent{
+		docker{
+		    image 'python:3.8'
+		      }
+		 }
+	    steps{
+		    withEnv(["HOME=${env.WORKSPACE}"]){
+			dir("SecureCity"){
+				    sh 'pip install django-environ'
+				    sh 'pip install radon'
+				    sh 'python -m radon cc -s . -a'
+			}	
+		    }
+		 }
+            }
+            stage('PyLint') {
 		    agent{
 			docker{
 			    image 'python:3.8'
@@ -195,22 +208,7 @@ pipeline {
 			    }
 			 }
             }
-	    stage('Metric 2 - cyclomatic') {
-		    agent{
-			docker{
-			    image 'python:3.8'
-			      }
-           	         }
-		    steps{
-			    withEnv(["HOME=${env.WORKSPACE}"]){
-			    	dir("SecureCity"){
-                                            sh 'pip install django-environ'
-					    sh 'pip install radon'
-					    sh 'python -m radon cc -s . -a'
-                                }	
-			    }
-			 }
-            }
+
             stage('Deploy') {
             agent {
                 docker {
