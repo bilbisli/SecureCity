@@ -122,6 +122,8 @@ def create_patrol(request):
     analyze_patrols_priority()
     return render(request, 'Patrols/CreatePatrol.html', context)
 
+def needed(patrol):
+    return -(patrol.participants_needed - patrol.approved_reactions.count())
 
 @login_required(login_url='/Login/')
 def parent_patrol(request):
@@ -129,8 +131,12 @@ def parent_patrol(request):
         activePatrols = Patrol.objects.filter(patrol_status__in=["Creation", "Active"]).order_by('-priority')
         donePatrols = Patrol.objects.filter(patrol_status="Archive").order_by('-priority')
     elif request.GET.get('sort') == 'Participants_Needed':
-        activePatrols = Patrol.objects.filter(patrol_status__in=["Creation", "Active"]).order_by('-participants_needed')
-        donePatrols = Patrol.objects.filter(patrol_status="Archive").order_by('-participants_needed')
+        activePatrols = Patrol.objects.filter(patrol_status__in=["Creation", "Active"])
+        donePatrols = Patrol.objects.filter(patrol_status="Archive")
+        activePatrols = list(activePatrols)
+        donePatrols = list(donePatrols)
+        activePatrols.sort(key=needed)
+        donePatrols.sort(key=needed)
     elif request.GET.get('sort') == 'Location':
         activePatrols = Patrol.objects.filter(location=request.user.profile.Neighborhood)
         donePatrols = Patrol.objects.filter(patrol_status="Archive").filter(location=request.user.profile.Neighborhood)
