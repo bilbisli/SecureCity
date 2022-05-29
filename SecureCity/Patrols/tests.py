@@ -12,7 +12,7 @@ from .models import Patrol, default_neighborhoods
 
 @tag('integrationTest')
 class PatrolManagementTest(TestCase):
-    @tag('unitTest')
+    @tag('integrationTest')
     def setUp(self):
         super().setUp()
         self.user = User.objects.create_user('testerFinal', 'tester@testing.com', 'testpassword')
@@ -34,7 +34,7 @@ class PatrolManagementTest(TestCase):
         self.user.delete()
         super().tearDown()
 
-    @tag('unitTest')
+    @tag('integrationTest')
     def test_patrolManagement_not_manager(self):
         # test patrol management when user is not manager
         response = self.client.get(reverse('PatrolManagement'))
@@ -44,7 +44,7 @@ class PatrolManagementTest(TestCase):
         self.assertNotEqual(response.status_code, 404)
         self.assertEqual(response.status_code, 302)
 
-    @tag('unitTest')
+    @tag('integrationTest')
     def test_patrolManagement_is_manager(self):
         # self.client.logout()
         self.user.profile.is_patrol_manager = True
@@ -95,7 +95,7 @@ class PatrolManagementTest(TestCase):
                                    self.patrol.date,
                                    f'{self.patrol.start_time}:00-{self.patrol.end_time}:00'])
 
-    @tag('unitTest')
+    @tag('integrationTest')
     def test_patrolManagement_add_patrol(self):
         # self.client.logout()
         self.user.profile.is_patrol_manager = True
