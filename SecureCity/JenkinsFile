@@ -167,8 +167,12 @@ pipeline {
                 }
                 steps {
                         withEnv(["HOME=${env.WORKSPACE}"]){
+				dir("SecureCity"){
+					sh 'python manage.py makemigrations'
+                                        sh 'python manage.py migrate'
                                         sh 'python -m coverage run --source="." manage.py test'
                                         sh 'python -m coverage report'
+				}
                                 
                         }
                 }
