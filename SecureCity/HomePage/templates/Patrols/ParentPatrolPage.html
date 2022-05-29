@@ -140,7 +140,7 @@ function myFunction(id) {
                             <td>{{patrol.start_time}}</td>
                             <td>{{patrol.end_time}}</td>
                             <td>{{patrol.priority}}</td>
-                            <td>{{patrol.participants_needed}}</td>
+                            <td>{{ patrol.approved_reactions.count }}/{{ patrol.participants_needed }}</td>
                         </tr>
                     {% endfor %}
                     <tr>
@@ -155,7 +155,7 @@ function myFunction(id) {
                             <td>{{patrol.start_time}}</td>
                             <td>{{patrol.end_time}}</td>
                             <td>{{patrol.priority}}</td>
-                            <td>{{patrol.participants_needed}}</td>
+                            <td>{{ patrol.approved_reactions.count }}/{{ patrol.participants_needed }}</td>
                             {% if user.is_superuser %}
                                 <td><button id="b_{{ patrol.id }}" onclick="myFunction({{ patrol.id }})">Show Summary</button></td>
                                 <tr id="{{ patrol.id }}" style="display: none">
