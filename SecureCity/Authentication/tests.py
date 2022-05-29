@@ -13,6 +13,17 @@ from .forms import *
 from django.test import tag
 from adminPage.models import get_data
 
+import csv
+import io
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.test import TestCase, RequestFactory, Client
+from django.contrib.auth.models import User
+from django.urls import reverse, resolve
+from django.test import tag
+# from .views import patrol_management, patrol_page
+# from .models import Patrol, default_neighborhoods
+# from adminPage.models import
+
 
 @tag('unitTest')
 class SignUptest(TestCase):
@@ -63,3 +74,28 @@ class Parenttest(TestCase):
         df.iloc[:, 0] = df.iloc[:, 0].apply(lambda x: int(x.replace(',', '')))
         #df.to_csv('officers1.csv', encoding="ISO-8859-8", index=False)
         self.assertTrue((df['neighborhood_1'] == self.user.profile.Neighborhood).all())
+
+
+@tag('integrationTest')
+class PatrolManagerTest(TestCase):
+    @tag('unitTest')
+    def setUp(self):
+        super().setUp()
+        self.user = User.objects.create_user('testerFinal', 'tester@testing.com', 'testpassword')
+        self.user.save()
+        self.factory = RequestFactory()
+        self.client = Client()
+        logged_in = self.client.login(username='testerFinal', password='testpassword')
+        self.assertTrue(logged_in)
+
+    @tag('unitTest')
+    def test_adminPage_not_admin(self):
+        # test admin page when user is not admin
+        response = self.client.get(reverse('adminPage'))
+        self.assertEqual(response.status_code, 302)
+
+    @tag('unitTest')
+    def test_resident_page(self):
+        # test resident page
+        response = self.client.get(reverse('resident_page'))
+        self.assertEqual(response.status_code, 200)
