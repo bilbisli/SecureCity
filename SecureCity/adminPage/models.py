@@ -195,6 +195,7 @@ def updateData():
                                  data_search_path='action/datastore_search?resource_id=',
                                  df_preprocessing_function=crime_df_clean,
                                  )
+
     lamas_demographics = pd.read_csv('static/lamas_simplified.csv')
     lamas_demographics = lamas_demographics.iloc[2:, :-1]
     lamas_demographics[heb_stat_area_column] = lamas_demographics[heb_stat_area_column].astype(int)

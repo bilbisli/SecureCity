@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import ExtendedUserCreationForm, ParentProfileForm
 from Patrols import models as PatrolModels
 from adminPage.models import get_data, updateData
-
+# from Patrols.models import analyze_patrols_priority
 
 crime_columns = (
         'עבירות כלפי המוסר', 'עבירות כלפי הרכוש', 'עבירות נגד גוף', 'עבירות סדר ציבורי', 'עבירות מין',
@@ -83,20 +83,27 @@ def residentPage(request):
     }
     if request.user.profile.is_patrol_manager:
         neighborhood_column = "neighborhood_1"
+        priority_col = "priority"
         heb_neighb_col = "שכונה"
         total_population_col = "סה''כ"
+        heb_priority_col = "עדיפות"
+        heb_ratio_col = "יחס עבירות לאוכלוסייה"
+        residents_offense_ratio = 'residents_offense_ratio'
         columns = [heb_neighb_col, total_population_col] + list(crime_columns)
         df = get_data('unified_data')
         if df is not None:
-
             if not request.user.is_superuser:
                 df = df[df[neighborhood_column] == request.user.profile.Neighborhood]
-
             df[heb_neighb_col] = df[neighborhood_column]
+            priorities = PatrolModels.analyze_patrols_priority()
+            priorities[neighborhood_column] = priorities.index
             df = df.drop(neighborhood_column, axis=1)
             df = df[columns]
             df = df.groupby([heb_neighb_col]).sum()
-            # df.to_excel('static/data.xlsx')
+            df[heb_neighb_col] = df.index
+            df[heb_priority_col] = priorities[priority_col]
+            df[heb_ratio_col] = priorities[residents_offense_ratio]
+            df.drop(heb_neighb_col, axis=1, inplace=True)
 
         objects = PatrolModels.Patrol.objects.filter(manager=request.user)
         p_type = "patrol"
