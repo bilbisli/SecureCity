@@ -174,7 +174,23 @@ pipeline {
                         }
                 }
             }
-            stage('Metric 1 - pylint python code convention') {
+	    stage('Cyclomation Complexity') {
+	    agent{
+		docker{
+		    image 'python:3.8'
+		      }
+		 }
+	    steps{
+		    withEnv(["HOME=${env.WORKSPACE}"]){
+			dir("SecureCity"){
+				    sh 'pip install django-environ'
+				    sh 'pip install radon'
+				    sh 'python -m radon cc -s . -a'
+			}	
+		    }
+		 }
+            }
+            stage('PyLint') {
 		    agent{
 			docker{
 			    image 'python:3.8'
@@ -192,22 +208,7 @@ pipeline {
 			    }
 			 }
             }
-	    stage('Metric 2 - cyclomatic') {
-		    agent{
-			docker{
-			    image 'python:3.8'
-			      }
-           	         }
-		    steps{
-			    withEnv(["HOME=${env.WORKSPACE}"]){
-			    	dir("SecureCity"){
-                                            sh 'pip install django-environ'
-					    sh 'pip install radon'
-					    sh 'python -m radon cc -s . -a'
-                                }	
-			    }
-			 }
-            }
+
             stage('Deploy') {
             agent {
                 docker {
