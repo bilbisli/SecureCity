@@ -35,9 +35,12 @@ def get_priority(area):
 
 def get_priorities():
     try:
+        stat_area_column = "אג''ס"
         areas_df = analyze_patrols_priority()
-        priorities_dict = pd.Series(areas_df['priority'].values, index=areas_df['stat-area']).to_dict()
-    except (ValueError, KeyError, TypeError, AttributeError):
+        print('aaaaaaa', areas_df)
+        priorities_dict = pd.Series(areas_df['priority'].values, index=areas_df[stat_area_column]).to_dict()
+    except (ValueError, KeyError, TypeError, AttributeError) as e:
+        print(e)
         priorities_dict = {neighborhood: DEFAULT_PATROL_SIZE for priority, neighborhood in
                            enumerate(default_neighborhoods)}
     return priorities_dict
@@ -112,6 +115,7 @@ def analyze_patrols_priority(parameters=crime_columns):
 
     # take care of the case where there is no data in the database
     if unified_data is None:
+        print('no data in the database')
         return None
 
     unified_data[total_offenses_column] = unified_data[list(parameters)].sum(axis=1)
