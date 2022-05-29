@@ -187,7 +187,7 @@ pipeline {
 					    sh 'pip install black'
 					    sh 'pip install pylint'
 					    sh 'python -m black HomePage'
-					    sh 'python -m pylint --exit-zero HomePage
+					    sh 'python -m pylint --exit-zero HomePage Contact
 // 					    sh 'python -m pylint --exit-zero Estudy_Project'
                                 }	
 				}
