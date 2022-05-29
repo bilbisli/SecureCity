@@ -170,8 +170,6 @@ pipeline {
                                 dir("SecureCity"){
                                         sh 'python -m coverage run --source="." manage.py test'
                                         sh 'python -m coverage report'
-                                        sh 'python -m pylint --output-format=parseable --fail-under=<threshold value> module --msg-template="{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}" | tee pylint.log || echo "pylint exited with $?"'
-
                                 }
                         }
                 }
@@ -186,7 +184,7 @@ pipeline {
 			    withEnv(["HOME=${env.WORKSPACE}"]){
 				   	    //sh 'pip install django-environ'
 					    //sh 'pip install black'
-					    //sh 'pip install pylint'
+					    sh 'pip install pylint'
 					    //sh 'python -m black Estudy_Project accounts DetailsAccount HomePage category YouTube forum star_ratings gridfs_storage'
 					    sh 'python -m pylint --exit-zero HomePage --load-plugins=pylint_django'
 // 					    sh 'python -m pylint --exit-zero Estudy_Project'
