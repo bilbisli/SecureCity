@@ -86,7 +86,12 @@
     <br><br><br>
     <h1>Data about {% if user.is_superuser %} Your City {% else %} Neighborhood {{ user.profile.Neighborhood }} {% endif %}:</h1>
     <br>
-    {{ df.to_html|safe }}
+    {% if df is None %}
+        No data found.
+    {% else %}
+        {{ df.to_html|safe }}
+    {% endif %}
+
 {% endif %}
 </body>
 </html>
