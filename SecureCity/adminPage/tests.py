@@ -64,7 +64,7 @@ class UpdateDBTest(TestCase):
         self.assertContains(response, self.no_data_msg)
         self.assertNotContains(response, f'<th>{self.non_default_area}</th>')
 
-    def Test_view_api_db_update_from_view(self):
+    def Test_api_db_update_from_view(self):
         """
         This test is to check if the view for updating the database is works correctly
         """
@@ -108,7 +108,7 @@ class UpdateDBTest(TestCase):
         self.Test_data_fetch_fail()
         self.Test_locations_b4_db_update()
         self.Test_my_page_patrol_manager_no_data()
-        self.Test_view_api_db_update_from_view()
+        self.Test_api_db_update_from_view()
         self.Test_data_fetch_success()
         self.Test_locations_after_db_update()
         self.Test_my_page_patrol_manager_with_data()
