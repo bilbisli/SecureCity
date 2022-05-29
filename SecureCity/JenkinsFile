@@ -3,7 +3,7 @@
      stages {
      // hackathon
      //---------------------------------------------------------------------------------------------------------
-        stage('Build') {
+        stage('Build'){
             agent {
                 docker {
                     image 'cimg/base:stable'
