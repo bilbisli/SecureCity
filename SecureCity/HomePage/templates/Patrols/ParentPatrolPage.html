@@ -121,8 +121,9 @@ function myFunction(id) {
                         </th>
                         <th>Start Time</th>
                         <th>End Time</th>
+                        <th>Date</th>
                         <th>Priority</th>
-                        <th>Participants Needed</th>
+                        <th>Participants</th>
                     </tr>
                     <tr>
                         <th><b>Active Patrols</b></th>
@@ -139,8 +140,9 @@ function myFunction(id) {
                             <td>{{patrol.location}}</td>
                             <td>{{patrol.start_time}}</td>
                             <td>{{patrol.end_time}}</td>
+                            <td>{{patrol.date}}</td>
                             <td>{{patrol.priority}}</td>
-                            <td>{{patrol.participants_needed}}</td>
+                            <td>{{ patrol.approved_reactions.count }}/{{ patrol.participants_needed }}</td>
                         </tr>
                     {% endfor %}
                     <tr>
@@ -154,8 +156,9 @@ function myFunction(id) {
                             <td>{{patrol.location}}</td>
                             <td>{{patrol.start_time}}</td>
                             <td>{{patrol.end_time}}</td>
+                            <td>{{patrol.date}}</td>
                             <td>{{patrol.priority}}</td>
-                            <td>{{patrol.participants_needed}}</td>
+                            <td>{{ patrol.approved_reactions.count }}/{{ patrol.participants_needed }}</td>
                             {% if user.is_superuser %}
                                 <td><button id="b_{{ patrol.id }}" onclick="myFunction({{ patrol.id }})">Show Summary</button></td>
                                 <tr id="{{ patrol.id }}" style="display: none">
