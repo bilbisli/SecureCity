@@ -37,14 +37,11 @@ def get_priorities():
     try:
         neighborbood_column = "neighborhood_1"
         areas_df = analyze_patrols_priority()
-        print('areas df:')
-        print(areas_df)
         priorities_dict = pd.Series(areas_df['priority'].values, index=areas_df[neighborbood_column]).to_dict()
 
     except (ValueError, KeyError, TypeError, AttributeError) as e:
         priorities_dict = {neighborhood: DEFAULT_PATROL_SIZE for priority, neighborhood in
                            enumerate(default_neighborhoods)}
-    print(priorities_dict)
     return priorities_dict
 
 
