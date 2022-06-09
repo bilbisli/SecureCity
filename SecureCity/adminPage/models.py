@@ -8,6 +8,7 @@ from pandas.errors import ParserError
 default_neighborhoods = ('א', 'ב', 'ג', 'ד', 'ה')
 
 
+
 def current_time():
     return timezone.localtime(timezone.now())
 
