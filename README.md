@@ -46,7 +46,7 @@ can see statistical data acout all the city that shown in graphs and charts
 
 ---
 ## Requirements
-pip install -r Secure City/requirements.txt
+`pip install -r SecureCity/requirements.txt`
 
 [Back To The Top](#Secure-City)
 
