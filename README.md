@@ -38,7 +38,7 @@ can see statistical data acout all the city that shown in graphs and charts
 - Bootstrap
 - Docker
 - Jira
-- Jenking
+- Jenkins
 - Heroku
 - Remote APIs
 
