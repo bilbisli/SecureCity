@@ -36,6 +36,11 @@ can see statistical data acout all the city that shown in graphs and charts
 - HTML
 - CSS
 - Bootstrap
+- Docker
+- Jira
+- Jenking
+- Heroku
+- Remote APIs
 
 [Back To The Top](#Secure-City)
 
