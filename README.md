@@ -2,13 +2,15 @@
 ---
 # Secure City
 
->  neighborhood watch management system 
+>  Neighborhood watch management system with areas to patrol reccomendations and visualizations (using PowerBI). Project developed utilizing [CI-CD tools](#Architecture) from system requirements management through testing and all the way to containarization and production.
+
 ---
 
 ### Table of Contents
 
 - [Description](#description)
 - [Requirements](#requirements)
+- [How To Run](#Architecture)
 - [How To Run](#how-to-run)
 - [License](#license)
 - [Author Info](#author-info)
@@ -44,9 +46,14 @@ pip install -r Secure City/requirements.txt
 [Back To The Top](#Secure-City)
 
 ---
+## Architecture
+![architecture with CICD](https://github.com/bilbisli/SecureCity/assets/73055024/69290772-8a0c-4f2e-aeca-3ebac7e6e7fe)
+
+[Back To The Top](#Secure-City)
+
+---
 ## How To Run
 In order to run the program, the python interpeter must be at least version 3.8 and you mast install the requirements using the command from above
-
 
 [Back To The Top](#Secure-City)
 
